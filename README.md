@@ -6,4 +6,29 @@ A neuroscience project for flatmap visualization.
 
 This project aims to create flatmap representations of neural data.
 
-Currently, this repository contains only basic setup files (.gitignore and README.md). The main project code and dependencies have not been added yet.
+Currently, this repository contains basic setup files and an initial pilot notebook for the Swanson flatmap using the International Brain Laboratory (IBL) atlas.
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+cd flatmap
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+Open the Jupyter notebook:
+
+```bash
+jupyter notebook swanson_flatmap_pilot.ipynb
+```
+
+Run the cells to explore the Swanson flatmap atlas.
