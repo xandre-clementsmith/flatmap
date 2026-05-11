@@ -1,0 +1,1090 @@
+{
+  "structure_ids": [
+    1,
+    19,
+    25,
+    45,
+    52,
+    66,
+    73,
+    80,
+    87,
+    101,
+    108,
+    115,
+    123,
+    137,
+    151,
+    165,
+    179,
+    186,
+    193,
+    200,
+    227,
+    233,
+    239,
+    246,
+    259,
+    280,
+    286,
+    292,
+    299,
+    326,
+    333,
+    340,
+    361,
+    368,
+    374,
+    381,
+    391,
+    417,
+    433,
+    455,
+    458,
+    463,
+    468,
+    474,
+    491,
+    492,
+    495,
+    508,
+    524,
+    528,
+    532,
+    536,
+    556,
+    558,
+    560,
+    562,
+    564,
+    574,
+    576,
+    577,
+    578,
+    589,
+    601,
+    611,
+    612,
+    614,
+    618,
+    619,
+    622,
+    645,
+    646,
+    648,
+    650,
+    663,
+    669,
+    670,
+    676,
+    678,
+    683,
+    686,
+    693,
+    695,
+    704,
+    713,
+    714,
+    734,
+    740,
+    745,
+    758,
+    765,
+    771,
+    777,
+    783,
+    788,
+    793,
+    795,
+    796,
+    800,
+    803,
+    811,
+    814,
+    815,
+    816,
+    823,
+    824,
+    826,
+    827,
+    832,
+    835,
+    839,
+    853,
+    854,
+    868,
+    871,
+    886,
+    890,
+    913,
+    914,
+    918,
+    920,
+    932,
+    936,
+    943,
+    949,
+    955,
+    956,
+    957,
+    968,
+    976,
+    978,
+    979,
+    980,
+    985,
+    988,
+    989,
+    992,
+    993,
+    1003,
+    1012,
+    1021,
+    1025,
+    1034,
+    1047,
+    1051,
+    1055,
+    1059,
+    1063,
+    1068,
+    1073,
+    1077,
+    1081,
+    1085,
+    1089,
+    1093,
+    1099,
+    1100
+  ],
+  "experiment_count": 6,
+  "total_connections": 185,
+  "sparse_connections": [
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 695,
+      "normalized_volume": 1.0
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 771,
+      "normalized_volume": 0.9789164702516219
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 612,
+      "normalized_volume": 0.2526984162403962
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 528,
+      "normalized_volume": 0.23845853411608614
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1073,
+      "normalized_volume": 0.22435816210693915
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 811,
+      "normalized_volume": 0.1955644369133043
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 803,
+      "normalized_volume": 0.18871391339245577
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 101,
+      "normalized_volume": 0.15166697246160238
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1089,
+      "normalized_volume": 0.13248086682042193
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 771,
+      "normalized_volume": 0.08004260922413162
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 835,
+      "normalized_volume": 0.07785889617314014
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 795,
+      "normalized_volume": 0.07781738763183356
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1093,
+      "normalized_volume": 0.07664600022506411
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 993,
+      "normalized_volume": 0.07065486174851127
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 985,
+      "normalized_volume": 0.0628456901546191
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 695,
+      "normalized_volume": 0.06242371625979919
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 669,
+      "normalized_volume": 0.0433308695555094
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 918,
+      "normalized_volume": 0.039613343672026805
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 714,
+      "normalized_volume": 0.0350278553272272
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 826,
+      "normalized_volume": 0.03283948491027404
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 574,
+      "normalized_volume": 0.026496747346149756
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 956,
+      "normalized_volume": 0.02013311429467582
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 932,
+      "normalized_volume": 0.019536334310463494
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 528,
+      "normalized_volume": 0.01932416353834949
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 536,
+      "normalized_volume": 0.019205309976859524
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 943,
+      "normalized_volume": 0.018114474885749816
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 381,
+      "normalized_volume": 0.01805407779097009
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 648,
+      "normalized_volume": 0.017220074127459906
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1099,
+      "normalized_volume": 0.016297628218684024
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 463,
+      "normalized_volume": 0.016171925802047533
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 73,
+      "normalized_volume": 0.015690592482821848
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 73,
+      "normalized_volume": 0.015636814569306306
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1021,
+      "normalized_volume": 0.0154813970536189
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 326,
+      "normalized_volume": 0.014512349538809454
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 645,
+      "normalized_volume": 0.014100372009147107
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 165,
+      "normalized_volume": 0.014052302241770035
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 886,
+      "normalized_volume": 0.013572406161090601
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 614,
+      "normalized_volume": 0.013498439474918654
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1100,
+      "normalized_volume": 0.013248053321143654
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1073,
+      "normalized_volume": 0.01202123782692443
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 52,
+      "normalized_volume": 0.01099101577296179
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 239,
+      "normalized_volume": 0.01098834182514392
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 788,
+      "normalized_volume": 0.010925429712831494
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 824,
+      "normalized_volume": 0.010411098229679807
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 589,
+      "normalized_volume": 0.009886296769306028
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1089,
+      "normalized_volume": 0.00911706953050723
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 783,
+      "normalized_volume": 0.009089321403809724
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 361,
+      "normalized_volume": 0.008910948398836322
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 491,
+      "normalized_volume": 0.007396867200512224
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 645,
+      "normalized_volume": 0.007302925711425033
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 564,
+      "normalized_volume": 0.007061420827816941
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1093,
+      "normalized_volume": 0.006981530290031099
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 663,
+      "normalized_volume": 0.006315043022730908
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 123,
+      "normalized_volume": 0.0060092430357541774
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1,
+      "normalized_volume": 0.005944081053079036
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 618,
+      "normalized_volume": 0.005810634913757291
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 669,
+      "normalized_volume": 0.005726813242398913
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 932,
+      "normalized_volume": 0.005468213251395277
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 814,
+      "normalized_volume": 0.00508031036899512
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1025,
+      "normalized_volume": 0.00496384893519327
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 957,
+      "normalized_volume": 0.004714893477218394
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 803,
+      "normalized_volume": 0.004627777669532361
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 326,
+      "normalized_volume": 0.004512959157026548
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 795,
+      "normalized_volume": 0.004482122371756316
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 800,
+      "normalized_volume": 0.004443440534018436
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 988,
+      "normalized_volume": 0.004116205361751642
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 993,
+      "normalized_volume": 0.003616216320771218
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 827,
+      "normalized_volume": 0.0034934777480338116
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 920,
+      "normalized_volume": 0.0032999792726219395
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 968,
+      "normalized_volume": 0.0031179158298881987
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 374,
+      "normalized_volume": 0.0029180940056707074
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 854,
+      "normalized_volume": 0.0028544111176286116
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 619,
+      "normalized_volume": 0.002821942079748079
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 417,
+      "normalized_volume": 0.0028007866402769096
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 670,
+      "normalized_volume": 0.0027590173715959575
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 980,
+      "normalized_volume": 0.002746495226951002
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1077,
+      "normalized_volume": 0.002689742335641823
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 246,
+      "normalized_volume": 0.002596462319017839
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 693,
+      "normalized_volume": 0.0023908625243748787
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 574,
+      "normalized_volume": 0.0023380424851706257
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 920,
+      "normalized_volume": 0.0022123702247401184
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 985,
+      "normalized_volume": 0.0021013299579882207
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 577,
+      "normalized_volume": 0.002082695342066936
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 978,
+      "normalized_volume": 0.002045057094571571
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 589,
+      "normalized_volume": 0.0019516033081602821
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 558,
+      "normalized_volume": 0.001844613035808815
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 704,
+      "normalized_volume": 0.0018128876254480024
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 811,
+      "normalized_volume": 0.0017837125081110424
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 123,
+      "normalized_volume": 0.0017804054277349426
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1047,
+      "normalized_volume": 0.0017422746539048652
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 558,
+      "normalized_volume": 0.0017198063367565748
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 108,
+      "normalized_volume": 0.0016736566373819518
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 19,
+      "normalized_volume": 0.0016194454126453623
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 612,
+      "normalized_volume": 0.0015539000677486383
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 186,
+      "normalized_volume": 0.001421395073373107
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 978,
+      "normalized_volume": 0.0014208429388610335
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 151,
+      "normalized_volume": 0.0013763075276123891
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 556,
+      "normalized_volume": 0.0013761947941239416
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 955,
+      "normalized_volume": 0.001070130914588128
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 976,
+      "normalized_volume": 0.0009908974429021012
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 955,
+      "normalized_volume": 0.000942989793932513
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 976,
+      "normalized_volume": 0.0008875251191259186
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 936,
+      "normalized_volume": 0.0008648080944874589
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 19,
+      "normalized_volume": 0.0008333755201192403
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 704,
+      "normalized_volume": 0.0008176629344342946
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 101,
+      "normalized_volume": 0.0008052563998053478
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 832,
+      "normalized_volume": 0.0007932268378149336
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 886,
+      "normalized_volume": 0.0007914320446813238
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 816,
+      "normalized_volume": 0.00076939623215678
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 918,
+      "normalized_volume": 0.0007654370042616529
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 108,
+      "normalized_volume": 0.0007629638795524523
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1100,
+      "normalized_volume": 0.0007624312895683848
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1085,
+      "normalized_volume": 0.0007123239184509872
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 936,
+      "normalized_volume": 0.0006849614885075612
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1025,
+      "normalized_volume": 0.0006140632089029071
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 233,
+      "normalized_volume": 0.0006041502649767072
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 714,
+      "normalized_volume": 0.0005988168701814307
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 165,
+      "normalized_volume": 0.0005773796559415753
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 66,
+      "normalized_volume": 0.0005543178873672782
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 832,
+      "normalized_volume": 0.000551511926957817
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 286,
+      "normalized_volume": 0.0005323821819025829
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 839,
+      "normalized_volume": 0.0005099901917829645
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 333,
+      "normalized_volume": 0.0004806982122408697
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 601,
+      "normalized_volume": 0.0004747914214098571
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 678,
+      "normalized_volume": 0.00047064072346182114
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 765,
+      "normalized_volume": 0.0004609289760176613
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 433,
+      "normalized_volume": 0.00045642174856433605
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 826,
+      "normalized_volume": 0.00043405386425023615
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 989,
+      "normalized_volume": 0.00043016663089101467
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 361,
+      "normalized_volume": 0.0003536177671248121
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 663,
+      "normalized_volume": 0.0003419471337066652
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1099,
+      "normalized_volume": 0.000299186528449207
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 491,
+      "normalized_volume": 0.00026290764330297463
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 814,
+      "normalized_volume": 0.00026114336953266746
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 914,
+      "normalized_volume": 0.0002385097375279794
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 788,
+      "normalized_volume": 0.00021473421395144468
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 1081,
+      "normalized_volume": 0.0002035539829853609
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 292,
+      "normalized_volume": 0.0001816634909452881
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 968,
+      "normalized_volume": 0.00014605128762192878
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 280,
+      "normalized_volume": 0.00014349502359489323
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 989,
+      "normalized_volume": 0.0001276573169894636
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 115,
+      "normalized_volume": 0.0001238286878659054
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 949,
+      "normalized_volume": 0.0001233057283846032
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 246,
+      "normalized_volume": 0.00012233162954099203
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 619,
+      "normalized_volume": 0.00010005504443095234
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1,
+      "normalized_volume": 9.919259208953949e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 381,
+      "normalized_volume": 9.781033161110099e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 957,
+      "normalized_volume": 7.622802985592827e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 417,
+      "normalized_volume": 7.416235336571989e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 622,
+      "normalized_volume": 7.207965295528043e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 611,
+      "normalized_volume": 7.072601595070042e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 824,
+      "normalized_volume": 6.842731377307068e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 956,
+      "normalized_volume": 6.797713446188298e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 765,
+      "normalized_volume": 6.554774115639026e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 614,
+      "normalized_volume": 6.403978815778814e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 239,
+      "normalized_volume": 4.573790500986189e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 576,
+      "normalized_volume": 4.2935489026632816e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 463,
+      "normalized_volume": 3.4384359001754514e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 839,
+      "normalized_volume": 3.423775672435489e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 292,
+      "normalized_volume": 3.412944520514809e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 368,
+      "normalized_volume": 3.181869811819932e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 611,
+      "normalized_volume": 2.7599039267602507e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 374,
+      "normalized_volume": 2.5163105343549062e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 536,
+      "normalized_volume": 1.821192756325759e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 835,
+      "normalized_volume": 1.799256711315475e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 648,
+      "normalized_volume": 1.6053535292402875e-05
+    },
+    {
+      "injection_structure_id": 1,
+      "projection_structure_id": 949,
+      "normalized_volume": 1.4104884188330218e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 280,
+      "normalized_volume": 1.2966040611904121e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 943,
+      "normalized_volume": 1.2066117199542154e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 564,
+      "normalized_volume": 1.0337261186131841e-05
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 800,
+      "normalized_volume": 8.398121418953186e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 783,
+      "normalized_volume": 7.497638851209157e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1077,
+      "normalized_volume": 6.349833553834012e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 151,
+      "normalized_volume": 6.061274220502102e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1021,
+      "normalized_volume": 4.292326281732482e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 52,
+      "normalized_volume": 3.3011551611688773e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 115,
+      "normalized_volume": 2.1436389001608547e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 693,
+      "normalized_volume": 1.9848492875649864e-06
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 186,
+      "normalized_volume": 7.184436628542073e-07
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 618,
+      "normalized_volume": 5.562946818377304e-07
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 66,
+      "normalized_volume": 3.81676145012352e-07
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 286,
+      "normalized_volume": 7.326433711011404e-08
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 670,
+      "normalized_volume": 7.036048559952637e-08
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 1085,
+      "normalized_volume": 2.8191948667399022e-08
+    },
+    {
+      "injection_structure_id": 101,
+      "projection_structure_id": 980,
+      "normalized_volume": 1.1130320435009222e-09
+    }
+  ],
+  "note": "Connectivity aggregated from sample experiments, normalized 0-1"
+}

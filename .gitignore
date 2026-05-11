@@ -115,3 +115,6 @@ dmypy.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Allen connectivity download cache
+mouse_connectivity/
