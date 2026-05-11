@@ -71,9 +71,10 @@ async function main() {
       return coveredIds.has(allenId) ? base : `${base} no-data`;
     })
     .attr('d', d => pathFromCoords(d.coordsReg || []))
-    .attr('fill', d => {
+    .style('fill', d => {
+      if (!coveredIds.has(d.thisID)) return '#2a2a2a';
       const meta = metadata[d.thisID];
-      return meta ? meta.hexcolor : '#2a2a2a';
+      return meta ? meta.hexcolor : '#3a3a3a';
     });
 
   // Interaction
