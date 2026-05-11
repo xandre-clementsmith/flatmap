@@ -9,15 +9,37 @@ Exports three JSON files:
 """
 
 import json
+import operator as op
+from functools import reduce
 import numpy as np
 from pathlib import Path
-from iblatlas.flatmaps import swanson_json, _swanson_labels_positions
+from iblatlas.flatmaps import swanson_json
 from iblatlas.regions import BrainRegions
 from allensdk.core.mouse_connectivity_cache import MouseConnectivityCache
 
+# allensdk uses `df.is_injection` (attribute access) which breaks on newer pandas.
+# Monkey-patch to use bracket notation instead.
+def _filter_structure_unionizes(self, unionizes, is_injection=None,
+                                 structure_ids=None, include_descendants=False,
+                                 hemisphere_ids=None):
+    if is_injection is not None:
+        unionizes = unionizes[unionizes['is_injection'] == is_injection]
+    if structure_ids is not None:
+        structure_ids = MouseConnectivityCache.validate_structure_ids(structure_ids)
+        if include_descendants:
+            structure_ids = reduce(op.add, self.get_structure_tree().descendant_ids(structure_ids))
+        else:
+            structure_ids = set(structure_ids)
+        unionizes = unionizes[unionizes['structure_id'].isin(structure_ids)]
+    if hemisphere_ids is not None:
+        unionizes = unionizes[unionizes['hemisphere_id'].isin(hemisphere_ids)]
+    return unionizes
+
+MouseConnectivityCache.filter_structure_unionizes = _filter_structure_unionizes
+
 # Output directory
-OUTPUT_DIR = Path(__file__).parent / "data"
-OUTPUT_DIR.mkdir(exist_ok=True)
+OUTPUT_DIR = Path(__file__).resolve().parents[1] / "app" / "public" / "data"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 def main():
     print("Starting Phase 0 export...")
@@ -27,18 +49,17 @@ def main():
     swanson_regions = swanson_json()
     print(f"Loaded {len(swanson_regions)} regions")
 
-    # 2. Get Allen ID mappings
-    print("Loading Allen ID mappings...")
-    allen_positions = _swanson_labels_positions()
-    allen_ids = list(allen_positions.keys())
-    print(f"Found {len(allen_ids)} Allen IDs")
+    # 2. Get all Allen IDs from the drawn region polygons (superset of label positions)
+    print("Loading Allen IDs from swanson_json regions...")
+    all_swanson_ids = sorted(set(r['thisID'] for r in swanson_regions))
+    print(f"Found {len(all_swanson_ids)} unique region IDs")
 
     # 3. Get BrainRegions metadata
     print("Loading BrainRegions metadata...")
     br = BrainRegions()
-    # Filter to our Allen IDs that exist in BrainRegions
-    valid_allen_ids = [aid for aid in allen_ids if aid in br.id]
-    print(f"Valid Allen IDs: {len(valid_allen_ids)} out of {len(allen_ids)}")
+    # Filter to IDs that exist in BrainRegions
+    valid_allen_ids = [aid for aid in all_swanson_ids if aid in br.id]
+    print(f"Valid Allen IDs: {len(valid_allen_ids)} out of {len(all_swanson_ids)}")
     metadata = br.get(valid_allen_ids)
     print(f"Metadata for {len(metadata.id)} regions")
 
@@ -72,24 +93,27 @@ def main():
     print("Exporting connectivity matrix...")
     mcc = MouseConnectivityCache()
     
-    # Get all experiments that inject into any mapped Swanson structures
-    print(f"Getting experiments for {len(valid_allen_ids)} structures...")
-    exp_to_inj_struct = {}  # Map experiment_id to injection_structure_id
-    all_exp_ids = set()
-    for struct_id in valid_allen_ids:
-        try:
-            experiments = mcc.get_experiments(injection_structure_ids=[struct_id])
-            if isinstance(experiments, list):
-                exp_ids = [e['id'] for e in experiments]
-            else:
-                exp_ids = experiments.index.tolist()
-            for exp_id in exp_ids:
-                all_exp_ids.add(exp_id)
-                exp_to_inj_struct[exp_id] = struct_id
-        except Exception as e:
-            print(f"Error getting experiments for structure {struct_id}: {e}")
-    
-    exp_ids = list(all_exp_ids)
+    # Build exp_to_inj_struct directly from experiments.json so each experiment
+    # is attributed to its actual injection structure, not whichever query ran first.
+    print(f"Scanning experiments.json for injections into {len(valid_allen_ids)} structures...")
+    valid_set = set(valid_allen_ids)
+    exp_to_inj_struct = {}
+    repo_root = Path(__file__).resolve().parents[1]
+    with open(repo_root / "mouse_connectivity" / "experiments.json") as f:
+        all_experiments = json.load(f)
+    for exp in all_experiments:
+        exp_id = exp.get("data_set_id")
+        if exp_id is None:
+            continue
+        inj_str = exp.get("injection_structures", "")
+        if not inj_str:
+            continue
+        inj_ids = [int(s) for s in str(inj_str).split("/") if s.strip()]
+        matching = [sid for sid in inj_ids if sid in valid_set]
+        if matching:
+            exp_to_inj_struct[exp_id] = matching[0]
+
+    exp_ids = list(exp_to_inj_struct.keys())
     print(f"Discovered {len(exp_ids)} experiments from {len(set(exp_to_inj_struct.values()))} injection structures")
     
     if exp_ids:
@@ -120,6 +144,9 @@ def main():
                         proj_struct_id = struct_info['structure_id']
                         if proj_struct_id in valid_allen_ids:
                             volume = matrix[exp_idx, struct_idx]
+                            # volume > 0 per experiment, but aggregated sums can retain
+                            # floating-point noise (~1e-10) that renders as 0 in output.
+                            # These are not filtered here; ~65 such entries are expected.
                             if volume > 0:
                                 key = (inj_struct_id, proj_struct_id)
                                 connectivity[key] = connectivity.get(key, 0) + volume
@@ -149,7 +176,7 @@ def main():
                     "experiment_count": len(exp_ids),
                     "total_connections": len(sparse_connections),
                     "sparse_connections": sparse_connections,
-                    "note": "Connectivity aggregated from sample experiments, normalized 0-1"
+                    "note": "Connectivity aggregated from Allen experiments, normalized 0-1. Only 46/156 structures have injection experiments in the Allen dataset; 110 structures have no injection coverage. ~65 connections have near-zero volume (<1e-9) from float aggregation noise."
                 }
             else:
                 connectivity_data = {

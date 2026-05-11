@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #1a1a1a;
+  color: #e0e0e0;
+  font-family: sans-serif;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+#map-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+#map-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+.region {
+  cursor: pointer;
+  stroke: #333;
+  stroke-width: 0.5;
+  transition: opacity 0.15s;
+}
+
+.region.no-data {
+  cursor: default;
+}
+
+.region.hole {
+  cursor: default;
+  pointer-events: none;
+}
+
+.region.dimmed {
+  opacity: 0.35;
+}
+
+.region.selected {
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+
+#info-panel {
+  width: 260px;
+  padding: 20px;
+  background: #111;
+  border-left: 1px solid #333;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#region-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#region-acronym {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+#region-name {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+#connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.connection-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.connection-bar {
+  height: 4px;
+  border-radius: 2px;
+  margin-top: 2px;
+  background: #4a9eff;
+}

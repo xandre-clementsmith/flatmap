@@ -118,3 +118,7 @@ Thumbs.db
 
 # Allen connectivity download cache
 mouse_connectivity/
+
+# App
+app/node_modules/
+app/dist/

@@ -1,34 +1,39 @@
 # Flatmap
 
-A neuroscience project for flatmap visualization.
+Interactive Swanson flatmap visualization of Allen Mouse Connectivity Atlas data.
 
-## Description
-
-This project aims to create flatmap representations of neural data.
-
-Currently, this repository contains basic setup files and an initial pilot notebook for the Swanson flatmap using the International Brain Laboratory (IBL) atlas.
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone <repository-url>
-cd flatmap
-```
-
-Install dependencies:
+## Setup
 
 ```bash
 pip install -r requirements.txt
+cd app && npm install
 ```
 
-## Usage
+## Workflow
 
-Open the Jupyter notebook:
+### 1. Generate data
+
+Run from the repo root (requires internet on first run to cache Allen data):
 
 ```bash
-jupyter notebook swanson_flatmap_pilot.ipynb
+python3 src/export_phase0.py
 ```
 
-Run the cells to explore the Swanson flatmap atlas.
+Outputs three files to `app/public/data/`:
+- `swanson_regions.json` — SVG paths for all 396 Swanson flatmap regions
+- `region_metadata.json` — acronym, name, color for 156 Allen-mapped structures
+- `connectivity_matrix.json` — sparse projection matrix (47 injection structures)
+
+### 2. Run the app
+
+```bash
+cd app && npm run dev
+```
+
+### 3. Build for Netlify
+
+```bash
+cd app && npm run build
+```
+
+Drag the `app/dist/` folder to Netlify.

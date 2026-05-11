@@ -1,0 +1,2626 @@
+{
+  "19": {
+    "acronym": "IG",
+    "name": "Induseum griseum",
+    "hexcolor": "#7ed04b",
+    "level": 7,
+    "parent": 1080,
+    "order": 491
+  },
+  "25": {
+    "acronym": "sif",
+    "name": "simple fissure",
+    "hexcolor": "#aaaaaa",
+    "level": 3,
+    "parent": 1040,
+    "order": 1319
+  },
+  "45": {
+    "acronym": "SPVOrdm",
+    "name": "Spinal nucleus of the trigeminal oral part rostral dorsomedial part",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 445,
+    "order": 960
+  },
+  "52": {
+    "acronym": "ENTl3",
+    "name": "Entorhinal area lateral part layer 3",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 918,
+    "order": 500
+  },
+  "66": {
+    "acronym": "LT",
+    "name": "Lateral terminal nucleus of the accessory optic tract",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 861
+  },
+  "73": {
+    "acronym": "VS",
+    "name": "ventricular systems",
+    "hexcolor": "#aaaaaa",
+    "level": 1,
+    "parent": 997,
+    "order": 1292
+  },
+  "80": {
+    "acronym": "AHA",
+    "name": "Anterior hypothalamic area",
+    "hexcolor": "#ff5547",
+    "level": 6,
+    "parent": 141,
+    "order": 736
+  },
+  "87": {
+    "acronym": "PVHmpd",
+    "name": "Paraventricular hypothalamic nucleus parvicellular division medial parvicellular part dorsal zone",
+    "hexcolor": "#ff5d50",
+    "level": 8,
+    "parent": 94,
+    "order": 729
+  },
+  "101": {
+    "acronym": "VCO",
+    "name": "Ventral cochlear nucleus",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 607,
+    "order": 942
+  },
+  "108": {
+    "acronym": "chpl",
+    "name": "choroid plexus",
+    "hexcolor": "#aaaaaa",
+    "level": 3,
+    "parent": 81,
+    "order": 1296
+  },
+  "115": {
+    "acronym": "IV",
+    "name": "Trochlear nucleus",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 857
+  },
+  "123": {
+    "acronym": "KF",
+    "name": "Koelliker-Fuse subnucleus",
+    "hexcolor": "#ffae6f",
+    "level": 7,
+    "parent": 867,
+    "order": 891
+  },
+  "137": {
+    "acronym": "CSl",
+    "name": "Superior central nucleus raphe lateral part",
+    "hexcolor": "#ffc395",
+    "level": 7,
+    "parent": 679,
+    "order": 926
+  },
+  "144": {
+    "acronym": "OT1-3",
+    "name": "Olfactory tubercle layers 1-3",
+    "hexcolor": "#80cdf8",
+    "level": 7,
+    "parent": 754,
+    "order": 580
+  },
+  "151": {
+    "acronym": "AOB",
+    "name": "Accessory olfactory bulb",
+    "hexcolor": "#9df0d2",
+    "level": 6,
+    "parent": 698,
+    "order": 386
+  },
+  "165": {
+    "acronym": "RAmb",
+    "name": "Midbrain raphe nuclei",
+    "hexcolor": "#ffa6ff",
+    "level": 5,
+    "parent": 348,
+    "order": 868
+  },
+  "179": {
+    "acronym": "ACA6a",
+    "name": "Anterior cingulate area layer 6a",
+    "hexcolor": "#40a666",
+    "level": 7,
+    "parent": 31,
+    "order": 224
+  },
+  "186": {
+    "acronym": "LH",
+    "name": "Lateral habenula",
+    "hexcolor": "#ff909f",
+    "level": 7,
+    "parent": 958,
+    "order": 713
+  },
+  "193": {
+    "acronym": "PPYs",
+    "name": "Parapyramidal nucleus superficial part",
+    "hexcolor": "#ffb3d9",
+    "level": 7,
+    "parent": 1069,
+    "order": 1000
+  },
+  "200": {
+    "acronym": "COAa2",
+    "name": "Cortical amygdalar area anterior part layer 2",
+    "hexcolor": "#61e7b7",
+    "level": 8,
+    "parent": 639,
+    "order": 429
+  },
+  "227": {
+    "acronym": "ACA6b",
+    "name": "Anterior cingulate area layer 6b",
+    "hexcolor": "#40a666",
+    "level": 7,
+    "parent": 31,
+    "order": 225
+  },
+  "233": {
+    "acronym": "VISal5",
+    "name": "Anterolateral visual area layer 5",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 402,
+    "order": 168
+  },
+  "239": {
+    "acronym": "ATN",
+    "name": "Anterior group of the dorsal thalamus",
+    "hexcolor": "#ff909f",
+    "level": 6,
+    "parent": 856,
+    "order": 674
+  },
+  "246": {
+    "acronym": "RR",
+    "name": "Midbrain reticular nucleus retrorubral area",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 825
+  },
+  "259": {
+    "acronym": "ENTmv1",
+    "name": "Entorhinal area medial part ventral zone layer 1",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 934,
+    "order": 518
+  },
+  "272": {
+    "acronym": "AVPV",
+    "name": "Anteroventral periventricular nucleus",
+    "hexcolor": "#ff5547",
+    "level": 6,
+    "parent": 141,
+    "order": 738
+  },
+  "280": {
+    "acronym": "B",
+    "name": "Barrington's nucleus",
+    "hexcolor": "#ffba86",
+    "level": 6,
+    "parent": 987,
+    "order": 907
+  },
+  "286": {
+    "acronym": "SCH",
+    "name": "Suprachiasmatic nucleus",
+    "hexcolor": "#ff5547",
+    "level": 6,
+    "parent": 141,
+    "order": 752
+  },
+  "292": {
+    "acronym": "BA",
+    "name": "Bed nucleus of the accessory olfactory tract",
+    "hexcolor": "#80c0e2",
+    "level": 6,
+    "parent": 278,
+    "order": 594
+  },
+  "299": {
+    "acronym": "MO5",
+    "name": "Somatomotor areas Layer 5",
+    "hexcolor": "#1f9d5a",
+    "level": 7,
+    "parent": 500,
+    "order": 15
+  },
+  "326": {
+    "acronym": "scp",
+    "name": "superior cerebelar peduncles",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 752,
+    "order": 1174
+  },
+  "333": {
+    "acronym": "SH",
+    "name": "Septohippocampal nucleus",
+    "hexcolor": "#90cbed",
+    "level": 6,
+    "parent": 275,
+    "order": 591
+  },
+  "347": {
+    "acronym": "SBPV",
+    "name": "Subparaventricular zone",
+    "hexcolor": "#ff5547",
+    "level": 6,
+    "parent": 141,
+    "order": 751
+  },
+  "354": {
+    "acronym": "MY",
+    "name": "Medulla",
+    "hexcolor": "#ff9bcd",
+    "level": 4,
+    "parent": 1065,
+    "order": 935
+  },
+  "361": {
+    "acronym": "SSp-tr",
+    "name": "Primary somatosensory area trunk",
+    "hexcolor": "#188064",
+    "level": 8,
+    "parent": 322,
+    "order": 86
+  },
+  "368": {
+    "acronym": "PERI6b",
+    "name": "Perirhinal area layer 6b",
+    "hexcolor": "#0e9684",
+    "level": 7,
+    "parent": 922,
+    "order": 372
+  },
+  "374": {
+    "acronym": "SNc",
+    "name": "Substantia nigra compact part",
+    "hexcolor": "#ffa6ff",
+    "level": 5,
+    "parent": 348,
+    "order": 866
+  },
+  "381": {
+    "acronym": "SNr",
+    "name": "Substantia nigra reticular part",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 822
+  },
+  "387": {
+    "acronym": "ENTl5/6",
+    "name": "Entorhinal area lateral part layer 5/6",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 918,
+    "order": 504
+  },
+  "391": {
+    "acronym": "CA1slm",
+    "name": "Field CA1 stratum lacunosum-moleculare",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 382,
+    "order": 458
+  },
+  "400": {
+    "acronym": "PAA1-3",
+    "name": "Piriform-amygdalar area layers 1-3",
+    "hexcolor": "#59daab",
+    "level": 7,
+    "parent": 788,
+    "order": 445
+  },
+  "406": {
+    "acronym": "SPF",
+    "name": "Subparafascicular nucleus",
+    "hexcolor": "#ff8084",
+    "level": 6,
+    "parent": 864,
+    "order": 652
+  },
+  "411": {
+    "acronym": "MEAad",
+    "name": "Medial amygdalar nucleus anterodorsal part",
+    "hexcolor": "#80c0e2",
+    "level": 7,
+    "parent": 403,
+    "order": 601
+  },
+  "417": {
+    "acronym": "VISrl",
+    "name": "Rostrolateral visual area",
+    "hexcolor": "#009fac",
+    "level": 7,
+    "parent": 22,
+    "order": 353
+  },
+  "422": {
+    "acronym": "SPFp",
+    "name": "Subparafascicular nucleus parvicellular part",
+    "hexcolor": "#ff8084",
+    "level": 7,
+    "parent": 406,
+    "order": 654
+  },
+  "428": {
+    "acronym": "mct",
+    "name": "medial corticohypothalamic tract",
+    "hexcolor": "#cccccc",
+    "level": 6,
+    "parent": 737,
+    "order": 1251
+  },
+  "433": {
+    "acronym": "VISam5",
+    "name": "Anteromedial visual area layer 5",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 394,
+    "order": 175
+  },
+  "439": {
+    "acronym": "PVHdp",
+    "name": "Paraventricular hypothalamic nucleus descending division dorsal parvicellular part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 63,
+    "order": 783
+  },
+  "445": {
+    "acronym": "SPVO",
+    "name": "Spinal nucleus of the trigeminal oral part",
+    "hexcolor": "#ffa5d2",
+    "level": 6,
+    "parent": 386,
+    "order": 956
+  },
+  "450": {
+    "acronym": "SSp-ul1",
+    "name": "Primary somatosensory area upper limb layer 1",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 369,
+    "order": 80
+  },
+  "458": {
+    "acronym": "OT1",
+    "name": "Olfactory tubercle molecular layer",
+    "hexcolor": "#80cdf8",
+    "level": 7,
+    "parent": 754,
+    "order": 581
+  },
+  "463": {
+    "acronym": "CA3",
+    "name": "Field CA3",
+    "hexcolor": "#7ed04b",
+    "level": 8,
+    "parent": 375,
+    "order": 467
+  },
+  "468": {
+    "acronym": "ENTm2a",
+    "name": "Entorhinal area medial part dorsal zone layer 2a",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 926,
+    "order": 510
+  },
+  "474": {
+    "acronym": "ab",
+    "name": "angular path",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1099,
+    "order": 1257
+  },
+  "491": {
+    "acronym": "MM",
+    "name": "Medial mammillary nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 331,
+    "order": 764
+  },
+  "492": {
+    "acronym": "ORB2/3",
+    "name": "Orbital area layer 2/3",
+    "hexcolor": "#248a5e",
+    "level": 7,
+    "parent": 714,
+    "order": 254
+  },
+  "495": {
+    "acronym": "CA3sp",
+    "name": "Field CA3 pyramidal layer",
+    "hexcolor": "#66a83d",
+    "level": 9,
+    "parent": 463,
+    "order": 471
+  },
+  "508": {
+    "acronym": "ENTm2b",
+    "name": "Entorhinal area medial part dorsal zone layer 2b",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 926,
+    "order": 511
+  },
+  "518": {
+    "acronym": "SUBv",
+    "name": "Subiculum ventral part",
+    "hexcolor": "#4fc244",
+    "level": 8,
+    "parent": 502,
+    "order": 540
+  },
+  "524": {
+    "acronym": "ORBm2",
+    "name": "Orbital area medial part layer 2",
+    "hexcolor": "#248a5e",
+    "level": 8,
+    "parent": 731,
+    "order": 266
+  },
+  "528": {
+    "acronym": "CBX",
+    "name": "Cerebellar cortex",
+    "hexcolor": "#f0f080",
+    "level": 3,
+    "parent": 512,
+    "order": 1015
+  },
+  "532": {
+    "acronym": "PTLp1",
+    "name": "Posterior parietal association areas layer 1",
+    "hexcolor": "#009fac",
+    "level": 7,
+    "parent": 22,
+    "order": 340
+  },
+  "536": {
+    "acronym": "CEA",
+    "name": "Central amygdalar nucleus",
+    "hexcolor": "#80c0e2",
+    "level": 6,
+    "parent": 278,
+    "order": 595
+  },
+  "557": {
+    "acronym": "TM",
+    "name": "Tuberomammillary nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 331,
+    "order": 773
+  },
+  "558": {
+    "acronym": "SSp-n1",
+    "name": "Primary somatosensory area nose layer 1",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 353,
+    "order": 45
+  },
+  "560": {
+    "acronym": "CNspg",
+    "name": "Cochlear nucleus subpedunclular granular region",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 607,
+    "order": 940
+  },
+  "561": {
+    "acronym": "VIS2/3",
+    "name": "Visual areas layer 2/3",
+    "hexcolor": "#08858c",
+    "level": 7,
+    "parent": 669,
+    "order": 159
+  },
+  "562": {
+    "acronym": "BSTrh",
+    "name": "Bed nuclei of the stria terminalis anterior division rhomboid nucleus",
+    "hexcolor": "#b3c0df",
+    "level": 8,
+    "parent": 359,
+    "order": 630
+  },
+  "564": {
+    "acronym": "MS",
+    "name": "Medial septal nucleus",
+    "hexcolor": "#96a7d3",
+    "level": 7,
+    "parent": 904,
+    "order": 617
+  },
+  "565": {
+    "acronym": "VISpm5",
+    "name": "posteromedial visual area layer 5",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 533,
+    "order": 203
+  },
+  "566": {
+    "acronym": "TR",
+    "name": "Postpiriform transition area",
+    "hexcolor": "#a8ecd3",
+    "level": 6,
+    "parent": 698,
+    "order": 449
+  },
+  "568": {
+    "acronym": "ACVI",
+    "name": "Accessory abducens nucleus",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 966
+  },
+  "569": {
+    "acronym": "BSTd",
+    "name": "Bed nuclei of the stria terminalis posterior division dorsal nucleus",
+    "hexcolor": "#b3c0df",
+    "level": 8,
+    "parent": 367,
+    "order": 633
+  },
+  "570": {
+    "acronym": "dl",
+    "name": "dorsolateral fascicle",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 932,
+    "order": 1151
+  },
+  "574": {
+    "acronym": "TRN",
+    "name": "Tegmental reticular nucleus",
+    "hexcolor": "#ffba86",
+    "level": 6,
+    "parent": 987,
+    "order": 918
+  },
+  "576": {
+    "acronym": "ACVII",
+    "name": "Accessory facial motor nucleus",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 968
+  },
+  "577": {
+    "acronym": "SSp-ul4",
+    "name": "Primary somatosensory area upper limb layer 4",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 369,
+    "order": 82
+  },
+  "578": {
+    "acronym": "BSTpr",
+    "name": "Bed nuclei of the stria terminalis posterior division principal nucleus",
+    "hexcolor": "#b3c0df",
+    "level": 8,
+    "parent": 367,
+    "order": 634
+  },
+  "588": {
+    "acronym": "ACAv1",
+    "name": "Anterior cingulate area ventral part layer 1",
+    "hexcolor": "#40a666",
+    "level": 8,
+    "parent": 48,
+    "order": 233
+  },
+  "589": {
+    "acronym": "TT",
+    "name": "Taenia tecta",
+    "hexcolor": "#62d09f",
+    "level": 6,
+    "parent": 698,
+    "order": 398
+  },
+  "590": {
+    "acronym": "RSPv6a",
+    "name": "Retrosplenial area ventral part layer 6a",
+    "hexcolor": "#1aa698",
+    "level": 8,
+    "parent": 886,
+    "order": 337
+  },
+  "591": {
+    "acronym": "CLI",
+    "name": "Central linear nucleus raphe",
+    "hexcolor": "#ffa6ff",
+    "level": 6,
+    "parent": 165,
+    "order": 880
+  },
+  "592": {
+    "acronym": "COApm1-2",
+    "name": "Cortical amygdalar area posterior part medial zone layers 1-2",
+    "hexcolor": "#61e7b7",
+    "level": 9,
+    "parent": 663,
+    "order": 439
+  },
+  "594": {
+    "acronym": "BSTtr",
+    "name": "Bed nuclei of the stria terminalis posterior division transverse nucleus",
+    "hexcolor": "#b3c0df",
+    "level": 8,
+    "parent": 367,
+    "order": 636
+  },
+  "595": {
+    "acronym": "fr",
+    "name": "fasciculus retroflexus",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1083,
+    "order": 1286
+  },
+  "597": {
+    "acronym": "TTd",
+    "name": "Taenia tecta dorsal part",
+    "hexcolor": "#62d09f",
+    "level": 7,
+    "parent": 589,
+    "order": 399
+  },
+  "598": {
+    "acronym": "AUDv6b",
+    "name": "Ventral auditory area layer 6b",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1018,
+    "order": 156
+  },
+  "599": {
+    "acronym": "CM",
+    "name": "Central medial nucleus of the thalamus",
+    "hexcolor": "#ff909f",
+    "level": 7,
+    "parent": 51,
+    "order": 698
+  },
+  "600": {
+    "acronym": "AUDd2/3",
+    "name": "Dorsal auditory area layer 2/3",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1011,
+    "order": 124
+  },
+  "601": {
+    "acronym": "VISal6a",
+    "name": "Anterolateral visual area layer 6a",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 402,
+    "order": 169
+  },
+  "611": {
+    "acronym": "hbc",
+    "name": "habenular commissure",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1083,
+    "order": 1287
+  },
+  "612": {
+    "acronym": "NLL",
+    "name": "Nucleus of the lateral lemniscus",
+    "hexcolor": "#ffae6f",
+    "level": 6,
+    "parent": 1132,
+    "order": 885
+  },
+  "614": {
+    "acronym": "TU",
+    "name": "Tuberal nucleus",
+    "hexcolor": "#f2483b",
+    "level": 6,
+    "parent": 290,
+    "order": 801
+  },
+  "615": {
+    "acronym": "SNl",
+    "name": "Substantia nigra lateral part",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 864
+  },
+  "618": {
+    "acronym": "hc",
+    "name": "hippocampal commissures",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1099,
+    "order": 1253
+  },
+  "619": {
+    "acronym": "NLOT",
+    "name": "Nucleus of the lateral olfactory tract",
+    "hexcolor": "#95e4c8",
+    "level": 6,
+    "parent": 698,
+    "order": 421
+  },
+  "620": {
+    "acronym": "ORBm5",
+    "name": "Orbital area medial part layer 5",
+    "hexcolor": "#248a5e",
+    "level": 8,
+    "parent": 731,
+    "order": 268
+  },
+  "622": {
+    "acronym": "RSPv6b",
+    "name": "Retrosplenial area ventral part layer 6b",
+    "hexcolor": "#1aa698",
+    "level": 8,
+    "parent": 886,
+    "order": 338
+  },
+  "639": {
+    "acronym": "COAa",
+    "name": "Cortical amygdalar area anterior part",
+    "hexcolor": "#61e7b7",
+    "level": 7,
+    "parent": 631,
+    "order": 427
+  },
+  "645": {
+    "acronym": "VERM",
+    "name": "Vermal regions",
+    "hexcolor": "#fffc91",
+    "level": 4,
+    "parent": 528,
+    "order": 1019
+  },
+  "646": {
+    "acronym": "DP5",
+    "name": "Dorsal peduncular area layer 5",
+    "hexcolor": "#a4daa4",
+    "level": 7,
+    "parent": 814,
+    "order": 414
+  },
+  "648": {
+    "acronym": "MOp5",
+    "name": "Primary motor area Layer 5",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 985,
+    "order": 21
+  },
+  "649": {
+    "acronym": "VISal6b",
+    "name": "Anterolateral visual area layer 6b",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 402,
+    "order": 170
+  },
+  "650": {
+    "acronym": "jrb",
+    "name": "juxtarestiform body",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1123,
+    "order": 1183
+  },
+  "651": {
+    "acronym": "NTS",
+    "name": "Nucleus of the solitary tract",
+    "hexcolor": "#ffa5d2",
+    "level": 6,
+    "parent": 386,
+    "order": 948
+  },
+  "654": {
+    "acronym": "SSp-n4",
+    "name": "Primary somatosensory area nose layer 4",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 353,
+    "order": 47
+  },
+  "655": {
+    "acronym": "COApl",
+    "name": "Cortical amygdalar area posterior part lateral zone",
+    "hexcolor": "#61e7b7",
+    "level": 8,
+    "parent": 647,
+    "order": 432
+  },
+  "656": {
+    "acronym": "MOs1",
+    "name": "Secondary motor area layer 1",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 993,
+    "order": 25
+  },
+  "657": {
+    "acronym": "SSp-m2/3",
+    "name": "Primary somatosensory area mouth layer 2/3",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 345,
+    "order": 74
+  },
+  "660": {
+    "acronym": "PVHpmm",
+    "name": "Paraventricular hypothalamic nucleus magnocellular division posterior magnocellular part medial zone",
+    "hexcolor": "#ff5d50",
+    "level": 9,
+    "parent": 103,
+    "order": 726
+  },
+  "661": {
+    "acronym": "VII",
+    "name": "Facial motor nucleus",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 967
+  },
+  "662": {
+    "acronym": "GU6b",
+    "name": "Gustatory areas layer 6b",
+    "hexcolor": "#009c75",
+    "level": 7,
+    "parent": 1057,
+    "order": 113
+  },
+  "663": {
+    "acronym": "COApm",
+    "name": "Cortical amygdalar area posterior part medial zone",
+    "hexcolor": "#61e7b7",
+    "level": 8,
+    "parent": 647,
+    "order": 438
+  },
+  "669": {
+    "acronym": "VIS",
+    "name": "Visual areas",
+    "hexcolor": "#08858c",
+    "level": 6,
+    "parent": 315,
+    "order": 157
+  },
+  "670": {
+    "acronym": "SSp-tr2/3",
+    "name": "Primary somatosensory area trunk layer 2/3",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 361,
+    "order": 88
+  },
+  "671": {
+    "acronym": "RSPagl1",
+    "name": "Retrosplenial area lateral agranular part layer 1",
+    "hexcolor": "#1aa698",
+    "level": 8,
+    "parent": 894,
+    "order": 299
+  },
+  "672": {
+    "acronym": "CP",
+    "name": "Caudoputamen",
+    "hexcolor": "#98d6f9",
+    "level": 6,
+    "parent": 485,
+    "order": 573
+  },
+  "676": {
+    "acronym": "DMHp",
+    "name": "Dorsomedial nucleus of the hypothalamus posterior part",
+    "hexcolor": "#ff5547",
+    "level": 7,
+    "parent": 830,
+    "order": 741
+  },
+  "678": {
+    "acronym": "AUDd4",
+    "name": "Dorsal auditory area layer 4",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1011,
+    "order": 125
+  },
+  "679": {
+    "acronym": "CS",
+    "name": "Superior central nucleus raphe",
+    "hexcolor": "#ffc395",
+    "level": 6,
+    "parent": 1117,
+    "order": 925
+  },
+  "680": {
+    "acronym": "ORBvl6b",
+    "name": "Orbital area ventrolateral part layer 6b",
+    "hexcolor": "#248a5e",
+    "level": 8,
+    "parent": 746,
+    "order": 277
+  },
+  "681": {
+    "acronym": "mtg",
+    "name": "mammillotegmental tract",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 46,
+    "order": 1280
+  },
+  "682": {
+    "acronym": "NTSl",
+    "name": "Nucleus of the solitary tract lateral part",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 651,
+    "order": 952
+  },
+  "683": {
+    "acronym": "PTLp5",
+    "name": "Posterior parietal association areas layer 5",
+    "hexcolor": "#009fac",
+    "level": 7,
+    "parent": 22,
+    "order": 343
+  },
+  "685": {
+    "acronym": "VM",
+    "name": "Ventral medial nucleus of the thalamus",
+    "hexcolor": "#ff8084",
+    "level": 7,
+    "parent": 637,
+    "order": 645
+  },
+  "686": {
+    "acronym": "SSp6a",
+    "name": "Primary somatosensory area layer 6a",
+    "hexcolor": "#188064",
+    "level": 8,
+    "parent": 322,
+    "order": 42
+  },
+  "690": {
+    "acronym": "mtt",
+    "name": "mammillothalamic tract",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 46,
+    "order": 1279
+  },
+  "691": {
+    "acronym": "NTSm",
+    "name": "Nucleus of the solitary tract medial part",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 651,
+    "order": 953
+  },
+  "693": {
+    "acronym": "VMH",
+    "name": "Ventromedial hypothalamic nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 6,
+    "parent": 467,
+    "order": 787
+  },
+  "694": {
+    "acronym": "AIv2/3",
+    "name": "Agranular insular area ventral part layer 2/3",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 119,
+    "order": 293
+  },
+  "695": {
+    "acronym": "CTXpl",
+    "name": "Cortical plate",
+    "hexcolor": "#70ff70",
+    "level": 4,
+    "parent": 688,
+    "order": 4
+  },
+  "698": {
+    "acronym": "OLF",
+    "name": "Olfactory areas",
+    "hexcolor": "#9ad2bd",
+    "level": 5,
+    "parent": 695,
+    "order": 379
+  },
+  "699": {
+    "acronym": "AIv6b",
+    "name": "Agranular insular area ventral part layer 6b",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 119,
+    "order": 296
+  },
+  "700": {
+    "acronym": "AHNa",
+    "name": "Anterior hypothalamic nucleus anterior part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 88,
+    "order": 758
+  },
+  "701": {
+    "acronym": "VNC",
+    "name": "Vestibular nuclei",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 1001
+  },
+  "702": {
+    "acronym": "SSp-n5",
+    "name": "Primary somatosensory area nose layer 5",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 353,
+    "order": 48
+  },
+  "704": {
+    "acronym": "AIv1",
+    "name": "Agranular insular area ventral part layer 1",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 119,
+    "order": 292
+  },
+  "706": {
+    "acronym": "OP",
+    "name": "Olivary pretectal nucleus",
+    "hexcolor": "#ff90ff",
+    "level": 6,
+    "parent": 1100,
+    "order": 848
+  },
+  "708": {
+    "acronym": "AHNc",
+    "name": "Anterior hypothalamic nucleus central part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 88,
+    "order": 759
+  },
+  "711": {
+    "acronym": "CU",
+    "name": "Cuneate nucleus",
+    "hexcolor": "#ffa5d2",
+    "level": 7,
+    "parent": 720,
+    "order": 944
+  },
+  "713": {
+    "acronym": "per",
+    "name": "perforant path",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1099,
+    "order": 1256
+  },
+  "714": {
+    "acronym": "ORB",
+    "name": "Orbital area",
+    "hexcolor": "#248a5e",
+    "level": 6,
+    "parent": 315,
+    "order": 252
+  },
+  "718": {
+    "acronym": "VPL",
+    "name": "Ventral posterolateral nucleus of the thalamus",
+    "hexcolor": "#ff8084",
+    "level": 8,
+    "parent": 709,
+    "order": 647
+  },
+  "721": {
+    "acronym": "VISp4",
+    "name": "Primary visual area layer 4",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 385,
+    "order": 188
+  },
+  "732": {
+    "acronym": "Mmme",
+    "name": "Medial mammillary nucleus median part",
+    "hexcolor": "#ff4c3e",
+    "level": 8,
+    "parent": 491,
+    "order": 765
+  },
+  "733": {
+    "acronym": "VPM",
+    "name": "Ventral posteromedial nucleus of the thalamus",
+    "hexcolor": "#ff8084",
+    "level": 8,
+    "parent": 709,
+    "order": 649
+  },
+  "734": {
+    "acronym": "DGcr",
+    "name": "Dentate gyrus crest",
+    "hexcolor": "#7ed04b",
+    "level": 8,
+    "parent": 726,
+    "order": 478
+  },
+  "736": {
+    "acronym": "ctb",
+    "name": "central tegmental bundle",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 1000,
+    "order": 1233
+  },
+  "737": {
+    "acronym": "fxpo",
+    "name": "postcommissural fornix",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1099,
+    "order": 1250
+  },
+  "738": {
+    "acronym": "ORBv",
+    "name": "Orbital area ventral part",
+    "hexcolor": "#248a5e",
+    "level": 7,
+    "parent": 714,
+    "order": 271
+  },
+  "739": {
+    "acronym": "ACA5",
+    "name": "Anterior cingulate area layer 5",
+    "hexcolor": "#40a666",
+    "level": 7,
+    "parent": 31,
+    "order": 223
+  },
+  "740": {
+    "acronym": "MPNc",
+    "name": "Medial preoptic nucleus central part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 515,
+    "order": 777
+  },
+  "744": {
+    "acronym": "cbc",
+    "name": "cerebellar commissure",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 960,
+    "order": 1172
+  },
+  "745": {
+    "acronym": "fxprg",
+    "name": "precommissural fornix general",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1099,
+    "order": 1248
+  },
+  "746": {
+    "acronym": "ORBvl",
+    "name": "Orbital area ventrolateral part",
+    "hexcolor": "#248a5e",
+    "level": 7,
+    "parent": 714,
+    "order": 272
+  },
+  "747": {
+    "acronym": "ILA2",
+    "name": "Infralimbic area layer 2",
+    "hexcolor": "#59b363",
+    "level": 7,
+    "parent": 44,
+    "order": 247
+  },
+  "748": {
+    "acronym": "MPNl",
+    "name": "Medial preoptic nucleus lateral part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 515,
+    "order": 778
+  },
+  "749": {
+    "acronym": "VTA",
+    "name": "Ventral tegmental area",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 823
+  },
+  "750": {
+    "acronym": "VISpl1",
+    "name": "Posterolateral visual area layer 1",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 425,
+    "order": 193
+  },
+  "751": {
+    "acronym": "DGcr-po",
+    "name": "Dentate gyrus crest polymorph layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 734,
+    "order": 480
+  },
+  "752": {
+    "acronym": "cbp",
+    "name": "cerebellar peduncles",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 960,
+    "order": 1173
+  },
+  "753": {
+    "acronym": "pm",
+    "name": "principal mammillary tract",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 46,
+    "order": 1278
+  },
+  "754": {
+    "acronym": "OT",
+    "name": "Olfactory tubercle",
+    "hexcolor": "#80cdf8",
+    "level": 6,
+    "parent": 493,
+    "order": 577
+  },
+  "756": {
+    "acronym": "MPNm",
+    "name": "Medial preoptic nucleus medial part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 515,
+    "order": 779
+  },
+  "758": {
+    "acronym": "DGcr-sg",
+    "name": "Dentate gyrus crest granule cell layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 734,
+    "order": 481
+  },
+  "764": {
+    "acronym": "ENTl2b",
+    "name": "Entorhinal area lateral part layer 2b",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 918,
+    "order": 499
+  },
+  "765": {
+    "acronym": "x",
+    "name": "Nucleus x",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 1006
+  },
+  "766": {
+    "acronym": "DGlb",
+    "name": "Dentate gyrus lateral blade",
+    "hexcolor": "#7ed04b",
+    "level": 8,
+    "parent": 726,
+    "order": 482
+  },
+  "771": {
+    "acronym": "P",
+    "name": "Pons",
+    "hexcolor": "#ff9b88",
+    "level": 4,
+    "parent": 1065,
+    "order": 883
+  },
+  "775": {
+    "acronym": "DGlb-mo",
+    "name": "Dentate gyrus lateral blade molecular layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 766,
+    "order": 483
+  },
+  "776": {
+    "acronym": "cc",
+    "name": "corpus callosum",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 983,
+    "order": 1191
+  },
+  "777": {
+    "acronym": "VMHdm",
+    "name": "Ventromedial hypothalamic nucleus dorsomedial part",
+    "hexcolor": "#ff4c3e",
+    "level": 7,
+    "parent": 693,
+    "order": 790
+  },
+  "781": {
+    "acronym": "y",
+    "name": "Nucleus y",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 1008
+  },
+  "782": {
+    "acronym": "DGlb-po",
+    "name": "Dentate gyrus lateral blade polymorph layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 766,
+    "order": 484
+  },
+  "783": {
+    "acronym": "AId6a",
+    "name": "Agranular insular area dorsal part layer 6a",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 104,
+    "order": 283
+  },
+  "788": {
+    "acronym": "PAA",
+    "name": "Piriform-amygdalar area",
+    "hexcolor": "#59daab",
+    "level": 6,
+    "parent": 698,
+    "order": 444
+  },
+  "793": {
+    "acronym": "SSp1",
+    "name": "Primary somatosensory area layer 1",
+    "hexcolor": "#188064",
+    "level": 8,
+    "parent": 322,
+    "order": 38
+  },
+  "795": {
+    "acronym": "PAG",
+    "name": "Periaqueductal gray",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 838
+  },
+  "796": {
+    "acronym": "A13",
+    "name": "Dopaminergic A13 group",
+    "hexcolor": "#f2483b",
+    "level": 7,
+    "parent": 797,
+    "order": 803
+  },
+  "797": {
+    "acronym": "ZI",
+    "name": "Zona incerta",
+    "hexcolor": "#f2483b",
+    "level": 6,
+    "parent": 290,
+    "order": 802
+  },
+  "798": {
+    "acronym": "VIIn",
+    "name": "facial nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1130
+  },
+  "800": {
+    "acronym": "AIv5",
+    "name": "Agranular insular area ventral part layer 5",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 119,
+    "order": 294
+  },
+  "801": {
+    "acronym": "VIS1",
+    "name": "Visual areas layer 1",
+    "hexcolor": "#08858c",
+    "level": 7,
+    "parent": 669,
+    "order": 158
+  },
+  "802": {
+    "acronym": "sm",
+    "name": "stria medullaris",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 1083,
+    "order": 1285
+  },
+  "803": {
+    "acronym": "PAL",
+    "name": "Pallidum",
+    "hexcolor": "#8599cc",
+    "level": 4,
+    "parent": 623,
+    "order": 608
+  },
+  "804": {
+    "acronym": "FF",
+    "name": "Fields of Forel",
+    "hexcolor": "#f2483b",
+    "level": 7,
+    "parent": 797,
+    "order": 804
+  },
+  "805": {
+    "acronym": "VISpm1",
+    "name": "posteromedial visual area layer 1",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 533,
+    "order": 200
+  },
+  "810": {
+    "acronym": "ACAv6a",
+    "name": "Anterior cingulate area ventral part 6a",
+    "hexcolor": "#40a666",
+    "level": 8,
+    "parent": 48,
+    "order": 236
+  },
+  "811": {
+    "acronym": "ICc",
+    "name": "Inferior colliculus central nucleus",
+    "hexcolor": "#ff7aff",
+    "level": 6,
+    "parent": 4,
+    "order": 813
+  },
+  "812": {
+    "acronym": "dscp",
+    "name": "superior cerebellar peduncle decussation",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 326,
+    "order": 1175
+  },
+  "814": {
+    "acronym": "DP",
+    "name": "Dorsal peduncular area",
+    "hexcolor": "#a4daa4",
+    "level": 6,
+    "parent": 698,
+    "order": 410
+  },
+  "815": {
+    "acronym": "DGmb-po",
+    "name": "Dentate gyrus medial blade polymorph layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 799,
+    "order": 488
+  },
+  "816": {
+    "acronym": "AUDp4",
+    "name": "Primary auditory area layer 4",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1002,
+    "order": 139
+  },
+  "817": {
+    "acronym": "supa",
+    "name": "supraoptic commissures anterior",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 349,
+    "order": 1266
+  },
+  "818": {
+    "acronym": "PALd",
+    "name": "Pallidum dorsal region",
+    "hexcolor": "#8599cc",
+    "level": 5,
+    "parent": 803,
+    "order": 609
+  },
+  "819": {
+    "acronym": "ACAv6b",
+    "name": "Anterior cingulate area ventral part 6b",
+    "hexcolor": "#40a666",
+    "level": 8,
+    "parent": 48,
+    "order": 237
+  },
+  "820": {
+    "acronym": "ICd",
+    "name": "Inferior colliculus dorsal nucleus",
+    "hexcolor": "#ff7aff",
+    "level": 6,
+    "parent": 4,
+    "order": 814
+  },
+  "823": {
+    "acronym": "DGmb-sg",
+    "name": "Dentate gyrus medial blade granule cell layer",
+    "hexcolor": "#7ed04b",
+    "level": 9,
+    "parent": 799,
+    "order": 489
+  },
+  "824": {
+    "acronym": "mfsbshy",
+    "name": "hypothalamus related",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 991,
+    "order": 1261
+  },
+  "826": {
+    "acronym": "PALm",
+    "name": "Pallidum medial region",
+    "hexcolor": "#96a7d3",
+    "level": 5,
+    "parent": 803,
+    "order": 615
+  },
+  "827": {
+    "acronym": "ILA5",
+    "name": "Infralimbic area layer 5",
+    "hexcolor": "#59b363",
+    "level": 7,
+    "parent": 44,
+    "order": 249
+  },
+  "832": {
+    "acronym": "IIIn",
+    "name": "oculomotor nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1119
+  },
+  "833": {
+    "acronym": "supv",
+    "name": "supraoptic commissures ventral",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 349,
+    "order": 1268
+  },
+  "834": {
+    "acronym": "SCzo",
+    "name": "Superior colliculus zonal layer",
+    "hexcolor": "#ff7aff",
+    "level": 6,
+    "parent": 302,
+    "order": 811
+  },
+  "835": {
+    "acronym": "PALv",
+    "name": "Pallidum ventral region",
+    "hexcolor": "#a2b1d8",
+    "level": 5,
+    "parent": 803,
+    "order": 612
+  },
+  "839": {
+    "acronym": "DMX",
+    "name": "Dorsal motor nucleus of the vagus nerve",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 973
+  },
+  "840": {
+    "acronym": "In",
+    "name": "olfactory nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1105
+  },
+  "841": {
+    "acronym": "tb",
+    "name": "trapezoid body",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 948,
+    "order": 1137
+  },
+  "842": {
+    "acronym": "SCsg",
+    "name": "Superior colliculus superficial gray layer",
+    "hexcolor": "#ff7aff",
+    "level": 6,
+    "parent": 302,
+    "order": 810
+  },
+  "845": {
+    "acronym": "SUBd-sp",
+    "name": "Subiculum dorsal part pyramidal layer",
+    "hexcolor": "#4bb547",
+    "level": 9,
+    "parent": 509,
+    "order": 538
+  },
+  "846": {
+    "acronym": "DN",
+    "name": "Dentate nucleus",
+    "hexcolor": "#fffdbc",
+    "level": 4,
+    "parent": 519,
+    "order": 1099
+  },
+  "847": {
+    "acronym": "AUDp5",
+    "name": "Primary auditory area layer 5",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1002,
+    "order": 140
+  },
+  "848": {
+    "acronym": "IIn",
+    "name": "optic nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1112
+  },
+  "849": {
+    "acronym": "VISC6b",
+    "name": "Visceral area layer 6b",
+    "hexcolor": "#11ad83",
+    "level": 7,
+    "parent": 677,
+    "order": 120
+  },
+  "850": {
+    "acronym": "uf",
+    "name": "uncinate fascicle",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 326,
+    "order": 1177
+  },
+  "853": {
+    "acronym": "SUBv-m",
+    "name": "Subiculum ventral part molecular layer",
+    "hexcolor": "#4fc244",
+    "level": 9,
+    "parent": 518,
+    "order": 541
+  },
+  "854": {
+    "acronym": "SSp-ul2/3",
+    "name": "Primary somatosensory area upper limb layer 2/3",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 369,
+    "order": 81
+  },
+  "855": {
+    "acronym": "rst",
+    "name": "retriculospinal tract",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 1000,
+    "order": 1234
+  },
+  "857": {
+    "acronym": "VISC6a",
+    "name": "Visceral area layer 6a",
+    "hexcolor": "#11ad83",
+    "level": 7,
+    "parent": 677,
+    "order": 119
+  },
+  "858": {
+    "acronym": "vc",
+    "name": "ventral commissure of the spinal cord",
+    "hexcolor": "#cccccc",
+    "level": 5,
+    "parent": 932,
+    "order": 1153
+  },
+  "860": {
+    "acronym": "PBlc",
+    "name": "Parabrachial nucleus lateral division central lateral part",
+    "hexcolor": "#ffae6f",
+    "level": 8,
+    "parent": 881,
+    "order": 893
+  },
+  "861": {
+    "acronym": "SUBv-sr",
+    "name": "Subiculum ventral part stratum radiatum",
+    "hexcolor": "#4fc244",
+    "level": 9,
+    "parent": 518,
+    "order": 543
+  },
+  "862": {
+    "acronym": "SSs6a",
+    "name": "Supplemental somatosensory area layer 6a",
+    "hexcolor": "#188064",
+    "level": 8,
+    "parent": 378,
+    "order": 105
+  },
+  "867": {
+    "acronym": "PB",
+    "name": "Parabrachial nucleus",
+    "hexcolor": "#ffae6f",
+    "level": 6,
+    "parent": 1132,
+    "order": 890
+  },
+  "868": {
+    "acronym": "PBld",
+    "name": "Parabrachial nucleus lateral division dorsal lateral part",
+    "hexcolor": "#ffae6f",
+    "level": 8,
+    "parent": 881,
+    "order": 894
+  },
+  "870": {
+    "acronym": "SUBv-sp",
+    "name": "Subiculum ventral part pyramidal layer",
+    "hexcolor": "#4bb547",
+    "level": 9,
+    "parent": 518,
+    "order": 542
+  },
+  "871": {
+    "acronym": "sst",
+    "name": "spinothalamic tract",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1160
+  },
+  "880": {
+    "acronym": "DTN",
+    "name": "Dorsal tegmental nucleus",
+    "hexcolor": "#ffba86",
+    "level": 6,
+    "parent": 987,
+    "order": 908
+  },
+  "881": {
+    "acronym": "PBl",
+    "name": "Parabrachial nucleus lateral division",
+    "hexcolor": "#ffae6f",
+    "level": 7,
+    "parent": 867,
+    "order": 892
+  },
+  "882": {
+    "acronym": "MOp6b",
+    "name": "Primary motor area Layer 6b",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 985,
+    "order": 23
+  },
+  "886": {
+    "acronym": "RSPv",
+    "name": "Retrosplenial area ventral part",
+    "hexcolor": "#1aa698",
+    "level": 7,
+    "parent": 254,
+    "order": 332
+  },
+  "888": {
+    "acronym": "PERI2/3",
+    "name": "Perirhinal area layer 2/3",
+    "hexcolor": "#0e9684",
+    "level": 7,
+    "parent": 922,
+    "order": 369
+  },
+  "889": {
+    "acronym": "SSp-n6a",
+    "name": "Primary somatosensory area nose layer 6a",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 353,
+    "order": 49
+  },
+  "890": {
+    "acronym": "PBm",
+    "name": "Parabrachial nucleus medial division",
+    "hexcolor": "#ffae6f",
+    "level": 7,
+    "parent": 867,
+    "order": 898
+  },
+  "891": {
+    "acronym": "PBlv",
+    "name": "Parabrachial nucleus lateral division ventral lateral part",
+    "hexcolor": "#ffae6f",
+    "level": 8,
+    "parent": 881,
+    "order": 897
+  },
+  "892": {
+    "acronym": "apd",
+    "name": "ansa peduncularis",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 768,
+    "order": 1241
+  },
+  "904": {
+    "acronym": "MSC",
+    "name": "Medial septal complex",
+    "hexcolor": "#96a7d3",
+    "level": 6,
+    "parent": 826,
+    "order": 616
+  },
+  "905": {
+    "acronym": "VISal2/3",
+    "name": "Anterolateral visual area layer 2/3",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 402,
+    "order": 166
+  },
+  "906": {
+    "acronym": "RSPagl6a",
+    "name": "Retrosplenial area lateral agranular part layer 6a",
+    "hexcolor": "#1aa698",
+    "level": 8,
+    "parent": 894,
+    "order": 302
+  },
+  "908": {
+    "acronym": "act",
+    "name": "anterior commissure temporal limb",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 768,
+    "order": 1242
+  },
+  "909": {
+    "acronym": "ENT",
+    "name": "Entorhinal area",
+    "hexcolor": "#32b825",
+    "level": 7,
+    "parent": 822,
+    "order": 493
+  },
+  "910": {
+    "acronym": "ORBm6a",
+    "name": "Orbital area medial part layer 6a",
+    "hexcolor": "#248a5e",
+    "level": 8,
+    "parent": 731,
+    "order": 269
+  },
+  "912": {
+    "acronym": "LING",
+    "name": "Lingula (I)",
+    "hexcolor": "#fffc91",
+    "level": 5,
+    "parent": 645,
+    "order": 1020
+  },
+  "913": {
+    "acronym": "VIS4",
+    "name": "Visual areas layer 4",
+    "hexcolor": "#08858c",
+    "level": 7,
+    "parent": 669,
+    "order": 160
+  },
+  "914": {
+    "acronym": "PD",
+    "name": "Posterodorsal preoptic nucleus",
+    "hexcolor": "#ff5547",
+    "level": 6,
+    "parent": 141,
+    "order": 746
+  },
+  "916": {
+    "acronym": "bsc",
+    "name": "brachium of the superior colliculus",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 848,
+    "order": 1114
+  },
+  "918": {
+    "acronym": "ENTl",
+    "name": "Entorhinal area lateral part",
+    "hexcolor": "#32b825",
+    "level": 8,
+    "parent": 909,
+    "order": 494
+  },
+  "919": {
+    "acronym": "ACAd6a",
+    "name": "Anterior cingulate area dorsal part layer 6a",
+    "hexcolor": "#40a666",
+    "level": 8,
+    "parent": 39,
+    "order": 230
+  },
+  "920": {
+    "acronym": "CENT",
+    "name": "Central lobule",
+    "hexcolor": "#fffc91",
+    "level": 5,
+    "parent": 645,
+    "order": 1024
+  },
+  "926": {
+    "acronym": "ENTm",
+    "name": "Entorhinal area medial part dorsal zone",
+    "hexcolor": "#32b825",
+    "level": 8,
+    "parent": 909,
+    "order": 507
+  },
+  "929": {
+    "acronym": "SSp-n6b",
+    "name": "Primary somatosensory area nose layer 6b",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 353,
+    "order": 50
+  },
+  "930": {
+    "acronym": "PF",
+    "name": "Parafascicular nucleus",
+    "hexcolor": "#ff909f",
+    "level": 7,
+    "parent": 51,
+    "order": 701
+  },
+  "931": {
+    "acronym": "PG",
+    "name": "Pontine gray",
+    "hexcolor": "#ffba86",
+    "level": 6,
+    "parent": 987,
+    "order": 912
+  },
+  "932": {
+    "acronym": "cett",
+    "name": "cervicothalamic tract",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 792,
+    "order": 1150
+  },
+  "933": {
+    "acronym": "VIIIn",
+    "name": "vestibulocochlear nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1133
+  },
+  "934": {
+    "acronym": "ENTmv",
+    "name": "Entorhinal area medial part ventral zone",
+    "hexcolor": "#32b825",
+    "level": 8,
+    "parent": 909,
+    "order": 517
+  },
+  "935": {
+    "acronym": "ACAd1",
+    "name": "Anterior cingulate area dorsal part layer 1",
+    "hexcolor": "#40a666",
+    "level": 8,
+    "parent": 39,
+    "order": 227
+  },
+  "938": {
+    "acronym": "PGRN",
+    "name": "Paragigantocellular reticular nucleus",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 990
+  },
+  "940": {
+    "acronym": "cing",
+    "name": "cingulum bundle",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 768,
+    "order": 1243
+  },
+  "941": {
+    "acronym": "vsp",
+    "name": "vestibulospinal pathway",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 1000,
+    "order": 1237
+  },
+  "942": {
+    "acronym": "EP",
+    "name": "Endopiriform nucleus",
+    "hexcolor": "#a0ee9d",
+    "level": 5,
+    "parent": 703,
+    "order": 558
+  },
+  "943": {
+    "acronym": "MOp2/3",
+    "name": "Primary motor area Layer 2/3",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 985,
+    "order": 20
+  },
+  "945": {
+    "acronym": "SSp-ul6a",
+    "name": "Primary somatosensory area upper limb layer 6a",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 369,
+    "order": 84
+  },
+  "946": {
+    "acronym": "PH",
+    "name": "Posterior hypothalamic nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 6,
+    "parent": 467,
+    "order": 792
+  },
+  "947": {
+    "acronym": "MO6b",
+    "name": "Somatomotor areas Layer 6b",
+    "hexcolor": "#1f9d5a",
+    "level": 7,
+    "parent": 500,
+    "order": 17
+  },
+  "948": {
+    "acronym": "cVIIIn",
+    "name": "cochlear nerve",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 933,
+    "order": 1136
+  },
+  "949": {
+    "acronym": "von",
+    "name": "vomeronasal nerve",
+    "hexcolor": "#cccccc",
+    "level": 3,
+    "parent": 967,
+    "order": 1104
+  },
+  "955": {
+    "acronym": "LRNm",
+    "name": "Lateral reticular nucleus magnocellular part",
+    "hexcolor": "#ffb3d9",
+    "level": 7,
+    "parent": 235,
+    "order": 982
+  },
+  "956": {
+    "acronym": "fa",
+    "name": "corpus callosum anterior forceps",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 776,
+    "order": 1192
+  },
+  "957": {
+    "acronym": "UVU",
+    "name": "Uvula (IX)",
+    "hexcolor": "#fffc91",
+    "level": 5,
+    "parent": 645,
+    "order": 1058
+  },
+  "964": {
+    "acronym": "ee",
+    "name": "corpus callosum extreme capsule",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 776,
+    "order": 1194
+  },
+  "966": {
+    "acronym": "EPv",
+    "name": "Endopiriform nucleus ventral part",
+    "hexcolor": "#a0ee9d",
+    "level": 6,
+    "parent": 942,
+    "order": 560
+  },
+  "967": {
+    "acronym": "cm",
+    "name": "cranial nerves",
+    "hexcolor": "#cccccc",
+    "level": 2,
+    "parent": 1009,
+    "order": 1102
+  },
+  "968": {
+    "acronym": "NOD",
+    "name": "Nodulus (X)",
+    "hexcolor": "#fffc91",
+    "level": 5,
+    "parent": 645,
+    "order": 1062
+  },
+  "969": {
+    "acronym": "ORBvl1",
+    "name": "Orbital area ventrolateral part layer 1",
+    "hexcolor": "#248a5e",
+    "level": 8,
+    "parent": 746,
+    "order": 273
+  },
+  "970": {
+    "acronym": "PGRNd",
+    "name": "Paragigantocellular reticular nucleus dorsal part",
+    "hexcolor": "#ffb3d9",
+    "level": 7,
+    "parent": 938,
+    "order": 991
+  },
+  "972": {
+    "acronym": "PL",
+    "name": "Prelimbic area",
+    "hexcolor": "#2fa850",
+    "level": 6,
+    "parent": 315,
+    "order": 238
+  },
+  "973": {
+    "acronym": "VISl2/3",
+    "name": "Lateral visual area layer 2/3",
+    "hexcolor": "#08858c",
+    "level": 8,
+    "parent": 409,
+    "order": 180
+  },
+  "974": {
+    "acronym": "SSp-m5",
+    "name": "Primary somatosensory area mouth layer 5",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 345,
+    "order": 76
+  },
+  "975": {
+    "acronym": "EW",
+    "name": "Edinger-Westphal nucleus",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 856
+  },
+  "976": {
+    "acronym": "CENT2",
+    "name": "Lobule II",
+    "hexcolor": "#fffc91",
+    "level": 6,
+    "parent": 920,
+    "order": 1025
+  },
+  "977": {
+    "acronym": "ECT6a",
+    "name": "Ectorhinal area/Layer 6a",
+    "hexcolor": "#0d9f91",
+    "level": 7,
+    "parent": 895,
+    "order": 377
+  },
+  "978": {
+    "acronym": "PGRNl",
+    "name": "Paragigantocellular reticular nucleus lateral part",
+    "hexcolor": "#ffb3d9",
+    "level": 7,
+    "parent": 938,
+    "order": 992
+  },
+  "979": {
+    "acronym": "ccr",
+    "name": "corpus callosum rostrum",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 776,
+    "order": 1197
+  },
+  "980": {
+    "acronym": "PMd",
+    "name": "Dorsal premammillary nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 6,
+    "parent": 467,
+    "order": 780
+  },
+  "981": {
+    "acronym": "SSp-bfd1",
+    "name": "Primary somatosensory area barrel field layer 1",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 329,
+    "order": 52
+  },
+  "983": {
+    "acronym": "lfbs",
+    "name": "lateral forebrain bundle system",
+    "hexcolor": "#cccccc",
+    "level": 2,
+    "parent": 1009,
+    "order": 1190
+  },
+  "984": {
+    "acronym": "CENT3",
+    "name": "Lobule III",
+    "hexcolor": "#fffc91",
+    "level": 6,
+    "parent": 920,
+    "order": 1029
+  },
+  "985": {
+    "acronym": "MOp",
+    "name": "Primary motor area",
+    "hexcolor": "#1f9d5a",
+    "level": 7,
+    "parent": 500,
+    "order": 18
+  },
+  "987": {
+    "acronym": "P-mot",
+    "name": "Pons motor related",
+    "hexcolor": "#ffba86",
+    "level": 5,
+    "parent": 771,
+    "order": 906
+  },
+  "988": {
+    "acronym": "ECT5",
+    "name": "Ectorhinal area/Layer 5",
+    "hexcolor": "#0d9f91",
+    "level": 7,
+    "parent": 895,
+    "order": 376
+  },
+  "989": {
+    "acronym": "FN",
+    "name": "Fastigial nucleus",
+    "hexcolor": "#fffdbc",
+    "level": 4,
+    "parent": 519,
+    "order": 1097
+  },
+  "990": {
+    "acronym": "AUDv4",
+    "name": "Ventral auditory area layer 4",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1018,
+    "order": 153
+  },
+  "992": {
+    "acronym": "CUL4",
+    "name": "Lobule IV",
+    "hexcolor": "#fffc91",
+    "level": 6,
+    "parent": 928,
+    "order": 1034
+  },
+  "993": {
+    "acronym": "MOs",
+    "name": "Secondary motor area",
+    "hexcolor": "#1f9d5a",
+    "level": 7,
+    "parent": 500,
+    "order": 24
+  },
+  "995": {
+    "acronym": "PMR",
+    "name": "Paramedian reticular nucleus",
+    "hexcolor": "#ffb3d9",
+    "level": 6,
+    "parent": 370,
+    "order": 997
+  },
+  "996": {
+    "acronym": "AId1",
+    "name": "Agranular insular area dorsal part layer 1",
+    "hexcolor": "#219866",
+    "level": 8,
+    "parent": 104,
+    "order": 280
+  },
+  "997": {
+    "acronym": "root",
+    "name": "root",
+    "hexcolor": "#ffffff",
+    "level": 0,
+    "parent": null,
+    "order": 0
+  },
+  "998": {
+    "acronym": "FS",
+    "name": "Fundus of striatum",
+    "hexcolor": "#80cdf8",
+    "level": 6,
+    "parent": 493,
+    "order": 576
+  },
+  "999": {
+    "acronym": "ENTl2/3",
+    "name": "Entorhinal area lateral part layer 2/3",
+    "hexcolor": "#32b825",
+    "level": 9,
+    "parent": 918,
+    "order": 497
+  },
+  "1003": {
+    "acronym": "cpt",
+    "name": "corticopontine tract",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 784,
+    "order": 1205
+  },
+  "1004": {
+    "acronym": "PMv",
+    "name": "Ventral premammillary nucleus",
+    "hexcolor": "#ff4c3e",
+    "level": 6,
+    "parent": 467,
+    "order": 781
+  },
+  "1005": {
+    "acronym": "AUDp6b",
+    "name": "Primary auditory area layer 6b",
+    "hexcolor": "#019399",
+    "level": 8,
+    "parent": 1002,
+    "order": 142
+  },
+  "1006": {
+    "acronym": "SSp-tr1",
+    "name": "Primary somatosensory area trunk layer 1",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 361,
+    "order": 87
+  },
+  "1007": {
+    "acronym": "SIM",
+    "name": "Simple lobule",
+    "hexcolor": "#fffc91",
+    "level": 5,
+    "parent": 1073,
+    "order": 1067
+  },
+  "1008": {
+    "acronym": "GENd",
+    "name": "Geniculate group dorsal thalamus",
+    "hexcolor": "#ff8084",
+    "level": 6,
+    "parent": 864,
+    "order": 657
+  },
+  "1009": {
+    "acronym": "fiber tracts",
+    "name": "fiber tracts",
+    "hexcolor": "#cccccc",
+    "level": 1,
+    "parent": 997,
+    "order": 1101
+  },
+  "1012": {
+    "acronym": "crt",
+    "name": "corticorubral tract",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 784,
+    "order": 1204
+  },
+  "1014": {
+    "acronym": "GENv",
+    "name": "Geniculate group ventral thalamus",
+    "hexcolor": "#ff909f",
+    "level": 6,
+    "parent": 856,
+    "order": 704
+  },
+  "1021": {
+    "acronym": "MOs6a",
+    "name": "Secondary motor area layer 6a",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 993,
+    "order": 28
+  },
+  "1026": {
+    "acronym": "SSp-ul6b",
+    "name": "Primary somatosensory area upper limb layer 6b",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 369,
+    "order": 85
+  },
+  "1030": {
+    "acronym": "SSp-ll1",
+    "name": "Primary somatosensory area lower limb layer 1",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 337,
+    "order": 66
+  },
+  "1043": {
+    "acronym": "tspc",
+    "name": "crossed tectospinal pathway",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 877,
+    "order": 1229
+  },
+  "1047": {
+    "acronym": "SSp-bfd4",
+    "name": "Primary somatosensory area barrel field layer 4",
+    "hexcolor": "#188064",
+    "level": 9,
+    "parent": 329,
+    "order": 54
+  },
+  "1051": {
+    "acronym": "tspd",
+    "name": "direct tectospinal pathway",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 877,
+    "order": 1227
+  },
+  "1055": {
+    "acronym": "eg",
+    "name": "endorhinal groove",
+    "hexcolor": "#aaaaaa",
+    "level": 3,
+    "parent": 1032,
+    "order": 1306
+  },
+  "1059": {
+    "acronym": "TTd4",
+    "name": "Taenia tecta dorsal part layer 4",
+    "hexcolor": "#62d09f",
+    "level": 8,
+    "parent": 597,
+    "order": 404
+  },
+  "1063": {
+    "acronym": "hf",
+    "name": "hippocampal fissure",
+    "hexcolor": "#aaaaaa",
+    "level": 3,
+    "parent": 1032,
+    "order": 1307
+  },
+  "1068": {
+    "acronym": "mfbst",
+    "name": "dorsal thalamus related",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 824,
+    "order": 1282
+  },
+  "1073": {
+    "acronym": "HEM",
+    "name": "Hemispheric regions",
+    "hexcolor": "#fffc91",
+    "level": 4,
+    "parent": 528,
+    "order": 1066
+  },
+  "1077": {
+    "acronym": "PR",
+    "name": "Perireunensis nucleus",
+    "hexcolor": "#ff909f",
+    "level": 7,
+    "parent": 444,
+    "order": 690
+  },
+  "1081": {
+    "acronym": "ILA6b",
+    "name": "Infralimbic area layer 6b",
+    "hexcolor": "#59b363",
+    "level": 7,
+    "parent": 44,
+    "order": 251
+  },
+  "1085": {
+    "acronym": "MOs6b",
+    "name": "Secondary motor area layer 6b",
+    "hexcolor": "#1f9d5a",
+    "level": 8,
+    "parent": 993,
+    "order": 29
+  },
+  "1089": {
+    "acronym": "HPF",
+    "name": "Hippocampal formation",
+    "hexcolor": "#7ed04b",
+    "level": 5,
+    "parent": 695,
+    "order": 454
+  },
+  "1093": {
+    "acronym": "PRNc",
+    "name": "Pontine reticular nucleus caudal part",
+    "hexcolor": "#ffba86",
+    "level": 6,
+    "parent": 987,
+    "order": 913
+  },
+  "1098": {
+    "acronym": "MDRNd",
+    "name": "Medullary reticular nucleus dorsal part",
+    "hexcolor": "#ffb3d9",
+    "level": 7,
+    "parent": 395,
+    "order": 986
+  },
+  "1099": {
+    "acronym": "fxs",
+    "name": "fornix system",
+    "hexcolor": "#cccccc",
+    "level": 4,
+    "parent": 768,
+    "order": 1244
+  },
+  "1100": {
+    "acronym": "PRT",
+    "name": "Pretectal region",
+    "hexcolor": "#ff90ff",
+    "level": 5,
+    "parent": 323,
+    "order": 843
+  }
+}
