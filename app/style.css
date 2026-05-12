@@ -33,10 +33,6 @@ body {
   transition: opacity 0.15s;
 }
 
-.region.hole {
-}
-
-
 .region.selected {
   stroke: #fff;
   stroke-width: 1.5;
