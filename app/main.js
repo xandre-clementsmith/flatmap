@@ -111,14 +111,14 @@ function showInfo(allenId, conns, metadata, mode) {
 
   // Sort connections strongest-first, excluding self-connections
   const sorted   = [...conns].filter(c => c[partnerId] !== allenId)
-                              .sort((a, b) => b.normalized_volume - a.normalized_volume);
-  const localMax = sorted[0]?.normalized_volume || 1;
+                              .sort((a, b) => b.normalized_value - a.normalized_value);
+  const localMax = sorted[0]?.normalized_value || 1;
 
   const list = document.getElementById('connections-list');
   list.innerHTML = '';
   for (const conn of sorted) {
     const partnerMeta = metadata[conn[partnerId]] || {};
-    const pct  = Math.round((conn.normalized_volume / localMax) * 100);
+    const pct  = Math.round((conn.normalized_value / localMax) * 100);
     const item = document.createElement('div');
     item.className = 'connection-item';
     item.innerHTML = `
@@ -270,6 +270,11 @@ async function main() {
 
   // ── Region selection ───────────────────────────────────────────────────────
 
+  function deselect() {
+    paths.classed('dimmed', false).classed('selected', false).style('opacity', null);
+    selected = null;
+  }
+
   function triggerSelect(allenId) {
     const isEff     = mode === 'efferent';
     const injMap    = metric === 'relative' ? injMapRel  : injMapAbs;
@@ -280,10 +285,10 @@ async function main() {
     // Build a per-region strength map normalized to the strongest connection for this region.
     // This local normalization lets weak-projector regions still show contrast.
     const relevant = conns.filter(c => c[partnerId] !== allenId);
-    const localMax = relevant.reduce((m, c) => Math.max(m, c.normalized_volume), 0) || 1;
+    const localMax = relevant.reduce((m, c) => Math.max(m, c.normalized_value), 0) || 1;
     const strengthMap = {};
     for (const conn of relevant) {
-      strengthMap[conn[partnerId]] = conn.normalized_volume / localMax;
+      strengthMap[conn[partnerId]] = conn.normalized_value / localMax;
     }
 
     paths
@@ -306,8 +311,7 @@ async function main() {
     const hasData = mode === 'efferent' ? !!injMap[allenId] : !!projMap[allenId];
 
     if (!hasData) {
-      paths.classed('dimmed', false).classed('selected', false).style('opacity', null);
-      selected = null;
+      deselect();
       showNoDataInfo(metadata[allenId] || {}, NO_DATA_REASONS[allenId] || DEFAULT_NO_DATA);
       return;
     }
@@ -320,8 +324,7 @@ async function main() {
   svg.on('click', (event) => {
     if (event.defaultPrevented) return;
     if (event.target.tagName === 'svg' || event.target.tagName === 'g') {
-      paths.classed('dimmed', false).classed('selected', false).style('opacity', null);
-      selected = null;
+      deselect();
       clearInfo();
     }
   });
@@ -343,4 +346,10 @@ async function main() {
   });
 }
 
-main();
+main().catch(err => {
+  console.error('Flatmap initialization failed:', err);
+  const container = document.getElementById('map-container');
+  if (container) {
+    container.innerHTML = '<p style="padding:2rem;color:#888">Failed to load map data. See browser console for details.</p>';
+  }
+});

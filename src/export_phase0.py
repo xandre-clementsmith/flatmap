@@ -29,6 +29,7 @@ from allensdk.core.mouse_connectivity_cache import MouseConnectivityCache
 # ---------------------------------------------------------------------------
 # allensdk's filter_structure_unionizes uses df.is_injection (attribute access)
 # which raises AttributeError on newer pandas.  Patch to use bracket notation.
+# Applied inside main() to avoid side effects at import time.
 
 def _filter_structure_unionizes(self, unionizes, is_injection=None,
                                  structure_ids=None, include_descendants=False,
@@ -46,8 +47,6 @@ def _filter_structure_unionizes(self, unionizes, is_injection=None,
         unionizes = unionizes[unionizes['hemisphere_id'].isin(hemisphere_ids)]
     return unionizes
 
-MouseConnectivityCache.filter_structure_unionizes = _filter_structure_unionizes
-
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -55,7 +54,6 @@ MouseConnectivityCache.filter_structure_unionizes = _filter_structure_unionizes
 
 # Output directory — parallel to src/, i.e. app/public/data/
 OUTPUT_DIR = Path(__file__).resolve().parents[1] / "app" / "public" / "data"
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Manual sibling overrides: maps region_id → proxy_id.
 # When the proxy appears as an injection target, the override also gets credit.
@@ -101,7 +99,7 @@ def flatmap_descendants(struct_id, valid_set, children_map):
 # Coordinate outlier filter
 # ---------------------------------------------------------------------------
 
-def filter_coordinate_outliers(exp_to_inj_structs, all_experiments, br, k=3.0, min_exps=5):
+def filter_coordinate_outliers(exp_to_inj_structs, all_experiments, id_to_acronym=None, k=3.0, min_exps=5):
     """Remove (experiment, structure) pairs where the injection centroid is a 3D outlier.
 
     For each structure with >= min_exps experiments:
@@ -155,8 +153,7 @@ def filter_coordinate_outliers(exp_to_inj_structs, all_experiments, br, k=3.0, m
         for eid in removed:
             outlier_pairs.add((eid, sid))
         if removed:
-            idx = np.where(br.id == sid)[0]
-            acr = br.acronym[idx[0]] if len(idx) else str(sid)
+            acr = id_to_acronym.get(sid, str(sid)) if id_to_acronym else str(sid)
             log_lines.append(
                 f"  {acr} ({sid}): {len(removed)}/{len(coords)} removed "
                 f"(threshold={threshold:.0f}µm)"
@@ -183,12 +180,12 @@ def make_sparse(mean_dict):
         {
             "injection_structure_id":  int(inj_id),
             "projection_structure_id": int(proj_id),
-            "normalized_volume":       float(vol / max_val),
+            "normalized_value":        float(vol / max_val),
         }
         for (inj_id, proj_id), vol in mean_dict.items()
         if vol / max_val > 1e-9
     ]
-    conns.sort(key=lambda x: x["normalized_volume"], reverse=True)
+    conns.sort(key=lambda x: x["normalized_value"], reverse=True)
     return conns
 
 
@@ -198,6 +195,11 @@ def make_sparse(mean_dict):
 
 def main():
     print("Starting Phase 0 export...")
+
+    # Apply the allensdk pandas-compatibility patch and create the output directory
+    # here rather than at import time to avoid side effects when this module is imported.
+    MouseConnectivityCache.filter_structure_unionizes = _filter_structure_unionizes
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # ── Phase 1: Load Swanson flatmap regions and resolve Allen CCF IDs ──────
     #
@@ -249,7 +251,7 @@ def main():
         all_experiments = json.load(f)
 
     exp_injection_volume = {
-        e["data_set_id"]: e.get("injection_volume") or None
+        e["data_set_id"]: e.get("injection_volume")
         for e in all_experiments
     }
 
@@ -283,8 +285,9 @@ def main():
     # median for that structure — catches off-target injections (e.g. lateral
     # VTA experiments drifting into SNc).  §13.
 
+    id_to_acronym = {int(sid): acr for sid, acr in zip(br.id, br.acronym)}
     outlier_pairs, outlier_log = filter_coordinate_outliers(
-        exp_to_inj_structs, all_experiments, br
+        exp_to_inj_structs, all_experiments, id_to_acronym
     )
     if outlier_log:
         print(f"Coordinate outlier filter removed {len(outlier_pairs)} (exp, struct) pairs:")
