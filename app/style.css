@@ -39,7 +39,6 @@ body {
 
 .region.hole {
   cursor: default;
-  pointer-events: none;
 }
 
 .region.dimmed {
@@ -90,6 +89,24 @@ body {
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
+}
+
+#tooltip {
+  display: none;
+  position: fixed;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  pointer-events: none;
+  z-index: 100;
+  max-width: 220px;
+  line-height: 1.4;
+}
+#tooltip .tt-id {
+  color: #888;
+  font-size: 0.72rem;
 }
 
 .connection-bar {

@@ -41,6 +41,24 @@ MouseConnectivityCache.filter_structure_unionizes = _filter_structure_unionizes
 OUTPUT_DIR = Path(__file__).resolve().parents[1] / "app" / "public" / "data"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
+def load_id_corrections():
+    """Load manual Swanson→Allen CCF ID corrections from swanson_id_corrections.csv."""
+    import csv
+    corrections_file = Path(__file__).resolve().parents[1] / "swanson_id_corrections.csv"
+    corrections = {}
+    if not corrections_file.exists():
+        return corrections
+    with open(corrections_file) as f:
+        for row in csv.DictReader(f):
+            if row['correct_allen_id'].strip():
+                try:
+                    corrections[int(row['thisID'])] = int(row['correct_allen_id'].strip())
+                except ValueError:
+                    pass
+    if corrections:
+        print(f"Loaded {len(corrections)} manual ID corrections")
+    return corrections
+
 def main():
     print("Starting Phase 0 export...")
 
@@ -49,17 +67,20 @@ def main():
     swanson_regions = swanson_json()
     print(f"Loaded {len(swanson_regions)} regions")
 
-    # 2. Get all Allen IDs from the drawn region polygons (superset of label positions)
-    print("Loading Allen IDs from swanson_json regions...")
-    all_swanson_ids = sorted(set(r['thisID'] for r in swanson_regions))
-    print(f"Found {len(all_swanson_ids)} unique region IDs")
-
-    # 3. Get BrainRegions metadata
-    print("Loading BrainRegions metadata...")
+    # 2. Resolve Allen CCF IDs
+    # thisID in swanson_json() is a ROW INDEX into BrainRegions arrays, not an Allen CCF ID.
+    # The actual Allen CCF ID is br.id[thisID].
+    print("Loading BrainRegions and resolving Allen CCF IDs...")
     br = BrainRegions()
-    # Filter to IDs that exist in BrainRegions
-    valid_allen_ids = [aid for aid in all_swanson_ids if aid in br.id]
-    print(f"Valid Allen IDs: {len(valid_allen_ids)} out of {len(all_swanson_ids)}")
+    for r in swanson_regions:
+        r['allenId'] = int(br.id[r['thisID']])
+
+    all_swanson_ids = sorted(set(r['allenId'] for r in swanson_regions))
+    print(f"Found {len(all_swanson_ids)} unique Allen CCF IDs")
+
+    # 3. Get BrainRegions metadata — all allenIds are already valid (derived from br.id)
+    valid_allen_ids = all_swanson_ids
+    print(f"Valid Allen IDs: {len(valid_allen_ids)}")
     metadata = br.get(valid_allen_ids)
     print(f"Metadata for {len(metadata.id)} regions")
 
@@ -108,6 +129,7 @@ def main():
         inj_str = exp.get("injection_structures", "")
         if not inj_str:
             continue
+        # injection_structures stores Allen CCF IDs directly
         inj_ids = [int(s) for s in str(inj_str).split("/") if s.strip()]
         matching = [sid for sid in inj_ids if sid in valid_set]
         if matching:
@@ -176,7 +198,7 @@ def main():
                     "experiment_count": len(exp_ids),
                     "total_connections": len(sparse_connections),
                     "sparse_connections": sparse_connections,
-                    "note": "Connectivity aggregated from Allen experiments, normalized 0-1. Only 46/156 structures have injection experiments in the Allen dataset; 110 structures have no injection coverage. ~65 connections have near-zero volume (<1e-9) from float aggregation noise."
+                    "note": "Connectivity aggregated from Allen experiments, normalized 0-1. Uses correct Allen CCF IDs (resolved from swanson_json thisID indices via br.id[thisID])."
                 }
             else:
                 connectivity_data = {

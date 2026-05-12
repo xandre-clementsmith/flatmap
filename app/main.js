@@ -21,7 +21,7 @@ async function main() {
     injectionMap[id].push(conn);
   }
 
-  // Set of allen IDs that have injection data
+  // Set of Allen CCF IDs that have injection data
   const coveredIds = new Set(Object.keys(injectionMap).map(Number));
 
   // SVG setup — coordinate bounds will be set once we inspect the data
@@ -60,29 +60,41 @@ async function main() {
      .attr('preserveAspectRatio', 'xMidYMid meet');
 
   // Draw regions
-  // NOTE: thisID in swanson_regions.json needs to be verified against Allen IDs
-  // in region_metadata once data is available. Mapping may require adjustment.
   const paths = g.selectAll('path.region')
     .data(regions)
     .join('path')
     .attr('class', d => {
-      const allenId = d.thisID;
+      const allenId = d.allenId;
       const base = d.hole ? 'region hole' : 'region';
       return coveredIds.has(allenId) ? base : `${base} no-data`;
     })
     .attr('d', d => pathFromCoords(d.coordsReg || []))
     .style('fill', d => {
-      if (!coveredIds.has(d.thisID)) return '#2a2a2a';
-      const meta = metadata[d.thisID];
+      if (d.hole || !coveredIds.has(d.allenId)) return '#2a2a2a';
+      const meta = metadata[d.allenId];
       return meta ? meta.hexcolor : '#3a3a3a';
     });
+
+  // Hover tooltip
+  const tooltip = d3.select('body').append('div').attr('id', 'tooltip');
+
+  paths.on('mousemove', (event, d) => {
+    const meta = metadata[d.allenId] || {};
+    tooltip
+      .style('display', 'block')
+      .style('left', (event.pageX + 12) + 'px')
+      .style('top',  (event.pageY - 28) + 'px')
+      .html(`<strong>${meta.acronym || '?'}</strong> <span class="tt-id">(ID ${d.allenId})</span><br>${meta.name || ''}`);
+  });
+
+  paths.on('mouseleave', () => tooltip.style('display', 'none'));
 
   // Interaction
   let selected = null;
 
   paths.on('click', (event, d) => {
-    const allenId = d.thisID;
-    if (!coveredIds.has(allenId)) return;
+    const allenId = d.allenId;
+    if (!coveredIds.has(allenId) || d.hole) return;
 
     selected = allenId;
     const conns = injectionMap[allenId] || [];
@@ -90,10 +102,10 @@ async function main() {
 
     paths
       .classed('dimmed', rd => {
-        const rid = rd.thisID;
+        const rid = rd.allenId;
         return rid !== allenId && !projSet.has(rid);
       })
-      .classed('selected', rd => rd.thisID === allenId);
+      .classed('selected', rd => rd.allenId === allenId);
 
     showInfo(allenId, conns, metadata);
   });
