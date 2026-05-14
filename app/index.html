@@ -9,25 +9,265 @@
 <body>
   <div id="app">
     <div id="map-container"></div>
+
+    <div id="pathway-wrapper">
+      <!-- Hanging tab — always visible, collapses panel rightward -->
+      <div id="pathway-tab" title="Toggle pathway panel">
+        <button id="pathway-toggle">◀</button>
+        <span class="pwy-tab-label">Pathways</span>
+      </div>
+
+      <!-- Panel — slides to width:0 when collapsed -->
+      <div id="pathway-panel">
+        <div id="pathway-content">
+
+          <!-- ── Tab bar: 2 rows — Direction × Route ── -->
+          <div id="pathway-mode-tabs">
+            <div class="pwy-tabs-row">
+              <button class="pwy-mode-tab active" id="tab-aff">↑ Afferent</button>
+              <button class="pwy-mode-tab"        id="tab-eff">↓ Efferent</button>
+            </div>
+            <div class="pwy-tabs-row">
+              <button class="pwy-mode-tab"        id="tab-spinal">Spinal</button>
+              <button class="pwy-mode-tab active" id="tab-cranial">Cranial</button>
+            </div>
+          </div>
+
+          <!-- ── AFFERENT CRANIAL: 7 cranial sensory bands (default panel) ── -->
+          <!-- All bands full length; dots mark relay nuclei -->
+          <div id="pwy-aff-cranial">
+            <svg class="pwy-svg" viewBox="0 0 180 440" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="70"  x2="180" y2="70"  class="pwy-divider"/>
+              <line x1="0" y1="140" x2="180" y2="140" class="pwy-divider"/>
+              <line x1="0" y1="215" x2="180" y2="215" class="pwy-divider"/>
+              <line x1="0" y1="305" x2="180" y2="305" class="pwy-divider"/>
+              <text x="10" y="22" class="pwy-section" text-anchor="end">Cx</text>
+              <text x="10" y="83" class="pwy-section" text-anchor="end">Mb</text>
+              <text x="10" y="155" class="pwy-section" text-anchor="end">Pn</text>
+              <text x="10" y="228" class="pwy-section" text-anchor="end">Md</text>
+              <text x="10" y="320" class="pwy-section" text-anchor="end">Cd</text>
+              <text x="22"  y="10" class="pwy-asc-band-label" fill="#b060a0">I</text>
+              <text x="43"  y="10" class="pwy-asc-band-label" fill="#c0a030">II</text>
+              <text x="64"  y="10" class="pwy-asc-band-label" fill="#60c0c0">Ve</text>
+              <text x="85"  y="10" class="pwy-asc-band-label" fill="#e0a050">V</text>
+              <text x="106" y="10" class="pwy-asc-band-label" fill="#70b870">Au</text>
+              <text x="127" y="10" class="pwy-asc-band-label" fill="#7090e0">Vc</text>
+              <text x="148" y="10" class="pwy-asc-band-label" fill="#a07840">Ho</text>
+              <!-- Bands extend from top to lowest relay dot (showing anatomical reach per pathway) -->
+              <line class="asc-band-visual" data-pathway="olf"  x1="22"  y1="14" x2="22"  y2="50"  stroke="#b060a0" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="olf"  x1="22"  y1="14" x2="22"  y2="50"  stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="vis"  x1="43"  y1="14" x2="43"  y2="98"  stroke="#c0a030" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="vis"  x1="43"  y1="14" x2="43"  y2="98"  stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="vest" x1="64"  y1="14" x2="64"  y2="273" stroke="#60c0c0" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="vest" x1="64"  y1="14" x2="64"  y2="273" stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="trig" x1="85"  y1="14" x2="85"  y2="288" stroke="#e0a050" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="trig" x1="85"  y1="14" x2="85"  y2="288" stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="aud"  x1="106" y1="14" x2="106" y2="280" stroke="#70b870" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="aud"  x1="106" y1="14" x2="106" y2="280" stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="visc" x1="127" y1="14" x2="127" y2="273" stroke="#7090e0" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="visc" x1="127" y1="14" x2="127" y2="273" stroke="transparent" stroke-width="18"/>
+              <line class="asc-band-visual" data-pathway="hum"  x1="148" y1="14" x2="148" y2="273" stroke="#a07840" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="hum"  x1="148" y1="14" x2="148" y2="273" stroke="transparent" stroke-width="18"/>
+              <!-- Relay dots: primary r=5, secondary r=4 -->
+              <circle class="asc-dot" data-nucleus-id="507" data-pathway="olf"  cx="22"  cy="28"  r="5" fill="#b060a0" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="159" data-pathway="olf"  cx="22"  cy="42"  r="4" fill="#b060a0" opacity="0.45"/>
+              <circle class="asc-dot" data-nucleus-id="170" data-pathway="vis"  cx="43"  cy="55"  r="5" fill="#c0a030" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="851" data-pathway="vis"  cx="43"  cy="90"  r="4" fill="#c0a030" opacity="0.45"/>
+              <circle class="asc-dot" data-nucleus-id="225" data-pathway="vest" cx="64"  cy="265" r="5" fill="#60c0c0" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="202" data-pathway="vest" cx="64"  cy="252" r="4" fill="#60c0c0" opacity="0.45"/>
+              <circle class="asc-dot" data-nucleus-id="429" data-pathway="trig" cx="85"  cy="280" r="5" fill="#e0a050" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="445" data-pathway="trig" cx="85"  cy="194" r="4" fill="#e0a050" opacity="0.45"/>
+              <circle class="asc-dot" data-nucleus-id="7"   data-pathway="trig" cx="85"  cy="152" r="4" fill="#e0a050" opacity="0.4"/>
+              <circle class="asc-dot" data-nucleus-id="96"  data-pathway="aud"  cx="106" cy="272" r="5" fill="#70b870" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="101" data-pathway="aud"  cx="106" cy="258" r="4" fill="#70b870" opacity="0.45"/>
+              <circle class="asc-dot" data-nucleus-id="811" data-pathway="aud"  cx="106" cy="102" r="4" fill="#70b870" opacity="0.4"/>
+              <circle class="asc-dot" data-nucleus-id="651" data-pathway="visc" cx="127" cy="265" r="5" fill="#7090e0" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="867" data-pathway="visc" cx="127" cy="147" r="4" fill="#7090e0" opacity="0.45"/>
+              <!-- Ho: primary hypothalamic hub (SCH) + area postrema only -->
+              <circle class="asc-dot" data-nucleus-id="286" data-pathway="hum"  cx="148" cy="50"  r="5" fill="#a07840" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="207" data-pathway="hum"  cx="148" cy="265" r="4" fill="#a07840" opacity="0.45"/>
+            </svg>
+            <div class="pathway-legend">
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#b060a0"></span>I — Olfactory</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#c0a030"></span>II — Optic</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#60c0c0"></span>Ve — Vestibular (VIII)</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#e0a050"></span>V — Trigeminal</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#70b870"></span>Au — Auditory (VIII)</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#7090e0"></span>Vc — Visceral / Gustatory</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#a07840"></span>Ho — Homeostatic (CVO)</div>
+            </div>
+          </div><!-- pwy-aff-cranial -->
+
+          <!-- ── AFFERENT SPINAL: DC / ALS / SpCr ── -->
+          <div id="pwy-aff-spinal" style="display:none">
+            <svg class="pwy-svg" viewBox="0 0 180 440" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="70"  x2="180" y2="70"  class="pwy-divider"/>
+              <line x1="0" y1="140" x2="180" y2="140" class="pwy-divider"/>
+              <line x1="0" y1="215" x2="180" y2="215" class="pwy-divider"/>
+              <line x1="0" y1="305" x2="180" y2="305" class="pwy-divider"/>
+              <text x="10" y="22" class="pwy-section" text-anchor="end">Cx</text>
+              <text x="10" y="83" class="pwy-section" text-anchor="end">Mb</text>
+              <text x="10" y="155" class="pwy-section" text-anchor="end">Pn</text>
+              <text x="10" y="228" class="pwy-section" text-anchor="end">Md</text>
+              <text x="10" y="320" class="pwy-section" text-anchor="end">Cd</text>
+              <text x="22" y="10" class="pwy-asc-band-label" fill="#e07070">DC</text>
+              <text x="43" y="10" class="pwy-asc-band-label" fill="#d4604a">ALS</text>
+              <text x="64" y="10" class="pwy-asc-band-label" fill="#7060c8">SpCr</text>
+              <!-- DC / Medial lemniscus — fine touch, vibration, proprioception -->
+              <line class="asc-band-visual" data-pathway="dcml" x1="22" y1="14" x2="22" y2="440" stroke="#e07070" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="dcml" x1="22" y1="14" x2="22" y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="asc-dot" data-nucleus-id="1039" data-pathway="dcml" cx="22" cy="272" r="6" fill="#e07070" opacity="0.55"/>
+              <circle class="asc-dot" data-nucleus-id="711"  data-pathway="dcml" cx="22" cy="257" r="6" fill="#e07070" opacity="0.45"/>
+              <!-- ALS — anterolateral system: STT (pain/temp), spinoreticular, spinotectal -->
+              <!-- relay: VPL (718) thalamus; SC (851) midbrain; reticular Pn/Md -->
+              <line class="asc-band-visual" data-pathway="als" x1="43" y1="14" x2="43" y2="440" stroke="#d4604a" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="als" x1="43" y1="14" x2="43" y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="asc-dot" data-nucleus-id="718" data-pathway="als" cx="43" cy="55"  r="6" fill="#d4604a" opacity="0.55"/>
+              <!-- SpCr — spinocerebellar + cuneocerebellar + spino-olivary -->
+              <!-- relay: IO (222) inferior olive (→ cerebellum via climbing fibres) -->
+              <line class="asc-band-visual" data-pathway="spcr" x1="64" y1="14" x2="64" y2="440" stroke="#7060c8" stroke-width="1.5" opacity="0.15"/>
+              <line class="asc-band-hit"    data-pathway="spcr" x1="64" y1="14" x2="64" y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="asc-dot" data-nucleus-id="222" data-pathway="spcr" cx="64" cy="268" r="6" fill="#7060c8" opacity="0.55"/>
+            </svg>
+            <div class="pathway-legend">
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#e07070"></span>DC — Dorsal col. / ML</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#d4604a"></span>ALS — Anterolateral system</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#7060c8"></span>SpCr — Spinocerebellar</div>
+            </div>
+          </div><!-- pwy-aff-spinal -->
+
+          <!-- ── EFFERENT CRANIAL: 8 motor CN bands ── -->
+          <div id="pwy-eff-cranial" style="display:none">
+            <svg class="pwy-svg" viewBox="0 0 180 440" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="70"  x2="180" y2="70"  class="pwy-divider"/>
+              <line x1="0" y1="140" x2="180" y2="140" class="pwy-divider"/>
+              <line x1="0" y1="215" x2="180" y2="215" class="pwy-divider"/>
+              <line x1="0" y1="305" x2="180" y2="305" class="pwy-divider"/>
+              <text x="10" y="22" class="pwy-section" text-anchor="end">Cx</text>
+              <text x="10" y="83" class="pwy-section" text-anchor="end">Mb</text>
+              <text x="10" y="155" class="pwy-section" text-anchor="end">Pn</text>
+              <text x="10" y="228" class="pwy-section" text-anchor="end">Md</text>
+              <text x="10" y="320" class="pwy-section" text-anchor="end">Cd</text>
+              <text x="22"  y="10" class="pwy-asc-band-label" fill="#5090d0">III</text>
+              <text x="43"  y="10" class="pwy-asc-band-label" fill="#70a0b0">IV</text>
+              <text x="64"  y="10" class="pwy-asc-band-label" fill="#c89050">Vm</text>
+              <text x="85"  y="10" class="pwy-asc-band-label" fill="#5070c0">VI</text>
+              <text x="106" y="10" class="pwy-asc-band-label" fill="#c07060">VII</text>
+              <text x="127" y="10" class="pwy-asc-band-label" fill="#9060a0">IX</text>
+              <text x="148" y="10" class="pwy-asc-band-label" fill="#60a060">XII</text>
+              <text x="169" y="10" class="pwy-asc-band-label" fill="#a07840">Ne</text>
+              <line class="motor-cn-band-visual" data-band="mcn-iii" x1="22"  y1="14" x2="22"  y2="100" stroke="#5090d0" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-iii" x1="22"  y1="14" x2="22"  y2="100" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-iv"  x1="43"  y1="14" x2="43"  y2="138" stroke="#70a0b0" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-iv"  x1="43"  y1="14" x2="43"  y2="138" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-v"   x1="64"  y1="14" x2="64"  y2="168" stroke="#c89050" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-v"   x1="64"  y1="14" x2="64"  y2="168" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-vi"  x1="85"  y1="14" x2="85"  y2="202" stroke="#5070c0" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-vi"  x1="85"  y1="14" x2="85"  y2="202" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-vii" x1="106" y1="14" x2="106" y2="208" stroke="#c07060" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-vii" x1="106" y1="14" x2="106" y2="208" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-ix"  x1="127" y1="14" x2="127" y2="265" stroke="#9060a0" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-ix"  x1="127" y1="14" x2="127" y2="265" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-xii" x1="148" y1="14" x2="148" y2="270" stroke="#60a060" stroke-width="1.5" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-xii" x1="148" y1="14" x2="148" y2="270" stroke="transparent" stroke-width="18"/>
+              <line class="motor-cn-band-visual" data-band="mcn-ne"  x1="169" y1="14" x2="169" y2="66"  stroke="#a07840" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.15"/>
+              <line class="motor-cn-band-hit"    data-band="mcn-ne"  x1="169" y1="14" x2="169" y2="66"  stroke="transparent" stroke-width="18"/>
+              <circle class="motor-cn-dot" data-nucleus-id="975" data-band="mcn-iii" cx="22"  cy="88"  r="5" fill="#5090d0" opacity="0.45"/>
+              <circle class="motor-cn-dot" data-nucleus-id="35"  data-band="mcn-iii" cx="22"  cy="96"  r="6" fill="#5090d0" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="115" data-band="mcn-iv"  cx="43"  cy="136" r="6" fill="#70a0b0" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="621" data-band="mcn-v"   cx="64"  cy="165" r="6" fill="#c89050" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="653" data-band="mcn-vi"  cx="85"  cy="198" r="6" fill="#5070c0" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="661" data-band="mcn-vii" cx="106" cy="205" r="6" fill="#c07060" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="106" data-band="mcn-ix"  cx="127" cy="238" r="5" fill="#9060a0" opacity="0.45"/>
+              <circle class="motor-cn-dot" data-nucleus-id="143" data-band="mcn-ix"  cx="127" cy="248" r="6" fill="#9060a0" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="839" data-band="mcn-ix"  cx="127" cy="255" r="5" fill="#9060a0" opacity="0.45"/>
+              <circle class="motor-cn-dot" data-nucleus-id="939" data-band="mcn-ix"  cx="127" cy="261" r="5" fill="#9060a0" opacity="0.4"/>
+              <circle class="motor-cn-dot" data-nucleus-id="773" data-band="mcn-xii" cx="148" cy="265" r="6" fill="#60a060" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="38"  data-band="mcn-ne"  cx="169" cy="51"  r="6" fill="#a07840" opacity="0.55"/>
+              <circle class="motor-cn-dot" data-nucleus-id="390" data-band="mcn-ne"  cx="169" cy="59"  r="5" fill="#a07840" opacity="0.45"/>
+            </svg>
+            <div class="pathway-legend">
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#5090d0"></span>III — Oculomotor</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#70a0b0"></span>IV — Trochlear</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#c89050"></span>Vm — Trigeminal (m)</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#5070c0"></span>VI — Abducens</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#c07060"></span>VII — Facial</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#9060a0"></span>IX — Ambiguus (IX/X/XI)</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#60a060"></span>XII — Hypoglossal</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#a07840"></span>Ne — Neuroendocrine</div>
+            </div>
+          </div><!-- pwy-eff-cranial -->
+
+          <!-- ── EFFERENT SPINAL: 5 descending tract bands (band top = origin level) ── -->
+          <div id="pwy-eff-spinal" style="display:none">
+            <svg class="pwy-svg" viewBox="0 0 180 440" xmlns="http://www.w3.org/2000/svg">
+              <line x1="0" y1="70"  x2="180" y2="70"  class="pwy-divider"/>
+              <line x1="0" y1="140" x2="180" y2="140" class="pwy-divider"/>
+              <line x1="0" y1="215" x2="180" y2="215" class="pwy-divider"/>
+              <line x1="0" y1="305" x2="180" y2="305" class="pwy-divider"/>
+              <text x="10" y="22" class="pwy-section" text-anchor="end">Cx</text>
+              <text x="10" y="83" class="pwy-section" text-anchor="end">Mb</text>
+              <text x="10" y="155" class="pwy-section" text-anchor="end">Pn</text>
+              <text x="10" y="228" class="pwy-section" text-anchor="end">Md</text>
+              <text x="10" y="320" class="pwy-section" text-anchor="end">Cd</text>
+              <text x="22"  y="10" class="pwy-asc-band-label" fill="#4ab5a0">cst</text>
+              <text x="43"  y="10" class="pwy-asc-band-label" fill="#9370cc">tsp</text>
+              <text x="64"  y="10" class="pwy-asc-band-label" fill="#d4894a">rust</text>
+              <text x="85"  y="10" class="pwy-asc-band-label" fill="#5bafd4">ret</text>
+              <text x="106" y="10" class="pwy-asc-band-label" fill="#c4a84a">vsp</text>
+              <line id="tract-cst"  x1="22"  y1="14" x2="22"  y2="440" stroke="#4ab5a0" stroke-width="2" opacity="0.15"/>
+              <line class="tract-band-hit" data-tract-id="784" x1="22"  y1="14" x2="22"  y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="pwy-origin-dot" data-tract-id="784" data-has-data="true"  cx="22"  cy="32"  r="7" fill="#4ab5a0" opacity="0.55"/>
+              <line id="tract-tsp"  x1="43"  y1="14" x2="43"  y2="440" stroke="#9370cc" stroke-width="2" opacity="0.15"/>
+              <line class="tract-band-hit" data-tract-id="877" x1="43"  y1="14" x2="43"  y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="pwy-origin-dot" data-tract-id="877" data-has-data="true"  cx="43"  cy="88"  r="7" fill="#9370cc" opacity="0.55"/>
+              <line id="tract-rust" x1="64"  y1="14" x2="64"  y2="440" stroke="#d4894a" stroke-width="2" opacity="0.15"/>
+              <line class="tract-band-hit" data-tract-id="863" x1="64"  y1="14" x2="64"  y2="440" stroke="transparent" stroke-width="18"/>
+              <circle class="pwy-origin-dot" data-tract-id="863" data-has-data="true"  cx="64"  cy="108" r="7" fill="#d4894a" opacity="0.55"/>
+              <line id="tract-rst"  x1="85"  y1="14" x2="85"  y2="440" stroke="#5bafd4" stroke-width="2" opacity="0.15"/>
+              <circle class="pwy-origin-dot" data-tract-id="855" data-has-data="false" cx="85"  cy="178" r="7" fill="#5bafd4" opacity="0.3"/>
+              <line id="tract-vsp"  x1="106" y1="14" x2="106" y2="440" stroke="#c4a84a" stroke-width="2" opacity="0.15"/>
+              <circle class="pwy-origin-dot" data-tract-id="941" data-has-data="false" cx="106" cy="248" r="7" fill="#c4a84a" opacity="0.3"/>
+            </svg>
+            <div class="pathway-legend">
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#4ab5a0"></span>cst — Corticospinal</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#9370cc"></span>tsp — Tectospinal</div>
+              <div class="pwy-legend-item"><span class="pwy-dot" style="background:#d4894a"></span>rust — Rubrospinal</div>
+              <div class="pwy-legend-item pwy-no-data"><span class="pwy-dot" style="background:#5bafd4"></span>ret — Reticulospinal</div>
+              <div class="pwy-legend-item pwy-no-data"><span class="pwy-dot" style="background:#c4a84a"></span>vsp — Vestibulospinal</div>
+            </div>
+          </div><!-- pwy-eff-spinal -->
+
+        </div><!-- pathway-content -->
+      </div><!-- pathway-panel -->
+    </div><!-- pathway-wrapper -->
+
     <div id="info-panel">
-      <div id="region-header">
-        <span id="region-acronym"></span>
-        <span id="region-name"></span>
+      <div id="info-mode-tabs">
+        <div class="pwy-tabs-row">
+          <button id="btn-efferent" class="pwy-mode-tab active">↓ Efferents</button>
+          <button id="btn-afferent" class="pwy-mode-tab">↑ Afferents</button>
+        </div>
+        <div class="pwy-tabs-row">
+          <button id="btn-relative" class="pwy-mode-tab active">Relative</button>
+          <button id="btn-absolute" class="pwy-mode-tab">Absolute</button>
+        </div>
       </div>
-      <div id="no-data-reason" style="display:none">
-        <span id="no-data-label"></span>
-        <p id="no-data-text"></p>
+      <div id="info-content">
+        <div id="region-header">
+          <span id="region-acronym"></span>
+          <span id="region-name"></span>
+        </div>
+        <div id="no-data-reason" style="display:none">
+          <span id="no-data-label"></span>
+          <p id="no-data-text"></p>
+        </div>
+        <div id="known-connections" style="display:none">
+          <div class="known-conn-header">Known (unmeasured)</div>
+          <div id="known-connections-list"></div>
+        </div>
+        <div id="connections-list"></div>
       </div>
-      <div id="mode-toggle">
-        <button id="btn-efferent" class="active">Efferents</button>
-        <button id="btn-afferent">Afferents</button>
-      </div>
-      <div id="metric-toggle">
-        <button id="btn-relative" class="active">Relative</button>
-        <button id="btn-absolute">Absolute</button>
-      </div>
-      <div id="metric-note"></div>
-      <div id="connections-list"></div>
     </div>
   </div>
   <script type="module" src="main.js"></script>

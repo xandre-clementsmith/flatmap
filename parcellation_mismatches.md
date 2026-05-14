@@ -205,6 +205,30 @@ All seven have completely empty `structure_set_ids` — not classified into any 
 
 **Validation:** After switch, RN's top efferents are RL, IF, RR, CLI, FF, VII, EW, AMB, NPC — midbrain tegmental nuclei and brainstem motor nuclei immediately surrounding RN, all anatomically correct. CP no longer appears in the top 20.
 
+**Algebraic relationship between relative and absolute metrics:**
+
+From Allen's field definitions (`projection_density = projection_volume / structure_volume`):
+
+```
+projection_volume × projection_intensity
+  = projection_density × projection_intensity × structure_volume
+  = projection_energy × structure_volume
+```
+
+Therefore:
+
+```
+relative = projection_energy / injection_volume
+absolute = (projection_volume × projection_intensity) / injection_volume
+         = relative × structure_volume_of_target
+```
+
+The two metrics differ by **exactly one factor**: the target structure's volume. Practical consequences:
+
+- **Relative is size-normalized**: a small nucleus with 10% labeled voxels scores identically to a large structure with 10% labeled. This is why projection_energy mitigates fibers-of-passage — it already normalizes by structure volume via density.
+- **Absolute is NOT size-normalized**: large structures (CP ≈ 10 mm³, HPF, isocortex) score 30–100× higher than small nuclei at identical projection density. This re-introduces the fibers-of-passage vulnerability: axons passing through a large structure's territory (e.g. VISp → SC axons running through the internal capsule adjacent to CP) inflate its absolute score relative to genuine small-nucleus targets.
+- **Expected observation**: for any injection region, the absolute top targets will be dominated by the largest brain structures regardless of true projection density (e.g. VISp absolute shows CP first; VISp relative does not). This is correct behavior, not a bug. Use relative for anatomical interpretation; absolute shows total labeled terminal field volume.
+
 ---
 
 ## 11. Injection-site exclusion suppresses adjacent primary targets (ENTm → DG)

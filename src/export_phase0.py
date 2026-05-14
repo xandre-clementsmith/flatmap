@@ -63,6 +63,11 @@ SIBLING_OVERRIDES = {
     934: 926,  # ENTmv (Entorhinal medial, ventral zone) <- ENTm (Entorhinal medial part)
 }
 
+# Allen CCF fiber tract IDs included as projection targets in the connectivity matrix.
+# These are descending motor pathways within the brain — NOT discrete injectable nuclei.
+# They appear as efferent targets when brain regions send axons through these pathways.
+TRACT_PROJECTION_IDS = frozenset({784, 863, 877})  # cst, rust, tsp
+
 
 # ---------------------------------------------------------------------------
 # Hierarchy helpers
@@ -224,7 +229,8 @@ def main():
         json.dump(swanson_regions, f, indent=2)
 
     print("Exporting region_metadata.json...")
-    metadata = br.get(valid_allen_ids)
+    all_meta_ids = valid_allen_ids + sorted(TRACT_PROJECTION_IDS)
+    metadata = br.get(all_meta_ids)
     meta_dict = {}
     for i, aid in enumerate(metadata.id):
         rgb = metadata.rgb[i]
@@ -308,21 +314,57 @@ def main():
 
     # ── Phase 5: Read cached structure_unionizes.csv files ────────────────────
     #
-    # Two metrics accumulated in parallel:
-    #   rel: projection_energy / injection_volume    (energy-based; mitigates fibers-of-passage, §10)
-    #   abs: projection_volume × intensity / inj_vol (volume-based alternative)
+    # Two metrics accumulated in parallel.
+    #
+    # Allen SDK field definitions (from structure_unionizes.csv):
+    #   projection_density  = labeled_voxels / total_voxels        (dimensionless fraction)
+    #   projection_volume   = labeled_voxels × voxel_volume        (mm³)
+    #   structure_volume    = total_voxels   × voxel_volume        (mm³)
+    #   projection_intensity = mean fluorescence of labeled voxels  (dimensionless)
+    #   projection_energy   = projection_density × projection_intensity
+    #                       = (projection_volume / structure_volume) × projection_intensity
+    #
+    # From these definitions:
+    #   projection_volume × projection_intensity
+    #     = projection_energy × structure_volume
+    #
+    # Therefore the two metrics are related by exactly one factor:
+    #
+    #   rel = projection_energy / injection_volume
+    #   abs = (projection_volume × projection_intensity) / injection_volume
+    #       = rel × structure_volume_of_target
+    #
+    # Practical consequences:
+    #   • rel is SIZE-NORMALIZED for the target structure — a small nucleus with
+    #     10% labeled voxels scores identically to a large structure with 10% labeled.
+    #     This is why §10 chose projection_energy: it mitigates fibers-of-passage by
+    #     normalizing for structure size, so a thin fiber tract through a large structure
+    #     contributes far less than dense terminal boutons.
+    #   • abs is NOT size-normalized — it is rel × structure_volume.  Large structures
+    #     (CP ≈ 10 mm³, HPF, isocortex) score 30–100× higher than small nuclei even
+    #     at identical projection density.  This re-introduces the fibers-of-passage
+    #     vulnerability that §10 removed: axons passing through a large structure's
+    #     territory inflate its abs score relative to genuine small-nucleus targets.
+    #   • Expected observation: for any injection region, abs top targets will be
+    #     dominated by the largest brain structures regardless of true projection density.
+    #     Use rel for anatomical interpretation; abs shows total labeled terminal volume.
+    #
+    # Both metrics use the same filters, injection_volume denominator, and exp_counts
+    # mean denominator — the only difference is the structure_volume factor above.
     #
     # Filters applied per CSV row:
     #   is_injection != True         — exclude injection-site rows (§7, §11)
     #   hemisphere_id == '3'         — bilateral total only; avoids triple-counting (§9)
     #   structure_id in valid_set    — only include flatmap regions
     #   structure_id not in inj_set  — exclude co-injected structures (§7)
-    #   projection_energy > 0        — skip unlabeled rows
+    #   projection_energy > 0        — skip unlabeled rows (zero energy → zero volume,
+    #                                  so this gate is equivalent for both metrics)
 
     cache_dir = repo_root / "mouse_connectivity"
+    proj_target_set  = valid_set | TRACT_PROJECTION_IDS   # flatmap regions + motor tracts as projection targets
     connectivity_rel = {}   # (inj_id, proj_id) → summed projection_energy / inj_vol
     connectivity_abs = {}   # (inj_id, proj_id) → summed proj_volume × intensity / inj_vol
-    exp_counts     = {}     # inj_struct_id → number of experiments attributed to it
+    exp_counts       = {}   # inj_struct_id → number of experiments attributed to it
     cached_count   = 0
     skipped_count  = 0
     skipped_no_vol = 0
@@ -361,7 +403,7 @@ def main():
             for row in rows
             if row['is_injection'].strip().lower() != 'true'
             and row['hemisphere_id'] == '3'
-            and int(row['structure_id']) in valid_set
+            and int(row['structure_id']) in proj_target_set
             and int(row['structure_id']) not in inj_struct_set
             and float(row['projection_energy']) > 0
         ]
@@ -398,16 +440,19 @@ def main():
         print(f"Max mean relative: {max_rel:.4f}, absolute: {max_abs:.4f}")
         connectivity_data = {
             "structure_ids":              valid_allen_ids,
+            "tract_ids":                  sorted(TRACT_PROJECTION_IDS),
             "experiment_count":           cached_count,
             "total_connections_relative": len(sparse_rel),
             "total_connections_absolute": len(sparse_abs),
             "sparse_connections_relative": sparse_rel,
             "sparse_connections_absolute": sparse_abs,
             "note": (
-                f"relative = mean(projection_energy/inj_vol); "
-                f"absolute = mean(projection_volume*intensity/inj_vol). "
-                f"{cached_count} cached experiments "
-                f"({skipped_count} uncached, {skipped_no_vol} missing inj_vol). "
+                f"relative = mean(projection_energy / injection_volume) — size-normalized for target structure. "
+                f"absolute = mean(projection_volume * intensity / injection_volume) = relative * structure_volume — NOT size-normalized; "
+                f"large structures (CP, HPF) score proportionally higher regardless of projection density. "
+                f"Projection targets include {len(TRACT_PROJECTION_IDS)} fiber tract structures (cst=784, rust=863, tsp=877) "
+                f"in addition to {len(valid_allen_ids)} Swanson flatmap regions. "
+                f"{cached_count} cached experiments ({skipped_count} uncached, {skipped_no_vol} missing inj_vol). "
                 f"Allen CCF IDs via br.id[thisID]."
             ),
         }

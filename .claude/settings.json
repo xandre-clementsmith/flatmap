@@ -6,7 +6,9 @@
       "Bash(cat /tmp/export_phase0_rerun.log && lsof -p 59540 2>/dev/null | grep -v \"\\\\.so\\\\|dylib\\\\|\\\\.pyc\\\\|Python\\\\b\" | tail -10)",
       "Read(//private/tmp/**)",
       "Bash(kill 59540)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(find ~/Documents/Neuroscience/flatmap -name \"*.json\" | xargs grep -l \"reticulospinal\\\\|vestibulospinal\\\\|rubrospinal\" 2>/dev/null | head -5)",
+      "Read(//Users/xandreclementsmith/Documents/Neuroscience/flatmap/**)"
     ]
   }
 }
