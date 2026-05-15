@@ -259,7 +259,7 @@ body {
 }
 
 #pathway-panel {
-  width: 180px;
+  width: 155px;
   overflow: hidden;
   transition: width 0.25s ease;
   background: #111;

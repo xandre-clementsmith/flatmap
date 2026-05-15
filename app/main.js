@@ -50,8 +50,11 @@ const DEFAULT_NO_DATA = {
 const MIN_OPACITY = 0.06;
 
 // Allen CCF IDs of fiber tract structures included as projection targets.
-// These are never injection sources, so clicking them shows info without changing map state.
+// Clicking a tract fiber routes to showTractInfo rather than showing Allen fiber-of-passage data.
 const TRACT_IDS = new Set([784, 863, 877, 855, 941]);
+
+// Maps tract fiber Allen CCF ID → TRACT_PROJECTION_SITES key.
+const TRACT_FIBER_TO_KEY = { 784: 'cst', 863: 'rust', 877: 'tsp', 855: 'rst', 941: 'vsp' };
 
 // Distinct colors for each tract — used in the connections list bars and the pathway schematic.
 const TRACT_COLORS = {
@@ -103,6 +106,11 @@ function buildMaps(sparseConnections) {
 }
 
 
+// Glow stubs — assigned inside main() once the D3 paths selection exists.
+// Declared at module level so top-level functions (showInfo, etc.) can call them.
+let startGlow = () => {};
+let stopGlow  = () => {};
+
 // ─── UI helpers ───────────────────────────────────────────────────────────────
 
 /** Mark one button in a toggle pair as active and the other as inactive. */
@@ -148,15 +156,17 @@ function showInfo(allenId, conns, metadata, mode, onSelectRegion = null) {
         <div class="connection-bar" style="width:${pct}%${barColor ? `;background:${barColor}` : ''}"></div>
       </div>
     `;
+    item.addEventListener('mouseenter', () => { if (!isTract) startGlow(conn[partnerId]); });
     item.addEventListener('mousemove', e => {
       tooltip.style.display = 'block';
       tooltip.style.left    = (e.pageX + 12) + 'px';
       tooltip.style.top     = (e.pageY - 28) + 'px';
       tooltip.innerHTML = `<strong>${partnerMeta.acronym || conn[partnerId]}</strong><br>${partnerMeta.name || ''}`;
     });
-    item.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+    item.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; stopGlow(); });
     item.addEventListener('click', () => {
       tooltip.style.display = 'none';
+      stopGlow();
       if (onSelectRegion) onSelectRegion(conn[partnerId]);
     });
     list.appendChild(item);
@@ -200,10 +210,10 @@ function clearPathwayPanel() {
 const ASCENDING_PATHWAYS = [
   { id: 'olf',  color: '#b060a0', nuclei: [507, 151, 159],           primary: 507  }, // MOB, AOB, AON
   { id: 'vis',  color: '#c0a030', nuclei: [170, 178, 851, 842, 628], primary: 170  }, // LGd, LGv, SCop, SCsg, NOT
-  { id: 'vest', color: '#60c0c0', nuclei: [225, 202, 209, 217],      primary: 225  }, // SPIV, MV, LAV, SUV
-  { id: 'dcml', color: '#e07070', nuclei: [1039, 711, 903],          primary: 1039 }, // GR, CU, ECU
-  { id: 'als',  color: '#d4604a', nuclei: [718],                     primary: 718  }, // VPL (STT thalamic relay)
-  { id: 'spcr', color: '#7060c8', nuclei: [222],                     primary: 222  }, // IO (spino-olivary relay)
+  { id: 'vest', color: '#60c0c0', nuclei: [225, 202, 209, 217, 968],  primary: 225  }, // SPIV, MV, LAV, SUV, NOD
+  { id: 'dcml', color: '#e07070', nuclei: [1039, 711, 789],          primary: 1039 }, // GR, CU, Z
+  { id: 'als',  color: '#d4604a', nuclei: [718, 733, 362, 575, 599, 907, 930, 795, 811, 842, 147, 283, 350, 867, 651, 978], primary: 718  },
+  { id: 'spcr', color: '#7060c8', nuclei: [83, 903, 955, 963, 912, 976, 984, 1091, 1007, 936, 944, 951, 957, 1033, 1025], primary: 83 }, // IO, ECU, LRN, cerebellar lobules
   { id: 'trig', color: '#e0a050', nuclei: [429, 437, 445, 7],        primary: 429  }, // SPVC, SPVI, SPVO, PSV
   { id: 'aud',  color: '#70b870', nuclei: [96, 101, 811, 1072, 1079, 1088], primary: 96 }, // DCO, VCO, ICc, MG*
   { id: 'visc', color: '#7090e0', nuclei: [651, 867],                primary: 651  }, // NTS, PB
@@ -275,7 +285,7 @@ const TRACT_PROJECTION_SITES = {
 
   dcml: {
     color:   '#e07070',
-    label:   'DC / Medial lemniscus',
+    label:   'DCML',
     sub:     'Fine touch & proprioception from body — spinal cord origin not in Allen CCF',
     dir:     'aff', route: 'spinal', primary: 1039,
     afferent_termini: [
@@ -327,20 +337,29 @@ const TRACT_PROJECTION_SITES = {
     color:   '#7060c8',
     label:   'Spinocerebellar',
     sub:     'Proprioception from spinal cord — origin not in Allen CCF',
-    dir:     'aff', route: 'spinal', primary: 222,
+    dir:     'aff', route: 'spinal', primary: 83,
     afferent_termini: [
       // ── Precerebellar relay nuclei ──────────────────────────────────────
       1039, // GR   — gracile nucleus (dorsal spinocerebellar collaterals)
       711,  // CU   — cuneate nucleus (cuneocerebellar via scp)
       903,  // ECU  — external cuneate nucleus (cuneocerebellar, forelimb)
       789,  // Z    — nucleus Z (proprioceptive relay)
-      222,  // IO   — inferior olive (climbing fiber relay, spino-olivary)
-      // ── Cerebellar cortex: vermis + paravermal anterior & posterior lobe ─
-      // Lateral hemisphere, flocculonodular lobe, and deep nuclei excluded.
+      83,   // IO   — inferior olivary complex (spino-olivary → climbing fibres)
+      955,  // LRNm — lateral reticular nucleus, magnocellular (spino-reticulo-cerebellar)
+      963,  // LRNp — lateral reticular nucleus, parvicellular
+      // ── Cerebellar cortex: all vermis lobules I–IX + paravermal ─────────
+      // Lateral hemisphere (crus I/II/ansiform), flocculonodular lobe (NOD, FL),
+      // and deep nuclei excluded per user specification.
+      912,  // LING  — lingula (lobule I) — minor spinocerebellar input
       976,  // CENT2 — lobule II (anterior lobe, vermis)
-      992,  // CUL4  — culmen lobule IV (anterior lobe, vermis/paravermal)
-      936,  // DEC   — declive / lobule VI (posterior lobe, vermis)
-      957,  // UVU   — uvula / lobule IX (posterior vermis)
+      984,  // CENT3 — lobule III (anterior lobe, vermis)
+      1091, // CUL4_5 — culmen lobules IV–V (anterior lobe, primary DSCT/VSCT target)
+      1007, // SIM   — simple lobule (lobule VI, paravermal junction)
+      936,  // DEC   — declive (lobule VI, posterior vermis)
+      944,  // FOTU  — folium-tuber vermis (lobule VII)
+      951,  // PYR   — pyramis (lobule VIII, significant DSCT target)
+      957,  // UVU   — uvula (lobule IX, posterior vermis)
+      1033, // COPY  — copula pyramidis (paravermal posterior lobe)
       1025, // PRM   — paramedian lobule (posterior paravermal)
     ],
   },
@@ -363,11 +382,18 @@ const TRACT_PROJECTION_SITES = {
       146,  // PRNr — pontine reticular nucleus, rostral (oral pontine reticular)
       1093, // PRNc — pontine reticular nucleus, caudal (caudal pontine reticular)
       350,  // SLC  — subceruleus nucleus (coeruleospinal / A7 bulbospinal)
+      // ── Pontine RF continued ───────────────────────────────────────────────
+      307,  // MARN  — magnocellular reticular nucleus (ventromedial pontine RF)
       // ── Medullary reticular formation ─────────────────────────────────────
-      1048, // GRN  — gigantocellular reticular nucleus (primary medullary RST origin)
-      978,  // PGRNl — paragigantocellular reticular nucleus, lateral
+      1048, // GRN   — gigantocellular reticular nucleus (primary medullary RST origin)
+      136,  // IRN   — intermediate reticular nucleus (medullary RST component)
+      970,  // PGRNd — paragigantocellular reticular, dorsal part
+      978,  // PGRNl — paragigantocellular reticular, lateral part
       1098, // MDRNd — medullary reticular nucleus, dorsal part
       1107, // MDRNv — medullary reticular nucleus, ventral part
+      // ── Serotonergic raphespinal (functionally grouped with RST) ─────────
+      230,  // RPA   — raphe pallidus (primary serotonergic RST component)
+      222,  // RO    — raphe obscurus (additional serotonergic bulbospinal)
     ],
   },
 
@@ -561,6 +587,16 @@ const MOTOR_CN_PRIMARY = {
   'mcn-vii': 661, 'mcn-ix': 143, 'mcn-xii': 773, 'mcn-ne': 38,
 };
 
+// Motor CN band id → TRACT_PROJECTION_SITES key (for info panel on band click)
+const BAND_TO_TRACT_KEY = {
+  'mcn-iii': 'cn_iii', 'mcn-iv': 'cn_iv', 'mcn-v': 'cn_vm',
+  'mcn-vi': 'cn_vi', 'mcn-vii': 'cn_vii', 'mcn-ix': 'cn_ix',
+  'mcn-xii': 'cn_xii', 'mcn-ne': 'cn_ne',
+};
+const TRACT_KEY_TO_BAND = Object.fromEntries(
+  Object.entries(BAND_TO_TRACT_KEY).map(([bandId, tractKey]) => [tractKey, bandId])
+);
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -686,6 +722,10 @@ async function main() {
   // Which route to auto-show for each ascending pathway (direction is always 'aff')
   const PATHWAY_ROUTE = { dcml: 'spinal', als: 'spinal', spcr: 'spinal' };
 
+  // Set true during dot-click-initiated selectRegion calls so updateAscendingPanel
+  // does not hijack the panel away from the panel the user is already viewing.
+  let suppressPanelSwitch = false;
+
   // ── Ascending panel interaction ────────────────────────────────────────────
 
   function clearAscendingPanel() {
@@ -694,7 +734,8 @@ async function main() {
       el.setAttribute('stroke-width', '1.5');
     });
     document.querySelectorAll('.asc-dot').forEach(el => {
-      el.setAttribute('opacity', el.r?.baseVal?.value > 5 ? '0.55' : '0.45');
+      const r = el.r?.baseVal?.value ?? 5;
+      el.setAttribute('opacity', r > 5 ? '0.55' : r > 4 ? '0.45' : '0.4');
     });
   }
 
@@ -708,28 +749,40 @@ async function main() {
     document.querySelectorAll('.asc-dot').forEach(el => {
       const match  = el.dataset.pathway === pathwayId;
       const isThis = Number(el.dataset.nucleusId) === allenId;
+      const r      = el.r?.baseVal?.value ?? 5;
+      const base   = r > 5 ? '0.55' : r > 4 ? '0.45' : '0.4';
       el.setAttribute('opacity', pathwayId
         ? (isThis ? '1.0' : match ? '0.65' : '0.1')
-        : (el.r?.baseVal?.value > 5 ? '0.55' : '0.45'));
+        : base);
     });
-    if (pathwayId) {
+    if (pathwayId && mode !== 'efferent' && !suppressPanelSwitch) {
       openPathwayPanel();
       switchToCombo('aff', PATHWAY_ROUTE[pathwayId] || 'cranial');
     }
   }
 
-  // Ascending nucleus dots → select that region
+  // Ascending nucleus dots → select that region in the anatomically correct mode.
+  // data-nav-mode="afferent" for relay nuclei (they receive the pathway);
+  // data-nav-mode="efferent" for origin nuclei (they send the pathway).
   document.querySelectorAll('.asc-dot').forEach(dot => {
     dot.addEventListener('click', e => {
       e.stopPropagation();
+      const navMode = dot.dataset.navMode || 'afferent';
+      mode = navMode;
+      setActiveButton(
+        navMode === 'afferent' ? 'btn-afferent' : 'btn-efferent',
+        navMode === 'afferent' ? 'btn-efferent' : 'btn-afferent',
+      );
+      suppressPanelSwitch = true;
       selectRegion(Number(dot.dataset.nucleusId));
+      suppressPanelSwitch = false;
     });
   });
 
-  // Ascending band hit areas → select primary relay nucleus
+  // Ascending band hit areas → show tract info in the info panel
   document.querySelectorAll('.asc-band-hit').forEach(band => {
-    const pw = ASCENDING_PATHWAYS.find(p => p.id === band.dataset.pathway);
-    if (pw) band.addEventListener('click', e => { e.stopPropagation(); selectRegion(pw.primary); });
+    const pathwayId = band.dataset.pathway;
+    if (pathwayId) band.addEventListener('click', e => { e.stopPropagation(); showTractInfo(pathwayId); });
   });
 
   // ── Motor CN panel interaction ─────────────────────────────────────────────
@@ -761,10 +814,10 @@ async function main() {
     if (bandId) { openPathwayPanel(); switchToCombo('eff', 'cranial'); }
   }
 
-  // Motor CN band hit areas → select primary nucleus
+  // Motor CN band hit areas → show cranial nerve info in the info panel
   document.querySelectorAll('.motor-cn-band-hit').forEach(band => {
-    const primary = MOTOR_CN_PRIMARY[band.dataset.band];
-    if (primary) band.addEventListener('click', e => { e.stopPropagation(); selectRegion(primary); });
+    const tractKey = BAND_TO_TRACT_KEY[band.dataset.band];
+    if (tractKey) band.addEventListener('click', e => { e.stopPropagation(); showTractInfo(tractKey); });
   });
 
   // Motor CN dots → select that nucleus
@@ -778,9 +831,15 @@ async function main() {
     hit.addEventListener('click', e => { e.stopPropagation(); selectRegion(Number(hit.dataset.tractId)); });
   });
 
-  // Origin dots: only those with data-has-data="true" get click handlers.
+  // Origin dots: those with data-has-data="true" get click handlers.
+  // Dots with data-tract-key show tract info; others select the tract as a region.
   document.querySelectorAll('.pwy-origin-dot[data-has-data="true"]').forEach(dot => {
-    dot.addEventListener('click', e => { e.stopPropagation(); selectRegion(Number(dot.dataset.tractId)); });
+    dot.addEventListener('click', e => {
+      e.stopPropagation();
+      const tractKey = dot.dataset.tractKey;
+      if (tractKey) showTractInfo(tractKey);
+      else selectRegion(Number(dot.dataset.tractId));
+    });
   });
 
   // Regions that have at least one efferent connection — used for visual fill coloring
@@ -850,6 +909,40 @@ async function main() {
   let mode     = 'efferent';  // 'efferent' | 'afferent'
   let metric   = 'relative';  // 'relative' | 'absolute'
 
+  // ── Hover glow ──────────────────────────────────────────────────────────────
+  // Assign the module-level stubs so top-level functions (showInfo) can call them.
+
+  let glowRaf     = null;
+  let glowAllenId = null;
+
+  startGlow = function(allenId) {
+    if (!allenId || glowAllenId === allenId) return;
+    stopGlow();
+    glowAllenId = allenId;
+    const t0     = performance.now();
+    const period = 1300;
+
+    function frame(now) {
+      if (glowAllenId !== allenId) return;
+      const s = (Math.sin(((now - t0) / period) * 2 * Math.PI) + 1) / 2;
+      paths.filter(d => d.allenId === allenId)
+        .style('stroke',         '#fff')
+        .style('stroke-width',   `${1.5 + s * 7}px`)
+        .style('stroke-opacity', 0.45 + s * 0.55);
+      glowRaf = requestAnimationFrame(frame);
+    }
+    glowRaf = requestAnimationFrame(frame);
+  };
+
+  stopGlow = function() {
+    if (glowRaf !== null) { cancelAnimationFrame(glowRaf); glowRaf = null; }
+    if (glowAllenId !== null) {
+      paths.filter(d => d.allenId === glowAllenId)
+        .style('stroke', null).style('stroke-width', null).style('stroke-opacity', null);
+      glowAllenId = null;
+    }
+  };
+
   // Render known-but-unmeasured connections for the given region and mode.
   function renderKnownConnections(allenId, curMode) {
     const knownSection = document.getElementById('known-connections');
@@ -873,13 +966,92 @@ async function main() {
           <div class="known-conn-sub">${sites.sub}</div>
           <div class="known-conn-bar" style="width:100%;background:${sites.color}"></div>
         </div>`;
+      item.addEventListener('mouseenter', () => { if (sites.primary) startGlow(sites.primary); });
+      item.addEventListener('mouseleave', () => { stopGlow(); });
       item.addEventListener('click', e => {
         e.stopPropagation();
+        stopGlow();
         openPathwayPanel();
         switchToCombo(sites.dir || 'aff', sites.route || 'cranial');
         if (sites.primary) selectRegion(sites.primary);
       });
       knownList.appendChild(item);
+    }
+  }
+
+  // Show tract/pathway info in the info panel when a band is clicked directly.
+  // Lists all known projection sites for the tract; clicking a site navigates to it.
+  function showTractInfo(tractKey) {
+    const sites = TRACT_PROJECTION_SITES[tractKey];
+    if (!sites) return;
+
+    paths.interrupt('flash');
+    selected = null;
+
+    const isAff     = sites.dir === 'aff';
+    const regionIds = isAff ? (sites.afferent_termini || []) : (sites.efferent_origins || []);
+    const idSet     = new Set(regionIds);
+
+    // Highlight connected regions, dim everything else.
+    // Dimmed regions get pointer-events:none so nested/overlapping highlighted regions
+    // underneath receive mouse events (prevents tooltip showing child name over lit parent).
+    paths
+      .classed('dimmed', false)
+      .classed('selected', rd => idSet.has(rd.allenId))
+      .style('opacity',        rd => idSet.has(rd.allenId) ? 1 : MIN_OPACITY)
+      .style('pointer-events', rd => idSet.has(rd.allenId) ? 'auto' : 'none')
+      .style('stroke-width', null);
+
+    // Highlight the band visual for this tract; reset all other band panels
+    clearPathwayPanel();
+    clearAscendingPanel();
+    clearMotorCNPanel();
+    if (sites.dir === 'aff') {
+      document.querySelectorAll('.asc-band-visual').forEach(el => {
+        const match = el.dataset.pathway === tractKey;
+        el.setAttribute('opacity',      match ? '1.0' : '0.05');
+        el.setAttribute('stroke-width', match ? '3'   : '1.5');
+      });
+    } else if (sites.route === 'cranial') {
+      const bandId = TRACT_KEY_TO_BAND[tractKey];
+      document.querySelectorAll('.motor-cn-band-visual').forEach(el => {
+        const match = el.dataset.band === bandId;
+        el.setAttribute('opacity',      match ? '1.0' : '0.05');
+        el.setAttribute('stroke-width', match ? '3'   : '1.5');
+      });
+    } else {
+      // eff-spinal rst / vsp
+      const el = document.getElementById('tract-' + tractKey);
+      if (el) { el.setAttribute('opacity', '1.0'); el.setAttribute('stroke-width', '4'); }
+    }
+
+    document.getElementById('region-acronym').textContent    = sites.label;
+    document.getElementById('region-name').textContent       = sites.sub;
+    document.getElementById('no-data-reason').style.display  = 'none';
+    document.getElementById('known-connections').style.display = 'none';
+    const tooltip   = document.getElementById('tooltip');
+    const list      = document.getElementById('connections-list');
+    list.innerHTML  = '';
+
+    for (const rid of regionIds) {
+      const meta = metadata[rid] || {};
+      const item = document.createElement('div');
+      item.className = 'connection-item';
+      item.innerHTML = `
+        <div style="width:100%">
+          <div>${meta.acronym || rid}</div>
+          <div class="connection-bar" style="width:100%;background:${sites.color};opacity:0.7"></div>
+        </div>`;
+      item.addEventListener('mouseenter', () => { startGlow(rid); });
+      item.addEventListener('mousemove', e => {
+        tooltip.style.display = 'block';
+        tooltip.style.left    = (e.pageX + 12) + 'px';
+        tooltip.style.top     = (e.pageY - 28) + 'px';
+        tooltip.innerHTML = `<strong>${meta.acronym || rid}</strong><br>${meta.name || ''}`;
+      });
+      item.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; stopGlow(); });
+      item.addEventListener('click', () => { stopGlow(); selectRegion(rid); panToRegion(rid); });
+      list.appendChild(item);
     }
   }
 
@@ -911,7 +1083,8 @@ async function main() {
 
   function deselect() {
     paths.interrupt('flash'); // cancel any in-progress stroke-width animation
-    paths.classed('dimmed', false).classed('selected', false).style('opacity', null).style('stroke-width', null);
+    paths.classed('dimmed', false).classed('selected', false)
+      .style('opacity', null).style('stroke-width', null).style('pointer-events', null);
     selected = null;
     clearPathwayPanel();
     clearAscendingPanel();
@@ -921,7 +1094,13 @@ async function main() {
   // Consolidates map-click and panel-click selection paths.
   function selectRegion(allenId) {
     if (TRACT_IDS.has(allenId)) {
-      // Tracts are projection targets only — check whether any brain regions project into this tract.
+      // Tracts with curated projection sites (no Allen injection data): show known sites only.
+      // Tracts with real Allen data (CST/RUST/TSP): fall through to triggerSelect below.
+      const tractKey = TRACT_FIBER_TO_KEY[allenId];
+      if (tractKey && TRACT_PROJECTION_SITES[tractKey]) {
+        showTractInfo(tractKey);
+        return;
+      }
       const projMap = metric === 'relative' ? projMapRel : projMapAbs;
       if (!projMap[allenId]?.length) {
         deselect();
@@ -1006,6 +1185,7 @@ async function main() {
     paths
       .classed('dimmed',   false)
       .classed('selected', rd => !isTractSel && rd.allenId === allenId)
+      .style('pointer-events', null)  // restore after any tract-view that disabled events on dimmed paths
       .style('opacity', rd => {
         if (!isTractSel && rd.allenId === allenId) return 1;
         const s = strengthMap[rd.allenId];
@@ -1030,6 +1210,7 @@ async function main() {
 
   paths.on('click', (event, d) => {
     if (event.defaultPrevented) return;  // ignore drag-end clicks
+    stopGlow();
     selectRegion(d.allenId);
   });
 
