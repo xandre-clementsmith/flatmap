@@ -111,6 +111,416 @@ function buildMaps(sparseConnections) {
 let startGlow = () => {};
 let stopGlow  = () => {};
 
+// ─── Description panel ────────────────────────────────────────────────────────
+
+let _descOpen = false;
+
+function setDescription(text) {
+  const section = document.getElementById('description-section');
+  if (!text) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  document.getElementById('description-text').textContent = text;
+}
+
+(function initDescriptionToggle() {
+  const toggle = document.getElementById('description-toggle');
+  const body   = document.getElementById('description-body');
+  const arrow  = document.getElementById('description-arrow');
+  toggle.addEventListener('click', () => {
+    _descOpen = !_descOpen;
+    body.classList.toggle('open', _descOpen);
+    arrow.classList.toggle('open', _descOpen);
+  });
+})();
+
+const REGION_DESCRIPTIONS = {
+  // ── Isocortex ──────────────────────────────────────────────────────────────
+  16:  "Layer 6b of the isocortex. The deepest neocortical layer; projects to the claustrum and thalamic reticular nucleus and coordinates thalamocortical dialogue.",
+  39:  "Anterior cingulate area, dorsal part. Involved in cognitive control, attention, error monitoring, and conflict resolution; a key node of the prefrontal executive network.",
+  48:  "Anterior cingulate area, ventral part. Processes affective and motivational aspects of pain and decision-making; strongly connected to the amygdala and hypothalamus.",
+  104: "Agranular insular area, dorsal part. Receives somatic and motor signals; involved in interoception, motor preparation, and sensory-motor integration.",
+  111: "Agranular insular area, posterior part. Integrates visceral, taste, and somatic information; important for body-state awareness and autonomic regulation.",
+  119: "Agranular insular area, ventral part. Involved in gustatory and visceral processing; contributes to the affective valuation of interoceptive and sensory stimuli.",
+  1011:"Dorsal auditory area. Higher-order auditory cortex involved in auditory object recognition and spatial processing.",
+  1002:"Primary auditory cortex. Receives tonotopic thalamic input from MGv; performs frequency-specific spectrotemporal analysis of sound.",
+  1027:"Posterior auditory area. Higher-order auditory cortex involved in processing complex acoustic features and auditory memory.",
+  1018:"Ventral auditory area. Secondary auditory cortex involved in auditory integration and discrimination.",
+  814: "Dorsal peduncular area. A medial prefrontal region projecting heavily to hypothalamus and brainstem; involved in visceral and autonomic regulation.",
+  895: "Ectorhinal area. Parahippocampal cortex receiving polymodal sensory input; an intermediate relay conveying processed sensory information to the entorhinal cortex.",
+  918: "Entorhinal area, lateral part. Primary cortical gateway to the hippocampus; receives multimodal sensory input and provides the main perforant path input to the dentate gyrus.",
+  926: "Entorhinal area, medial part (dorsal zone). Encodes spatial and contextual information; integrates self-motion signals and contains grid cells critical for navigation.",
+  934: "Entorhinal area, medial part (ventral zone). Part of the parahippocampal region; involved in spatial and contextual encoding alongside the dorsal medial entorhinal cortex.",
+  1057:"Gustatory areas. Receive taste signals relayed via VPMpc thalamus; integrate flavor, texture, and hedonic information to guide ingestion decisions.",
+  44:  "Infralimbic area. A ventromedial prefrontal region involved in habit formation, fear extinction, and autonomic regulation; strongly connected to amygdala, hypothalamus, and brainstem.",
+  985: "Primary motor cortex. Directly controls voluntary movement via corticospinal projections; organized somatotopically with the hindlimb medial and forelimb lateral.",
+  993: "Secondary motor cortex. Involved in motor planning, sequencing, and coordination; projects to primary motor cortex and directly to spinal cord.",
+  731: "Orbital area, medial part. Part of orbitofrontal cortex; encodes reward value and expected outcomes; critical for flexible, value-guided decision-making.",
+  723: "Orbital area, lateral part. Part of orbitofrontal cortex; integrates sensory qualities with reward history; involved in credit assignment and reversal learning.",
+  738: "Orbital area, ventral part. Part of orbitofrontal cortex involved in olfactory and taste processing and reward-based evaluation of food stimuli.",
+  746: "Orbital area, ventrolateral part. Part of orbitofrontal cortex integrating multimodal sensory information for reward-guided behavior.",
+  922: "Perirhinal area. Parahippocampal cortex essential for object recognition memory and novelty detection; provides processed sensory input to entorhinal cortex.",
+  961: "Piriform area. Primary olfactory cortex; receives direct mitral cell input from the olfactory bulb and encodes odor identity.",
+  972: "Prelimbic area. Dorsomedial prefrontal cortex involved in working memory, fear expression, and goal-directed decision-making; projects to striatum, amygdala, and hypothalamus.",
+  879: "Retrosplenial area, dorsal part. Involved in spatial navigation, contextual memory, and integration of allocentric and egocentric reference frames.",
+  886: "Retrosplenial area, ventral part. Involved in spatial and contextual memory consolidation; bridges hippocampal and neocortical memory systems.",
+  894: "Retrosplenial area, lateral agranular part. Part of retrosplenial cortex; participates in spatial processing and head-direction signal integration.",
+  329: "Primary somatosensory area, barrel field. Processes whisker-related tactile information; each barrel corresponds to a single facial whisker, making this a model for cortical topographic organization.",
+  337: "Primary somatosensory area, lower limb. Processes tactile and proprioceptive input from the hindlimb.",
+  345: "Primary somatosensory area, mouth. Processes orofacial somatosensory input including touch and pressure around the mouth.",
+  353: "Primary somatosensory area, nose. Processes nasal tactile input relayed from the trigeminal system.",
+  361: "Primary somatosensory area, trunk. Processes somatosensory input from the body trunk and thorax.",
+  369: "Primary somatosensory area, upper limb. Processes tactile and proprioceptive input from the forelimb.",
+  378: "Supplemental somatosensory area. Secondary somatosensory cortex integrating bilateral somatosensory information; contributes to tactile discrimination and cross-modal processing.",
+  541: "Temporal association areas. Multimodal association cortex involved in object recognition, auditory processing, and long-term declarative memory.",
+  677: "Visceral area. Receives interoceptive visceral input relayed via thalamus; integrates body-state signals and participates in autonomic regulation.",
+  312782546: "Anterior visual area. Higher-order visual cortex processing optic flow and wide-field motion; involved in visual navigation.",
+  402: "Anterolateral visual area. Higher-order visual cortex; processes motion and spatial relationships in the visual scene.",
+  394: "Anteromedial visual area. Higher-order visual cortex integrating motion and spatial navigation signals; strongly connected to posterior parietal cortex.",
+  409: "Lateral visual area. Secondary visual cortex processing visual detail and object features.",
+  385: "Primary visual cortex. First cortical processing stage of vision; receives direct retinotopic input from the dorsal lateral geniculate nucleus; encodes orientation, spatial frequency, and contrast.",
+  425: "Posterolateral visual area. Higher-order visual cortex involved in visuospatial processing.",
+  533: "Posteromedial visual area. Higher-order visual area involved in spatial processing and visual navigation.",
+  417: "Rostrolateral visual area. Higher-order visual cortex; part of the rodent visual cortical hierarchy.",
+
+  // ── Hippocampal formation ──────────────────────────────────────────────────
+  382: "Field CA1 of the hippocampus. Critical for episodic memory encoding and spatial map representation; receives Schaffer collateral input from CA3 and projects via the subiculum to entorhinal cortex and prefrontal cortex.",
+  423: "Field CA2 of the hippocampus. Involved in social memory and temporal context coding; receives unique inputs from the supramammillary nucleus and entorhinal cortex; highly resistant to excitotoxic insult.",
+  463: "Field CA3 of the hippocampus. Receives mossy fiber input from the dentate gyrus; performs pattern completion via recurrent collaterals; rapidly encodes new associative memories.",
+  726: "Dentate gyrus. Performs pattern separation of cortical inputs before transmitting them to CA3; generates new granule cells throughout adult life (adult neurogenesis), contributing to memory clearance and context discrimination.",
+  502: "Subiculum. Main output of the hippocampus; projects to entorhinal cortex, mammillary bodies, prefrontal cortex, and nucleus accumbens; involved in spatial navigation and memory retrieval.",
+  1084:"Presubiculum. Receives strong head-direction signals from the thalamus; important for maintaining the spatial orientation framework used by entorhinal grid cells.",
+  1037:"Postsubiculum. Contains head-direction cells; provides orientation signals to the entorhinal cortex and other parahippocampal structures critical for navigation.",
+  843: "Parasubiculum. Part of the parahippocampal region; contains grid cells and border cells; contributes to the spatial metric used in navigation.",
+  982: "Fasciola cinerea. A rudimentary cortical strip of the hippocampal formation overlying the dentate gyrus.",
+  19:  "Induseum griseum. A vestigial cortical structure overlying the dorsal corpus callosum; considered a rudimentary part of the hippocampal formation.",
+
+  // ── Amygdala ───────────────────────────────────────────────────────────────
+  303: "Basolateral amygdalar nucleus, anterior part. A key site for fear conditioning and reward learning; receives sensory cortex and thalamic inputs; projects to prefrontal cortex, striatum, and central amygdala.",
+  311: "Basolateral amygdalar nucleus, posterior part. Processes aversive and emotionally salient stimuli; projects to the central amygdala to drive fear responses.",
+  451: "Basolateral amygdalar nucleus, ventral part. Part of the basolateral complex involved in emotional memory and reward; projects to prefrontal cortex and ventral striatum.",
+  327: "Basomedial amygdalar nucleus, anterior part. Receives olfactory input and projects to hypothalamus; involved in olfactory-based social and emotional responses.",
+  334: "Basomedial amygdalar nucleus, posterior part. Processes pheromone and olfactory signals; contributes to species-specific social and reproductive behavior.",
+  544: "Central amygdalar nucleus, capsular part. Part of the central amygdala output system; involved in regulating behavioral and autonomic fear responses.",
+  551: "Central amygdalar nucleus, lateral part. Receives input from the basolateral amygdala; serves as an integration zone for fear acquisition and modulation.",
+  559: "Central amygdalar nucleus, medial part. Primary output of the amygdala to brainstem fear circuits; controls freezing behavior, analgesia, and autonomic stress responses.",
+  403: "Medial amygdalar nucleus. Receives pheromone input from the accessory olfactory bulb; critical for sex-specific and species-specific social, territorial, and reproductive behavior.",
+  131: "Lateral amygdalar nucleus. The initial site of Pavlovian fear conditioning; receives thalamic and cortical sensory inputs and transmits fear-related associations to the basal nucleus.",
+  639: "Cortical amygdalar area, anterior part. Receives direct olfactory bulb input; involved in olfactory processing and odor-guided behavior.",
+  655: "Cortical amygdalar area, posterior lateral zone. Processes olfactory information; contributes to chemosensory-based social and reproductive behavior.",
+  663: "Cortical amygdalar area, posterior medial zone. Receives accessory olfactory bulb input; involved in pheromone processing and reproductive behavior regulation.",
+  780: "Posterior amygdalar nucleus. Receives auditory and somatosensory input; part of the amygdaloid complex involved in multimodal sensory integration and defensive behaviors.",
+  788: "Piriform-amygdalar area. Transition zone between piriform cortex and the amygdala; receives direct olfactory bulb input.",
+  23:  "Anterior amygdalar area. Transitional zone at the anterior pole of the amygdala; receives olfactory and other sensory inputs.",
+  292: "Bed nucleus of the accessory olfactory tract. Small nucleus associated with the accessory olfactory system and pheromone signal processing.",
+  1105:"Intercalated amygdalar nucleus. Small clusters of GABAergic neurons situated between the basolateral and central amygdala; gate information transfer and are critical for fear extinction.",
+
+  // ── Striatum and basal ganglia ─────────────────────────────────────────────
+  672: "Caudoputamen. Dorsal striatum; the main input nucleus of the basal ganglia for motor control; involved in habit formation and procedural learning. Receives dopaminergic input from SNc and massive cortical glutamatergic input.",
+  56:  "Nucleus accumbens. Ventral striatum; the core interface between limbic and motor systems; critical for reward processing, motivation, and reinforcement learning. Receives dopamine from VTA and converging input from prefrontal cortex, hippocampus, and amygdala.",
+  754: "Olfactory tubercle. Part of the ventral striatum; receives olfactory and dopaminergic input; integrates olfactory signals with motivational state.",
+  998: "Fundus of striatum. Transition zone at the base of the striatum connecting dorsal and ventral striatal territories.",
+  1022:"Globus pallidus, external segment. Part of the indirect basal ganglia pathway; inhibits the subthalamic nucleus and serves as an integration hub in basal ganglia circuitry.",
+  1031:"Globus pallidus, internal segment. Primary output nucleus of the basal ganglia via thalamus; tonically inhibits the motor thalamus to gate movement; receives direct and indirect pathway convergence.",
+  470: "Subthalamic nucleus. The only glutamatergic nucleus in the basal ganglia; part of the indirect pathway providing excitatory drive to GPi; a clinically critical target for deep brain stimulation in Parkinson's disease.",
+  374: "Substantia nigra, compact part. Contains dopaminergic neurons of the nigrostriatal pathway projecting to the dorsal striatum; encodes reward prediction errors; degeneration of these neurons is the hallmark of Parkinson's disease.",
+  381: "Substantia nigra, reticular part. Shares circuitry with GPi as an output nucleus of the basal ganglia; tonically inhibits the superior colliculus and thalamus to gate saccadic eye movements and voluntary movement.",
+
+  // ── Thalamus ───────────────────────────────────────────────────────────────
+  64:  "Anterodorsal nucleus. Part of the anterior thalamic group; contains robust head-direction cells; a critical node in the circuit for spatial orientation and navigation.",
+  255: "Anteroventral nucleus. Part of the anterior thalamic group; part of the Papez circuit; involved in episodic memory and spatial navigation via reciprocal connections with hippocampus and cingulate cortex.",
+  575: "Central lateral nucleus. Intralaminar thalamic nucleus; involved in arousal, attention, and motor control; projects broadly to striatum and cortex.",
+  599: "Central medial nucleus. Intralaminar thalamic nucleus projecting broadly to striatum and cerebral cortex; involved in attention, arousal, and sensorimotor gating.",
+  59:  "Intermediodorsal nucleus. Medial thalamic nucleus projecting to prefrontal cortex and striatum; involved in memory and limbic functions.",
+  1113:"Interanterodorsal nucleus. Part of the anterior thalamic complex involved in spatial memory and limbic circuits.",
+  1120:"Interanteromedial nucleus. Part of the anterior thalamic complex; contributes to spatial memory and the Papez memory circuit.",
+  27:  "Intergeniculate leaflet. Part of the lateral geniculate complex; contains neuropeptide Y neurons that receive retinal input; involved in non-image-forming visual functions including circadian photoentrainment.",
+  155: "Lateral dorsal nucleus. Anterior thalamic group nucleus; contains head-direction cells; involved in spatial navigation and memory as part of the extended hippocampal system.",
+  170: "Dorsal lateral geniculate nucleus. Primary visual thalamic relay; transmits retinotopic signals from the retina to primary visual cortex; organized in laminae corresponding to different retinal ganglion cell types.",
+  178: "Ventral lateral geniculate nucleus. Non-image-forming visual nucleus; involved in circadian rhythm regulation, photic modulation of locomotion, and pupillary responses.",
+  186: "Lateral habenula. Part of the habenular complex involved in aversive signaling; inhibits midbrain dopamine neurons in response to absent or unexpected rewards, encoding negative prediction errors.",
+  218: "Lateral posterior nucleus. Higher-order thalamic nucleus receiving superior colliculus input; involved in visuospatial processing and multisensory integration; projects to posterior parietal and visual association cortex.",
+  362: "Mediodorsal nucleus. Main thalamic relay to the prefrontal cortex; involved in working memory, attention, and cognitive control; functionally linked to cognitive aspects of basal ganglia output.",
+  1072:"Medial geniculate complex, dorsal part. Higher-order auditory thalamic nucleus involved in multimodal integration and auditory fear conditioning.",
+  1088:"Medial geniculate complex, medial part. Multimodal thalamic nucleus receiving auditory, somatosensory, and pain inputs; projects broadly to amygdala and cortex; involved in auditory fear learning and arousal.",
+  1079:"Medial geniculate complex, ventral part. Primary auditory thalamic relay; transmits tonotopically organized signals from the inferior colliculus to primary auditory cortex.",
+  483: "Medial habenula. Part of the habenular complex; contains substance P and acetylcholine neurons; projects via the fasciculus retroflexus to the interpeduncular nucleus; involved in stress responses, anxiety, aversion, and mood regulation.",
+  907: "Paracentral nucleus. Intralaminar thalamic nucleus involved in nociception, arousal, and motor control.",
+  930: "Parafascicular nucleus. Intralaminar thalamic nucleus; projects to striatum and cortex; involved in attention, nociception, and motor sequence learning.",
+  1020:"Posterior complex of the thalamus. Higher-order thalamic nucleus receiving nociceptive and somatosensory input from the spinal cord; projects to somatosensory and insular cortex.",
+  1029:"Posterior limiting nucleus of the thalamus. Part of the posterior thalamic complex; involved in multisensory processing.",
+  15:  "Parataenial nucleus. Small anterior thalamic nucleus projecting to striatum and limbic cortex; involved in limbic and motivational functions.",
+  149: "Paraventricular nucleus of the thalamus. Midline thalamic nucleus projecting heavily to nucleus accumbens, amygdala, and prefrontal cortex; a critical relay for stress signals, arousal states, and limbic-striatal integration.",
+  181: "Nucleus of reuniens. Midline thalamic nucleus interconnecting the hippocampus and medial prefrontal cortex; involved in working memory, spatial navigation, and extinction of conditioned fear.",
+  189: "Rhomboid nucleus. Midline thalamic nucleus projecting to prefrontal cortex and striatum; involved in limbic and cognitive functions.",
+  262: "Reticular nucleus of the thalamus. Inhibitory GABAergic nucleus surrounding the thalamus; gates thalamic relay by sending feedback inhibition; critical for thalamocortical oscillations, selective attention, and sleep spindles.",
+  366: "Submedial nucleus of the thalamus. Part of the ventral thalamic group involved in processing orofacial nociceptive information.",
+  629: "Ventral anterior-lateral complex. Motor thalamus receiving convergent output from basal ganglia and cerebellum; projects to motor and premotor cortex to coordinate movement.",
+  685: "Ventral medial nucleus. Motor thalamus receiving basal ganglia (GPi/SNr) output; projects to motor cortex and striatum; involved in gating voluntary movement initiation.",
+  718: "Ventral posterolateral nucleus. Somatosensory relay for the body; receives medial lemniscal and spinothalamic tract input; projects topographically to primary somatosensory cortex.",
+  725: "Ventral posterolateral nucleus, parvicellular part. Somatosensory thalamic subdivision for deep tissue and proprioceptive signals from the body.",
+  733: "Ventral posteromedial nucleus. Somatosensory relay for the face; receives trigeminal (medial lemniscal) input; projects to the barrel cortex and face area of somatosensory cortex.",
+  741: "Ventral posteromedial nucleus, parvicellular part. Relays gustatory information from the nucleus of the solitary tract to the gustatory cortex.",
+  325: "Suprageniculate nucleus. Thalamic nucleus receiving auditory and somatosensory input; involved in multisensory processing and projects to amygdala.",
+  321: "Subgeniculate nucleus. Small thalamic nucleus located beneath the lateral geniculate; involved in visual thalamic processing.",
+  367: "TBD",
+
+  // ── Septal area ────────────────────────────────────────────────────────────
+  564: "Medial septal nucleus. Contains cholinergic and GABAergic neurons projecting to the hippocampus; paces the hippocampal theta rhythm; critical for spatial memory, attention, and navigation.",
+  250: "Lateral septal nucleus, caudal part. Receives hippocampal output via the fornix; involved in stress responses, anxiety regulation, and social behavior.",
+  258: "Lateral septal nucleus, rostral part. Processes hippocampal output; involved in stress responses, aggression, and social recognition memory.",
+  266: "Lateral septal nucleus, ventral part. Involved in autonomic and neuroendocrine regulation; projects to hypothalamic areas controlling HPA axis activity.",
+  596: "Diagonal band nucleus. Contains cholinergic neurons projecting to hippocampus and olfactory bulb; important for attention, memory, and olfactory processing.",
+  310: "Septofimbrial nucleus. Part of the septal area involved in hippocampo-septal interactions and limbic memory circuitry.",
+  333: "Septohippocampal nucleus. Part of the septal complex containing cholinergic neurons involved in regulating hippocampal activity.",
+  581: "Triangular nucleus of septum. Small septal nucleus projecting to hypothalamus.",
+  287: "Bed nucleus of the anterior commissure. Small nucleus associated with the anterior commissure involved in limbic circuitry.",
+  351: "Bed nuclei of the stria terminalis. Extended amygdala structure integrating limbic input to regulate autonomic and neuroendocrine stress responses; involved in anxiety, fear, and social behavior.",
+  50:  "Precommissural nucleus. Small nucleus in the septal region associated with the anterior commissure; TBD specific function.",
+
+  // ── Hypothalamus ───────────────────────────────────────────────────────────
+  72:  "Anterodorsal preoptic nucleus. Part of the preoptic area; involved in thermoregulation and sleep regulation.",
+  80:  "Anterior hypothalamic area. Involved in temperature regulation, defensive behavior, and integration of homeostatic stress responses.",
+  88:  "Anterior hypothalamic nucleus. Involved in thermoregulation and defensive behaviors; integrates somatosensory and stress signals.",
+  223: "Arcuate hypothalamic nucleus. Contains key neuroendocrine and metabolic neurons including NPY/AgRP (hunger-promoting) and POMC/CART (satiety-promoting) neurons; regulates food intake, energy balance, growth hormone release, and reproduction.",
+  263: "Anteroventral preoptic nucleus. Part of the preoptic area involved in sleep regulation, thermoregulation, and reproductive behavior.",
+  272: "Anteroventral periventricular nucleus. Sexually dimorphic nucleus in the preoptic region; critical for generating the preovulatory LH surge that triggers ovulation.",
+  830: "Dorsomedial hypothalamic nucleus. Involved in circadian control of feeding, body weight, and stress responses; projects to brainstem autonomic centers and regulates sympathetic outflow.",
+  804: "Fields of Forel. Fiber tracts and associated neurons at the junction of the hypothalamus and midbrain; involved in motor coordination and relay between midbrain tegmentum and hypothalamus.",
+  194: "Lateral hypothalamic area. Contains orexin/hypocretin and melanin-concentrating hormone neurons; regulates arousal, feeding, sleep-wake transitions, and reward; projects throughout the brain.",
+  210: "Lateral mammillary nucleus. Part of the mammillary body; receives head-direction signals from the dorsal tegmental nucleus; involved in spatial navigation.",
+  452: "Median preoptic nucleus. Involved in thermoregulation, fluid homeostasis, and sleep; contains osmosensitive neurons that relay signals to vasopressin-producing cells.",
+  491: "Medial mammillary nucleus. Part of the Papez circuit; receives fornix input from the hippocampus and projects to the anterior thalamus; critical for episodic memory and spatial navigation.",
+  732: "Medial mammillary nucleus, median part. A subdivision of the medial mammillary nucleus involved in memory and navigation circuits.",
+  515: "Medial preoptic nucleus. Critical for male sexual behavior, parental behavior, and thermoregulation; contains sexually dimorphic nuclei regulated by gonadal hormones.",
+  523: "Medial preoptic area. Integrates gonadal hormone signals to regulate reproductive behavior, thermoregulation, and sleep; major site of testosterone action.",
+  531: "Medial pretectal area. Part of the pretectal complex involved in visual reflexes and the control of pupil diameter.",
+  946: "Posterior hypothalamic nucleus. Involved in thermogenesis, arousal, and autonomic regulation; integrates thermoregulatory and behavioral state signals.",
+  980: "Dorsal premammillary nucleus. A key node for processing threat and predator stress; involved in organizing defensive behavior and coordinating hypothalamic defense responses.",
+  1004:"Ventral premammillary nucleus. Involved in reproductive behavior; receives olfactory input and projects to hypothalamic areas controlling gonadotropin release.",
+  38:  "Paraventricular hypothalamic nucleus. Contains CRH, vasopressin, and oxytocin neurons; central regulator of the HPA stress axis, autonomic nervous system, and neuroendocrine function.",
+  63:  "Paraventricular hypothalamic nucleus, descending division. Projects to brainstem autonomic nuclei and spinal cord; regulates sympathetic and parasympathetic outflow and cardiovascular function.",
+  30:  "Periventricular hypothalamic nucleus, anterior part. Contains somatostatin neurons inhibiting growth hormone release; involved in neuroendocrine regulation.",
+  118: "Periventricular hypothalamic nucleus, intermediate part. Contains dopaminergic neurons regulating prolactin release; part of the tuberoinfundibular dopamine system.",
+  126: "Periventricular hypothalamic nucleus, posterior part. Involved in neuroendocrine regulation and reproductive control.",
+  133: "Periventricular hypothalamic nucleus, preoptic part. Contains neuroendocrine neurons involved in reproductive and autonomic regulation.",
+  173: "Retrochiasmatic area. Transition zone between the caudal hypothalamus and the optic chiasm region; involved in neuroendocrine integration.",
+  347: "Subparaventricular zone. Region immediately adjacent to the PVH; integrates circadian signals from the SCN to regulate sleep, feeding, and autonomic rhythms.",
+  286: "Suprachiasmatic nucleus. Master circadian pacemaker; receives direct retinal input via the retinohypothalamic tract and generates 24-hour biological rhythms that are distributed to the rest of the brain.",
+  390: "Supraoptic nucleus. Contains magnocellular neurons producing vasopressin and oxytocin that are released directly into the bloodstream; regulates water balance, blood pressure, and social bonding.",
+  525: "Supramammillary nucleus. Sends theta-pacing signals to the hippocampus independently of the medial septum; involved in spatial memory and sensorimotor integration.",
+  614: "Tuberal nucleus. Part of the hypothalamic tuberal region; involved in reproductive and metabolic regulation.",
+  1126:"Tuberomammillary nucleus, dorsal part. Contains histaminergic neurons promoting wakefulness; projects widely to the cortex; targeted by sedating antihistamines.",
+  1:   "Tuberomammillary nucleus, ventral part. Contains histaminergic neurons involved in promoting arousal and wakefulness; part of the ascending arousal system.",
+  693: "Ventromedial hypothalamic nucleus. Involved in satiety signaling, defensive behavior, and sexual behavior; contains dense estrogen receptors; a key node for glucose sensing and energy homeostasis.",
+  689: "Ventrolateral preoptic nucleus. Contains galanin/GABA neurons that actively promote sleep by inhibiting the ascending arousal systems; the main 'sleep switch' in the brain.",
+  763: "Vascular organ of the lamina terminalis. Circumventricular organ lacking a blood-brain barrier; detects plasma osmolality and circulating angiotensin II to regulate fluid balance and thirst.",
+  338: "Subfornical organ. Circumventricular organ without a blood-brain barrier; detects circulating hormones including angiotensin II and relaxin; controls thirst, salt appetite, and fluid homeostasis.",
+  1109:"Parastrial nucleus. Small nucleus adjacent to the stria terminalis; involved in neuroendocrine signaling.",
+  1124:"Suprachiasmatic preoptic nucleus. Part of the preoptic area adjacent to the SCN; involved in circadian-regulated reproductive behavior.",
+
+  // ── Olfactory system ───────────────────────────────────────────────────────
+  507: "Main olfactory bulb. First central relay of olfactory information; performs initial odor processing and spatial mapping; projects to piriform cortex, amygdala, and entorhinal cortex.",
+  151: "Accessory olfactory bulb. Processes pheromone signals from the vomeronasal organ; projects to the medial amygdala and hypothalamus to regulate social and reproductive behavior.",
+  159: "Anterior olfactory nucleus. Early olfactory processing station that modulates olfactory bulb activity via centrifugal feedback; involved in olfactory memory and discrimination.",
+  566: "Postpiriform transition area. Transition zone between piriform cortex and the amygdala; part of the primary olfactory cortex.",
+  619: "Nucleus of the lateral olfactory tract. Receives direct mitral cell input from the olfactory bulb; part of the primary olfactory cortex.",
+  597: "Taenia tecta, dorsal part. Hippocampal rudiment overlying the olfactory bulb; receives olfactory input and is involved in olfactory processing.",
+  605: "Taenia tecta, ventral part. Part of the olfactory cortex; involved in processing olfactory information.",
+
+  // ── Claustrum and related ──────────────────────────────────────────────────
+  583: "Claustrum. Thin sheet of neurons densely interconnected with virtually all areas of the cerebral cortex; proposed to coordinate cortical activity across sensory modalities and may play a role in conscious perception.",
+  952: "Endopiriform nucleus, dorsal part. Deep layer of olfactory cortex receiving piriform input; highly susceptible to seizure activity and involved in olfactory processing.",
+  966: "Endopiriform nucleus, ventral part. Deep endopiriform region involved in olfactory processing.",
+  342: "Substantia innominata. Contains the nucleus basalis of Meynert with cholinergic neurons projecting to the entire cerebral cortex; critical for attention, learning, and memory; degeneration of these neurons contributes to Alzheimer's disease.",
+  298: "Magnocellular nucleus. Contains large cholinergic neurons projecting to cortex and amygdala; part of the basal forebrain cholinergic system supporting attention and memory.",
+
+  // ── Midbrain ───────────────────────────────────────────────────────────────
+  795: "Periaqueductal gray. Surrounds the cerebral aqueduct; a hub for integrating and coordinating responses to pain, threat, and stress; contains opioid-sensitive neurons mediating analgesia; organizes vocalization, reproductive behavior, and defensive responses.",
+  214: "Red nucleus. Contains magnocellular (rubrospinal) and parvicellular (rubro-olivary) neurons; the magnocellular division is the origin of the rubrospinal tract for limb movement control; receives cerebellar input from the interposed nucleus.",
+  246: "Midbrain reticular nucleus, retrorubral area. Located caudal to the red nucleus; contains dopaminergic A8 group neurons; involved in motor control and reward processing.",
+  128: "Midbrain reticular nucleus. Brainstem motor region involved in locomotion, postural control, and arousal; an important origin of reticulospinal fibers descending to the spinal cord.",
+  616: "Cuneiform nucleus. Part of the mesencephalic locomotor region; stimulation elicits locomotion; projects to the reticular formation and coordinates locomotor rhythm initiation.",
+  231: "Anterior tegmental nucleus. Small midbrain tegmental nucleus; involved in limbic and autonomic regulation.",
+  880: "Dorsal tegmental nucleus. Contains head-direction cells; part of the Papez-adjacent circuit for spatial navigation; projects to mammillary bodies and anterior thalamus.",
+  100: "Interpeduncular nucleus. Receives habenular input via the fasciculus retroflexus; involved in stress responses, anxiety, circadian rhythms, and the aversive effects of nicotine.",
+  162: "Laterodorsal tegmental nucleus. Contains cholinergic neurons involved in REM sleep generation, arousal, and reward; projects to thalamus, hypothalamus, and limbic areas.",
+  1052:"Pedunculopontine nucleus. Contains cholinergic and glutamatergic neurons involved in movement initiation, arousal, and gait control; part of the mesencephalic locomotor region; degeneration contributes to gait freezing in Parkinson's disease.",
+  749: "Ventral tegmental area. Contains dopaminergic neurons of the mesolimbic and mesocortical systems; projects to nucleus accumbens (reward and motivation) and prefrontal cortex (cognition); critical for reinforcement learning, addiction, and motivated behavior.",
+  591: "Central linear nucleus raphe. Contains dopaminergic neurons near the ventral tegmental area; involved in behavioral and cardiovascular regulation.",
+  679: "Superior central nucleus raphe. Contains serotonergic neurons projecting to hippocampus and cortex; involved in anxiety, depression, and associative learning.",
+  872: "Dorsal raphe nucleus. The largest serotonergic nucleus in the brain; projects throughout the forebrain; regulates mood, anxiety, sleep-wake cycles, and appetite; the primary target of SSRI antidepressants.",
+  12:  "Interfascicular nucleus raphe. Contains dopaminergic neurons adjacent to the fasciculus retroflexus near the VTA; involved in limbic and reward regulation.",
+  197: "Rostral linear nucleus raphe. Contains serotonergic and dopaminergic neurons; involved in limbic mood and motivation regulation.",
+  1044:"Peripeduncular nucleus. Located adjacent to the cerebral peduncle; receives auditory and multimodal input; involved in acoustic and limbic processing.",
+  1077:"Perireunensis nucleus. Small thalamic nucleus adjacent to the nucleus of reuniens; TBD specific function.",
+  609: "Subparafascicular area. Located adjacent to the parafascicular nucleus; receives auditory and somatosensory input; projects to amygdala; involved in multimodal thalamic integration.",
+  414: "Subparafascicular nucleus, magnocellular part. Thalamic nucleus receiving auditory and somatosensory input; projects to the amygdala; involved in multimodal sensory-limbic integration.",
+  422: "Subparafascicular nucleus, parvicellular part. Projects to auditory cortex and limbic areas; involved in multimodal thalamic processing.",
+  356: "Preparasubthalamic nucleus. Small nucleus adjacent to the subthalamic region; TBD specific function.",
+  364: "Parasubthalamic nucleus. Small nucleus adjacent to the STN involved in hypothalamic-basal ganglia interactions.",
+  757: "Ventral tegmental nucleus. Small tegmental nucleus involved in spatial orientation and navigation; part of the circuit linking mammillary bodies and the dorsal tegmentum.",
+
+  // ── Raphe and pontine tegmentum ────────────────────────────────────────────
+  206: "Nucleus raphe magnus. Contains serotonergic neurons that project via the dorsal raphe spinal tract to the spinal cord dorsal horn; a key node of the descending pain-control system that produces stimulation-produced analgesia.",
+  222: "Nucleus raphe obscurus. Serotonergic nucleus in the medullary raphe; projects to spinal cord; involved in somatic motor facilitation, autonomic regulation, and control of respiratory rhythm.",
+  230: "Nucleus raphe pallidus. Contains serotonergic neurons that project to the spinal cord; involved in thermoregulation by activating sympathetic pathways to brown adipose tissue and skin vasculature.",
+  238: "Nucleus raphe pontis. Pontine raphe nucleus; projects to cerebellum and spinal cord; involved in modulation of cerebellar and spinal motor activity.",
+
+  // ── Parabrachial and related ───────────────────────────────────────────────
+  867: "Parabrachial nucleus. Integrates pain, taste, thermosensory, and visceral information; the critical ascending relay for interoceptive signals from the spinal cord and nucleus of the solitary tract to the forebrain (amygdala, hypothalamus, thalamus).",
+  123: "Kölliker-Fuse nucleus. Part of the lateral parabrachial complex; a key node for respiratory pattern generation, particularly controlling inspiratory-expiratory phase transitions.",
+
+  // ── Locus coeruleus and noradrenergic ─────────────────────────────────────
+  147: "Locus coeruleus. Primary noradrenergic nucleus; projects widely to cerebral cortex, hippocampus, cerebellum, and spinal cord; regulates arousal, attention, cognitive flexibility, and the stress response.",
+  283: "Lateral tegmental nucleus. Contains noradrenergic A1 and A2 neurons; involved in cardiovascular regulation and autonomic control.",
+  350: "Subceruleus nucleus. Located ventral to the locus coeruleus; contains noradrenergic A7 neurons; involved in REM sleep generation and descending motor regulation.",
+  358: "Sublaterodorsal nucleus. Key generator of REM sleep; glutamatergic neurons here project to the spinal cord to produce the muscle atonia characteristic of REM sleep.",
+
+  // ── Pontine and medullary reticular formation ──────────────────────────────
+  280: "Barrington's nucleus. Contains the sole neurons driving bladder voiding via excitatory projections to sacral parasympathetic neurons; also involved in defecation and pelvic organ coordination.",
+  1048:"Gigantocellular reticular nucleus. The largest reticular nucleus in the medullary RF; the primary origin of reticulospinal fibers; involved in locomotion, posture, and somatic motor facilitation.",
+  136: "Intermediate reticular nucleus. Medullary reticular region involved in autonomic and motor regulation; coordinates swallowing, respiration, and other rhythmic behaviors.",
+  307: "Magnocellular reticular nucleus. Pontine reticular nucleus contributing to the reticulospinal tract; involved in postural and somatic motor control.",
+  1098:"Medullary reticular nucleus, dorsal part. Medullary reticular region involved in descending motor control via the reticulospinal tract.",
+  1107:"Medullary reticular nucleus, ventral part. Medullary reticular region involved in motor and autonomic regulation.",
+  995: "Paramedian reticular nucleus. Small medullary nucleus involved in cerebellar control of eye movements; projects to the cerebellar vermis.",
+  852: "Parvicellular reticular nucleus. Part of the medullary reticular formation involved in swallowing, respiration, and autonomic regulation.",
+  970: "Paragigantocellular reticular nucleus, dorsal part. Located adjacent to the gigantocellular nucleus; involved in autonomic and motor regulation.",
+  978: "Paragigantocellular reticular nucleus, lateral part. Contains pre-sympathetic neurons and noradrenergic A1 cells; involved in cardiovascular regulation and descending pain modulation.",
+  1093:"Pontine reticular nucleus, caudal part. Part of the paramedian pontine reticular formation (PPRF); involved in generating horizontal saccades and contributes to the reticulospinal tract.",
+  146: "Pontine reticular nucleus. Rostral part of the PPRF; involved in horizontal gaze control, postural regulation, and reticulospinal motor commands.",
+  574: "Tegmental reticular nucleus. Pontine precerebellar nucleus relaying cortical and tectal signals to the cerebellum for motor coordination.",
+  1069:"Parapyramidal nucleus. Small serotonergic nucleus near the pyramidal tract in the medullary base; projects to spinal cord; involved in motor and autonomic regulation.",
+  604: "Nucleus incertus. Contains relaxin-3-expressing neurons projecting to hippocampus and septum; involved in stress responses, arousal, and hippocampal theta rhythm regulation.",
+
+  // ── Locus coeruleus-adjacent ───────────────────────────────────────────────
+  318: "Supragenual nucleus. Small nucleus in the pontine dorsal tegmentum involved in motor coordination and vestibular integration.",
+
+  // ── Colliculi ──────────────────────────────────────────────────────────────
+  811: "Inferior colliculus, central nucleus. Primary auditory midbrain nucleus; integrates ascending auditory streams; performs binaural processing, sound localization, and spectrotemporal analysis.",
+  820: "Inferior colliculus, dorsal nucleus. Higher-order auditory nucleus involved in multisensory integration and auditory learning.",
+  828: "Inferior colliculus, external nucleus. Multimodal nucleus receiving somatosensory and auditory input; a key site for auditory-motor and sensorimotor integration.",
+  580: "Nucleus of the brachium of the inferior colliculus. Relay nucleus connecting the inferior colliculus to the medial geniculate complex; involved in auditory thalamic processing.",
+  271: "Nucleus sagulum. Part of the lateral lemniscal system; involved in auditory processing and projects to the inferior colliculus.",
+  851: "Superior colliculus, optic layer. Receives direct retinal input; drives visual orienting reflexes toward salient stimuli via projections to premotor brainstem circuits.",
+  842: "Superior colliculus, superficial gray layer. Primary visual input layer; responds to luminance and contrast; the main driver of visual orienting reflexes.",
+  834: "Superior colliculus, zonal layer. Superficial visual layer of the superior colliculus; receives retinal input.",
+  10:  "Superior colliculus, intermediate gray layer (motor-related). Integrates visual, auditory, and somatosensory inputs to generate orienting movements of the head and eyes.",
+  17:  "Superior colliculus, intermediate white layer (motor-related). Contains efferent fibers conveying orienting movement commands from the SC to brainstem premotor circuits.",
+  26:  "Superior colliculus, deep gray layer (motor-related). Coordinates head and body orientation movements; receives input from frontal cortex, basal ganglia, and sensory layers.",
+  42:  "Superior colliculus, deep white layer (motor-related). White matter layer carrying motor output from the deep SC.",
+  874: "Parabigeminal nucleus. Cholinergic nucleus adjacent to the brachium of the superior colliculus; modulates SC activity and visual attention.",
+
+  // ── Pretectum ──────────────────────────────────────────────────────────────
+  215: "Anterior pretectal nucleus. Involved in descending pain modulation; electrical stimulation produces analgesia; also involved in attention and defensive behavior.",
+  706: "Olivary pretectal nucleus. Receives direct retinal input from intrinsically photosensitive retinal ganglion cells; the primary mediator of the pupillary light reflex.",
+  634: "Nucleus of the posterior commissure. Part of the pretectal region; involved in the coordination of vertical eye movements.",
+  1061:"Posterior pretectal nucleus. Part of the pretectal area involved in visual and oculomotor reflexes.",
+  628: "Nucleus of the optic tract. Receives direct retinal input; drives compensatory eye movements (optokinetic nystagmus) in response to whole-field visual motion.",
+
+  // ── Accessory optic system ─────────────────────────────────────────────────
+  66:  "Lateral terminal nucleus of the accessory optic system. Detects optic flow signals; drives the optokinetic reflex to stabilize gaze during self-motion.",
+
+  // ── Zona incerta and subthalamic region ───────────────────────────────────
+  797: "Zona incerta. Subthalamic GABAergic nucleus that gates and coordinates sensory, motor, and limbic processing; regulates feeding, attention, defensive behaviors, and rhythmic motor patterns.",
+
+  // ── Auditory brainstem ─────────────────────────────────────────────────────
+  96:  "Dorsal cochlear nucleus. Processes complex auditory features including spectral notches used for sound localization in elevation; projects to the contralateral inferior colliculus.",
+  101: "Ventral cochlear nucleus. Initial processing of auditory timing, frequency, and intensity; three projection pathways mediate binaural processing for sound localization.",
+  112: "Granular lamina of the cochlear nuclei. Intermediate layer between the dorsal and ventral cochlear nuclei involved in auditory processing.",
+  560: "Cochlear nucleus, subpeduncular granular region. Part of the cochlear nucleus complex involved in auditory processing.",
+  642: "Nucleus of the trapezoid body. Receives calyceal input from the anteroventral cochlear nucleus; critical for encoding interaural time differences for low-frequency sound localization.",
+  612: "Nucleus of the lateral lemniscus. Auditory nucleus on the ascending pathway; involved in binaural processing and temporal coding before reaching the inferior colliculus.",
+  90:  "Nucleus of the lateral lemniscus, horizontal part. Part of the lateral lemniscal complex involved in binaural auditory processing.",
+  99:  "Nucleus of the lateral lemniscus, ventral part. Processes auditory timing information; projects to the inferior colliculus.",
+  114: "Superior olivary complex, lateral part. Computes interaural level differences for high-frequency sound localization; receives excitatory cochlear nucleus input ipsilaterally and inhibitory input contralaterally via the MNTB.",
+  105: "Superior olivary complex, medial part. Binaural coincidence detector for interaural time differences; critical for low-frequency sound localization.",
+  122: "Superior olivary complex, periolivary region. Provides efferent olivocochlear feedback to cochlear outer hair cells; modulates cochlear gain and sensitivity.",
+  887: "Efferent cochlear group. Neurons providing direct efferent innervation to cochlear hair cells; modulates outer hair cell motility and cochlear sensitivity.",
+
+  // ── Trigeminal system ──────────────────────────────────────────────────────
+  7:   "Principal sensory nucleus of the trigeminal. Processes discriminative touch from the face; the facial analog of the dorsal column nuclei; projects to VPM thalamus.",
+  429: "Spinal nucleus of the trigeminal, caudal part. Processes pain and temperature from the face and oral cavity; analogous to the superficial spinal cord dorsal horn; a key relay for orofacial pain and headache.",
+  437: "Spinal nucleus of the trigeminal, interpolar part. Processes deep pain from teeth and temporomandibular joint; involved in dental pain and headache pathways.",
+  445: "Spinal nucleus of the trigeminal, oral part. Processes orofacial mechanoreception and nociception; important for jaw reflexes and orofacial pain.",
+  460: "Midbrain trigeminal nucleus. Contains the cell bodies of primary proprioceptive afferents from jaw muscles; the only location in the CNS where primary sensory neuron cell bodies reside (outside the dorsal root ganglia).",
+  534: "Supratrigeminal nucleus. Located dorsal to the motor trigeminal nucleus; involved in jaw-opening reflexes and coordination of masticatory rhythm.",
+  621: "Motor nucleus of the trigeminal. Contains motor neurons innervating the muscles of mastication (masseter, temporalis, pterygoids, digastric); controls chewing movements.",
+
+  // ── Cranial motor nuclei ───────────────────────────────────────────────────
+  661: "Facial motor nucleus. Contains motor neurons innervating all muscles of facial expression via the facial nerve (CN VII); organized into subnuclei for different facial regions.",
+  576: "Accessory facial motor nucleus. Small accessory group of facial motoneurons associated with the facial motor nucleus.",
+  653: "Abducens nucleus. Contains motor neurons for the lateral rectus muscle (horizontal eye movements) and interneurons projecting via the MLF to drive the contralateral medial rectus.",
+  568: "Accessory abducens nucleus. Small accessory group adjacent to the abducens nucleus; may contribute to retraction of the globe and eyelid movements.",
+  35:  "Oculomotor nucleus. Contains motor neurons for four extraocular muscles (medial, superior, inferior recti and inferior oblique) and levator palpebrae; controls vertical and medial eye movements.",
+  115: "Trochlear nucleus. Contains motor neurons for the superior oblique muscle; the only cranial nerve to exit the brainstem dorsally; controls intorsion and depression of the adducted eye.",
+  975: "Edinger-Westphal nucleus. Contains preganglionic parasympathetic neurons projecting to the ciliary ganglion; controls pupillary constriction and lens accommodation.",
+  67:  "Interstitial nucleus of Cajal. Part of the vertical gaze holding network; integrates eye velocity signals to maintain vertical and torsional eye position.",
+  587: "Nucleus of Darkschewitsch. Involved in vertical gaze control; part of the pretecto-olivary pathway coordinating eye movements and motor coordination.",
+  773: "Hypoglossal nucleus. Contains motor neurons innervating all tongue muscles via the hypoglossal nerve (CN XII); critical for swallowing, chewing, and speech articulation.",
+  143: "Nucleus ambiguus, ventral division. Contains motor neurons for pharyngeal and laryngeal muscles via CN IX and X; critical for swallowing and vocalization.",
+  939: "Nucleus ambiguus, dorsal division. Contains parasympathetic preganglionic neurons projecting to the cardiac ganglion (heart rate control); also innervates soft palate.",
+  839: "Dorsal motor nucleus of the vagus nerve. Contains preganglionic parasympathetic neurons projecting via the vagus nerve to thoracic and abdominal viscera; regulates heart rate, respiratory rate, and gastrointestinal motility.",
+  106: "Inferior salivatory nucleus. Contains preganglionic parasympathetic neurons for the parotid gland via the glossopharyngeal nerve (CN IX); controls salivation.",
+
+  // ── Nucleus of the solitary tract and area postrema ───────────────────────
+  651: "Nucleus of the solitary tract. Primary visceral sensory relay nucleus; receives all visceral afferents via CN VII, IX, and X; processes cardiovascular, respiratory, and gastrointestinal signals; projects to hypothalamus, amygdala, and parabrachial nucleus.",
+  859: "Parasolitary nucleus. Small nucleus adjacent to the NTS involved in visceral sensory integration.",
+  207: "Area postrema. Circumventricular organ lacking a blood-brain barrier; serves as the chemoreceptor trigger zone for vomiting; detects blood-borne toxins, emetic drugs, and hormones.",
+
+  // ── Vestibular nuclei ──────────────────────────────────────────────────────
+  225: "Spinal vestibular nucleus. Processes vestibular signals related to body rotation and head position; projects to the spinal cord via the vestibulospinal tract for postural control.",
+  202: "Medial vestibular nucleus. Integrates vestibular and visual signals to generate the vestibuloocular reflex (VOR) and gaze stabilization; projects to oculomotor nuclei.",
+  209: "Lateral vestibular nucleus. Contains Deiters' neurons; the origin of the lateral vestibulospinal tract providing powerful facilitation of extensor motor neurons for postural control; receives cerebellar input.",
+  217: "Superior vestibular nucleus. Processes semicircular canal input; contributes to eye movement stabilization and postural reflexes via projections to oculomotor nuclei.",
+  640: "Efferent vestibular nucleus. Provides efferent feedback to hair cells of the vestibular labyrinth; modulates the sensitivity of vestibular afferents.",
+
+  // ── Olivary and precerebellar ──────────────────────────────────────────────
+  83:  "Inferior olivary complex. The sole source of cerebellar climbing fibers that synapse on Purkinje cells; encodes motor errors and timing signals critical for cerebellar motor learning and coordination.",
+  955: "Lateral reticular nucleus, magnocellular part. Precerebellar nucleus receiving spinal cord, red nucleus, and cortical input; projects to the cerebellar vermis; involved in limb movement coordination.",
+  963: "Lateral reticular nucleus, parvicellular part. Precerebellar nucleus involved in transmitting spinal and supraspinal signals to the cerebellum.",
+  931: "Pontine gray. The largest precerebellar nucleus; relays cortical motor and cognitive information to the cerebellar hemispheres via the pontocerebellar tract; critical for voluntary movement coordination.",
+
+  // ── Other medullary ────────────────────────────────────────────────────────
+  203: "Linear nucleus of the medulla. Small medullary nucleus; TBD specific function.",
+  169: "Nucleus prepositus. Neural integrator for horizontal gaze holding; receives abducens nucleus input and maintains eye position by integrating eye velocity signals.",
+  161: "Nucleus intercalatus. Small medullary nucleus near the solitary tract; involved in integrating eye movement and visceral signals.",
+  177: "Nucleus of Roller. Part of the hypoglossal complex; involved in tongue movement coordination.",
+
+  // ── Cerebellar deep nuclei ─────────────────────────────────────────────────
+  846: "Dentate nucleus. The largest deep cerebellar nucleus; receives input from the lateral cerebellar hemisphere; projects via the superior cerebellar peduncle to the motor thalamus (VL); critical for voluntary limb movement, cognitive processing, and motor learning.",
+  91:  "Interposed nucleus. Deep cerebellar nucleus between the dentate and fastigial nuclei; involved in correcting limb movements during reaching; projects to the red nucleus and motor thalamus.",
+  989: "Fastigial nucleus. Deep cerebellar nucleus receiving input from the cerebellar vermis; projects to brainstem reticular and vestibular nuclei and the spinal cord; controls trunk, axial muscles, and gaze.",
+  372: "Infracerebellar nucleus. Small nucleus located below the cerebellum; TBD specific function.",
+
+  // ── Cerebellar cortex ──────────────────────────────────────────────────────
+  1056:"Crus 1 (ansiform lobule). Lateral cerebellar hemisphere lobule; receives pontine and climbing fiber input; involved in higher cognitive functions and coordination with associative cortex.",
+  1064:"Crus 2 (ansiform lobule). Lateral cerebellar hemisphere lobule; involved in cognitive processing, fine motor control, and communication with the cerebral cortex.",
+  1049:"Flocculus. Part of the vestibulocerebellum; critical for vestibuloocular reflex (VOR) adaptation and smooth pursuit eye movements.",
+  1041:"Paraflocculus. Adjacent to the flocculus; involved in VOR and optokinetic reflex control.",
+  912: "Lingula (lobule I). The most anterior vermal lobule; receives spinocerebellar input; involved in proprioceptive processing and trunk control.",
+  976: "Lobule II. Anterior vermal lobule receiving spinocerebellar tract input; involved in proprioception and somatosensory integration.",
+  984: "Lobule III. Anterior vermal lobule; part of the spinocerebellar territory for proprioceptive processing.",
+  1091:"Lobules IV–V (culmen). Anterior vermal lobules receiving dense spinocerebellar input; involved in coordination of limb movements.",
+  936: "Declive (lobule VI). Posterior vermal lobule receiving visual and vestibular input; involved in visuomotor control.",
+  944: "Folium-tuber vermis (lobule VII). Posterior vermal lobule receiving spinocerebellar and mossy fiber input.",
+  951: "Pyramis (lobule VIII). Posterior vermal lobule receiving spinocerebellar and vestibulocerebellar input.",
+  957: "Uvula (lobule IX). Posterior vermal lobule receiving strong vestibular input; involved in balance and postural control.",
+  968: "Nodulus (lobule X). Part of the vestibulocerebellum; receives direct vestibular input; involved in responses to head tilt, otolith signals, and optokinetic responses.",
+  1033:"Copula pyramidis. Posterior lobe hemisphere region adjacent to the pyramis; involved in motor coordination.",
+  1025:"Paramedian lobule. Hemisphere lobule adjacent to the vermis; involved in limb coordination via spinocerebellar and corticocerebellar input.",
+  1007:"Simple lobule. Hemisphere lobule receiving somatosensory cortex and spinocerebellar input; involved in limb movement control.",
+
+  // ── Small/specialized nuclei ───────────────────────────────────────────────
+  765: "Nucleus x. Small vestibular-related nucleus near the superior vestibular nucleus; TBD specific function.",
+  781: "Nucleus y. Part of the paramedian tract group; involved in eye movement control and vestibular integration.",
+  789: "Nucleus z. Located at the medulla-spinal cord junction; receives proprioceptive input from the forelimb; part of the dorsal column-medial lemniscal pathway for upper limb proprioception.",
+  898: "Pontine central gray. Gray matter surrounding the pontine tegmentum; involved in autonomic and behavioral state regulation.",
+};
+
 // ─── UI helpers ───────────────────────────────────────────────────────────────
 
 /** Mark one button in a toggle pair as active and the other as inactive. */
@@ -126,6 +536,7 @@ function showInfo(allenId, conns, metadata, mode, onSelectRegion = null) {
   document.getElementById('region-acronym').textContent = meta.acronym || allenId;
   document.getElementById('region-name').textContent    = meta.name    || '';
   document.getElementById('no-data-reason').style.display = 'none';
+  setDescription(REGION_DESCRIPTIONS[allenId] || '');
 
   const isEff     = mode === 'efferent';
   const partnerId = isEff ? 'projection_structure_id' : 'injection_structure_id';
@@ -142,6 +553,7 @@ function showInfo(allenId, conns, metadata, mode, onSelectRegion = null) {
   list.innerHTML = '';
 
   for (const conn of sorted) {
+    if (conn.normalized_value / localMax < 0.02) break; // hide tail entries that are <2% of max
     const isTract     = TRACT_IDS.has(conn[partnerId]);
     // Tracts only make sense as efferent targets; skip them in afferent mode.
     if (isTract && !isEff) continue;
@@ -174,7 +586,7 @@ function showInfo(allenId, conns, metadata, mode, onSelectRegion = null) {
 }
 
 /** Show the info panel with a no-data explanation for regions without connectivity. */
-function showNoDataInfo(meta, reason) {
+function showNoDataInfo(meta, reason, allenId = null) {
   document.getElementById('region-acronym').textContent = meta.acronym || '?';
   document.getElementById('region-name').textContent    = meta.name    || '';
   document.getElementById('no-data-label').textContent  = reason.label;
@@ -182,6 +594,7 @@ function showNoDataInfo(meta, reason) {
   document.getElementById('no-data-reason').style.display = 'flex';
   document.getElementById('connections-list').innerHTML = '';
   document.getElementById('known-connections').style.display = 'none';
+  setDescription(allenId != null ? (REGION_DESCRIPTIONS[allenId] || '') : '');
 }
 
 /** Clear the info panel back to its blank state (called on background click). */
@@ -191,6 +604,7 @@ function clearInfo() {
   document.getElementById('no-data-reason').style.display = 'none';
   document.getElementById('connections-list').innerHTML = '';
   document.getElementById('known-connections').style.display = 'none';
+  setDescription('');
 }
 
 /** Reset the descending pathway schematic to its dim resting state. */
@@ -912,13 +1326,20 @@ async function main() {
   // ── Hover glow ──────────────────────────────────────────────────────────────
   // Assign the module-level stubs so top-level functions (showInfo) can call them.
 
-  let glowRaf     = null;
-  let glowAllenId = null;
+  let glowRaf          = null;
+  let glowAllenId      = null;
+  let glowSavedOpacity = null;
 
   startGlow = function(allenId) {
     if (!allenId || glowAllenId === allenId) return;
     stopGlow();
     glowAllenId = allenId;
+
+    // Lift element opacity to 1 so the stroke glow is visible even on dimmed regions.
+    // Save the inline opacity first so we can restore it on mouse-leave.
+    const node = paths.filter(d => d.allenId === allenId).node();
+    glowSavedOpacity = node?.style.opacity || null;
+
     const t0     = performance.now();
     const period = 1300;
 
@@ -926,6 +1347,7 @@ async function main() {
       if (glowAllenId !== allenId) return;
       const s = (Math.sin(((now - t0) / period) * 2 * Math.PI) + 1) / 2;
       paths.filter(d => d.allenId === allenId)
+        .style('opacity',        '1')
         .style('stroke',         '#fff')
         .style('stroke-width',   `${1.5 + s * 7}px`)
         .style('stroke-opacity', 0.45 + s * 0.55);
@@ -938,8 +1360,12 @@ async function main() {
     if (glowRaf !== null) { cancelAnimationFrame(glowRaf); glowRaf = null; }
     if (glowAllenId !== null) {
       paths.filter(d => d.allenId === glowAllenId)
-        .style('stroke', null).style('stroke-width', null).style('stroke-opacity', null);
-      glowAllenId = null;
+        .style('opacity',        glowSavedOpacity)
+        .style('stroke',         null)
+        .style('stroke-width',   null)
+        .style('stroke-opacity', null);
+      glowAllenId      = null;
+      glowSavedOpacity = null;
     }
   };
 
@@ -1029,6 +1455,7 @@ async function main() {
     document.getElementById('region-name').textContent       = sites.sub;
     document.getElementById('no-data-reason').style.display  = 'none';
     document.getElementById('known-connections').style.display = 'none';
+    setDescription('');
     const tooltip   = document.getElementById('tooltip');
     const list      = document.getElementById('connections-list');
     list.innerHTML  = '';
@@ -1104,7 +1531,7 @@ async function main() {
       const projMap = metric === 'relative' ? projMapRel : projMapAbs;
       if (!projMap[allenId]?.length) {
         deselect();
-        showNoDataInfo(metadata[allenId] || {}, NO_DATA_REASONS[allenId] || DEFAULT_NO_DATA);
+        showNoDataInfo(metadata[allenId] || {}, NO_DATA_REASONS[allenId] || DEFAULT_NO_DATA, allenId);
         return;
       }
       selected = allenId;
@@ -1116,7 +1543,7 @@ async function main() {
     const hasData = mode === 'efferent' ? !!injMap[allenId] : !!projMap[allenId];
     if (!hasData) {
       deselect();
-      showNoDataInfo(metadata[allenId] || {}, NO_DATA_REASONS[allenId] || DEFAULT_NO_DATA);
+      showNoDataInfo(metadata[allenId] || {}, NO_DATA_REASONS[allenId] || DEFAULT_NO_DATA, allenId);
       return;
     }
     selected = allenId;

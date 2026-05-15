@@ -72,6 +72,61 @@ body {
   color: #888;
 }
 
+#description-section {
+  display: flex;
+  flex-direction: column;
+}
+
+#description-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+#description-toggle:hover .desc-label,
+#description-toggle:hover #description-arrow {
+  color: #888;
+}
+
+#description-arrow {
+  font-size: 0.45rem;
+  color: #555;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+#description-arrow.open {
+  transform: rotate(90deg);
+}
+
+.desc-label {
+  font-size: 0.58rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #555;
+}
+
+#description-body {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease;
+}
+
+#description-body.open {
+  max-height: 400px;
+}
+
+#description-text {
+  font-size: 0.78rem;
+  color: #888;
+  line-height: 1.5;
+  padding: 5px 0 2px;
+}
+
 #no-data-reason {
   display: flex;
   flex-direction: column;
