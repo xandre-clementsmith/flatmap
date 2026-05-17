@@ -866,6 +866,7 @@ async function main() {
       deselect(); clearInfo();
       if (appMode === 'networks') netSelect(null);
       else if (isMobileLayout()) closeMobilePanel();
+      if (isMobileLayout()) closeMobilePathway();
     }
   });
 
