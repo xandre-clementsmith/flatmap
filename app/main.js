@@ -804,9 +804,14 @@ async function main() {
     stopGlow();
     deselect();
     clearInfo();
-    document.getElementById('pathway-wrapper').style.display = 'none';
-    document.getElementById('conn-view').style.display       = 'none';
-    document.getElementById('net-view').style.display        = '';
+    if (isMobileLayout()) {
+      closeMobilePathway();
+      openMobilePanel();
+    } else {
+      document.getElementById('pathway-wrapper').style.display = 'none';
+    }
+    document.getElementById('conn-view').style.display = 'none';
+    document.getElementById('net-view').style.display  = '';
     paths.style('stroke', '#1a1a1a').style('stroke-width', '0.5px').style('stroke-opacity', null);
     netSelect(null);
     buildCommList();
@@ -815,9 +820,13 @@ async function main() {
   function exitNetworksMode() {
     appMode     = 'connectivity';
     netSelected = null;
-    document.getElementById('pathway-wrapper').style.display = '';
-    document.getElementById('conn-view').style.display       = '';
-    document.getElementById('net-view').style.display        = 'none';
+    if (isMobileLayout()) {
+      closeMobilePanel();
+    } else {
+      document.getElementById('pathway-wrapper').style.display = '';
+    }
+    document.getElementById('conn-view').style.display = '';
+    document.getElementById('net-view').style.display  = 'none';
     paths
       .classed('net-dimmed', false)
       .style('stroke', null).style('stroke-width', null).style('stroke-opacity', null)
@@ -856,7 +865,7 @@ async function main() {
     if (event.target.tagName === 'svg' || event.target.tagName === 'g') {
       deselect(); clearInfo();
       if (appMode === 'networks') netSelect(null);
-      if (isMobileLayout()) closeMobilePanel();
+      else if (isMobileLayout()) closeMobilePanel();
     }
   });
 
@@ -956,33 +965,31 @@ async function main() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfoModal(); });
 
   // Mobile drawers
-  const mobilePanelBtn = document.getElementById('mobile-panel-btn');
   const mobilePathBtn  = document.getElementById('mobile-path-btn');
   const infoEl         = document.getElementById('info-panel');
-  const pathPanelEl    = document.getElementById('pathway-panel');
+  const pathWrapperEl  = document.getElementById('pathway-wrapper');
 
   function isMobileLayout() { return window.matchMedia('(max-width: 680px)').matches; }
 
   function openMobilePanel() {
-    pathPanelEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
-    infoEl.classList.add('mobile-open');         mobilePanelBtn.textContent = 'Map ▼';
+    pathWrapperEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
+    infoEl.classList.add('mobile-open');
   }
   function closeMobilePanel() {
-    infoEl.classList.remove('mobile-open'); mobilePanelBtn.textContent = 'Info ▲';
+    infoEl.classList.remove('mobile-open');
   }
   function openMobilePathway() {
-    infoEl.classList.remove('mobile-open');      mobilePanelBtn.textContent = 'Info ▲';
-    pathPanelEl.classList.add('mobile-open');    mobilePathBtn.textContent = 'Map ▼';
+    infoEl.classList.remove('mobile-open');
+    pathWrapperEl.style.display = '';          // clear any inline display:none from desktop mode
+    pathWrapperEl.classList.add('mobile-open');
+    mobilePathBtn.textContent = 'Map ▼';
   }
   function closeMobilePathway() {
-    pathPanelEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
+    pathWrapperEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
   }
 
-  mobilePanelBtn.addEventListener('click', () => {
-    infoEl.classList.contains('mobile-open') ? closeMobilePanel() : openMobilePanel();
-  });
   mobilePathBtn.addEventListener('click', () => {
-    pathPanelEl.classList.contains('mobile-open') ? closeMobilePathway() : openMobilePathway();
+    pathWrapperEl.classList.contains('mobile-open') ? closeMobilePathway() : openMobilePathway();
   });
 }
 

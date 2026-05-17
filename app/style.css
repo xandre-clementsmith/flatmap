@@ -806,7 +806,7 @@ line[id^="tract-"] {
 
 /* ── Mobile layout (≤ 680px) ── */
 
-#mobile-panel-btn, #mobile-path-btn { display: none; }
+#mobile-path-btn { display: none; }
 
 @media (max-width: 680px) {
   #title { display: none; }
@@ -820,15 +820,14 @@ line[id^="tract-"] {
     touch-action: none;
   }
 
-  /* Info drawer */
+  /* Info drawer — fixed to viewport */
   #info-panel {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
     height: 50vh;
-    max-height: 50vh;
     border-left: none;
     border-top: 1px solid #333;
     border-radius: 12px 12px 0 0;
@@ -851,29 +850,36 @@ line[id^="tract-"] {
 
   #info-panel.mobile-open { transform: translateY(0); }
 
-  /* Pathway drawer */
-  #pathway-wrapper {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 20;
-  }
-
-  #pathway-tab { display: none; }
-
-  #pathway-panel {
-    width: 100% !important;
-    height: 50vh;
-    max-height: 50vh;
-    border-radius: 12px 12px 0 0;
-    border-top: 1px solid #333;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
+  /* Connectivity panel scrolling */
+  #conn-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
   }
 
-  #pathway-panel::before {
+  #info-content { min-height: 0; }
+
+  /* Pathway drawer — animate the whole wrapper, not the inner panel */
+  #pathway-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    z-index: 20;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    display: flex !important;
+    flex-direction: column;
+    background: #111;
+    border-top: 1px solid #333;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+  }
+
+  #pathway-wrapper::before {
     content: '';
     display: block;
     width: 36px;
@@ -884,14 +890,29 @@ line[id^="tract-"] {
     flex-shrink: 0;
   }
 
-  #pathway-panel.mobile-open { transform: translateY(0); }
+  #pathway-wrapper.mobile-open { transform: translateY(0); }
 
-  /* Floating buttons */
-  #mobile-panel-btn, #mobile-path-btn {
+  #pathway-tab { display: none; }
+
+  #pathway-panel {
+    width: 100% !important;
+    flex: 1 !important;
+    height: auto !important;
+    max-height: none !important;
+    transform: none !important;
+    transition: none !important;
+    overflow-y: auto !important;
+    border-radius: 0 !important;
+    border-top: none !important;
+  }
+
+  /* Floating pathway button */
+  #mobile-path-btn {
     display: flex;
     align-items: center;
-    position: absolute;
+    position: fixed;
     bottom: 20px;
+    right: 16px;
     z-index: 15;
     background: #1e1e1e;
     border: 1px solid #444;
@@ -906,9 +927,6 @@ line[id^="tract-"] {
     user-select: none;
   }
 
-  #mobile-panel-btn { right: 16px; }
-  #mobile-path-btn  { right: 100px; }
-
-  #mobile-panel-btn:active, #mobile-path-btn:active { background: #2a2a2a; }
+  #mobile-path-btn:active { background: #2a2a2a; }
 }
 
