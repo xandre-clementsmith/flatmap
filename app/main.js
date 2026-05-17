@@ -955,14 +955,34 @@ async function main() {
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfoModal(); });
 
-  // Mobile info drawer
+  // Mobile drawers
   const mobilePanelBtn = document.getElementById('mobile-panel-btn');
-  const infoEl = document.getElementById('info-panel');
+  const mobilePathBtn  = document.getElementById('mobile-path-btn');
+  const infoEl         = document.getElementById('info-panel');
+  const pathPanelEl    = document.getElementById('pathway-panel');
+
   function isMobileLayout() { return window.matchMedia('(max-width: 680px)').matches; }
-  function openMobilePanel()  { infoEl.classList.add('mobile-open');    mobilePanelBtn.textContent = 'Map ▼'; }
-  function closeMobilePanel() { infoEl.classList.remove('mobile-open'); mobilePanelBtn.textContent = 'Info ▲'; }
+
+  function openMobilePanel() {
+    pathPanelEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
+    infoEl.classList.add('mobile-open');         mobilePanelBtn.textContent = 'Map ▼';
+  }
+  function closeMobilePanel() {
+    infoEl.classList.remove('mobile-open'); mobilePanelBtn.textContent = 'Info ▲';
+  }
+  function openMobilePathway() {
+    infoEl.classList.remove('mobile-open');      mobilePanelBtn.textContent = 'Info ▲';
+    pathPanelEl.classList.add('mobile-open');    mobilePathBtn.textContent = 'Map ▼';
+  }
+  function closeMobilePathway() {
+    pathPanelEl.classList.remove('mobile-open'); mobilePathBtn.textContent = 'Pathways ▲';
+  }
+
   mobilePanelBtn.addEventListener('click', () => {
     infoEl.classList.contains('mobile-open') ? closeMobilePanel() : openMobilePanel();
+  });
+  mobilePathBtn.addEventListener('click', () => {
+    pathPanelEl.classList.contains('mobile-open') ? closeMobilePathway() : openMobilePathway();
   });
 }
 
