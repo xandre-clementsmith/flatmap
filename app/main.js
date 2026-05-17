@@ -930,6 +930,28 @@ async function main() {
       else selectRegion(Number(dot.dataset.tractId));
     });
   });
+
+  // About modal
+  const infoModal   = document.getElementById('info-modal');
+  const infoTabs    = document.querySelectorAll('.info-tab');
+  const infoSections = document.querySelectorAll('.info-section');
+
+  function openInfoModal() { infoModal.classList.add('open'); }
+  function closeInfoModal() { infoModal.classList.remove('open'); }
+
+  document.getElementById('btn-info').addEventListener('click', openInfoModal);
+  document.getElementById('info-modal-close').addEventListener('click', closeInfoModal);
+  document.getElementById('info-modal-backdrop').addEventListener('click', closeInfoModal);
+
+  infoTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      infoTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      infoSections.forEach(s => { s.style.display = s.id === `info-tab-${tab.dataset.tab}` ? '' : 'none'; });
+    });
+  });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeInfoModal(); });
 }
 
 main().catch(err => {

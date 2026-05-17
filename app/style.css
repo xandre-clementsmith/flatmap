@@ -651,3 +651,156 @@ line[id^="tract-"] {
   margin-top: 2px;
 }
 
+/* ── About button ── */
+
+#btn-info {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #2e2e2e;
+  color: #555;
+  font-size: 0.62rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+#btn-info:hover {
+  color: #999;
+  border-color: #444;
+}
+
+/* ── About modal ── */
+
+#info-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+#info-modal.open {
+  display: flex;
+}
+
+#info-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+#info-modal-box {
+  position: relative;
+  width: 580px;
+  max-width: calc(100vw - 40px);
+  max-height: 82vh;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#info-modal-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #1e1e1e;
+  flex-shrink: 0;
+  padding: 0 6px 0 0;
+}
+
+#info-modal-tabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+
+.info-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #555;
+  font-size: 0.65rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 11px 16px 9px;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.info-tab:hover { color: #888; }
+
+.info-tab.active {
+  color: #bbb;
+  border-bottom-color: #555;
+}
+
+#info-modal-close {
+  background: none;
+  border: none;
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 3px;
+  transition: color 0.12s;
+  flex-shrink: 0;
+}
+
+#info-modal-close:hover { color: #999; }
+
+#info-modal-body {
+  overflow-y: auto;
+  padding: 26px 28px 30px;
+}
+
+.info-section h3 {
+  font-size: 0.62rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #555;
+  margin-top: 22px;
+  margin-bottom: 7px;
+}
+
+.info-section h3:first-child {
+  margin-top: 0;
+}
+
+.info-section p {
+  font-size: 0.82rem;
+  color: #999;
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+
+.info-section p:last-child {
+  margin-bottom: 0;
+}
+
+.info-section a {
+  color: #7aaadc;
+  text-decoration: none;
+}
+
+.info-section a:hover {
+  text-decoration: underline;
+}
+
+.info-section code {
+  font-size: 0.78rem;
+  color: #aaa;
+  background: #1c1c1c;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+

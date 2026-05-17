@@ -14,6 +14,7 @@
         <button class="mode-btn active" id="btn-connectivity">Connectivity</button>
         <button class="mode-btn"        id="btn-networks">Networks</button>
       </div>
+      <button id="btn-info" title="About this tool">About</button>
     </header>
 
     <div id="main-row">
@@ -56,7 +57,7 @@
                 <text x="85"  y="10" class="pwy-asc-band-label" fill="#e0a050">V</text>
                 <text x="106" y="10" class="pwy-asc-band-label" fill="#70b870">Au</text>
                 <text x="127" y="10" class="pwy-asc-band-label" fill="#7090e0">Vc</text>
-                <text x="148" y="10" class="pwy-asc-band-label" fill="#a07840">Ho</text>
+                <text x="148" y="10" class="pwy-asc-band-label" fill="#a07840">CVO</text>
                 <line class="asc-band-visual" data-pathway="olf"  x1="22"  y1="14" x2="22"  y2="50"  stroke="#b060a0" stroke-width="1.5" opacity="0.15"/>
                 <line class="asc-band-hit"    data-pathway="olf"  x1="22"  y1="14" x2="22"  y2="50"  stroke="transparent" stroke-width="18"/>
                 <line class="asc-band-visual" data-pathway="vis"  x1="43"  y1="14" x2="43"  y2="98"  stroke="#c0a030" stroke-width="1.5" opacity="0.15"/>
@@ -69,7 +70,7 @@
                 <line class="asc-band-hit"    data-pathway="aud"  x1="106" y1="14" x2="106" y2="280" stroke="transparent" stroke-width="18"/>
                 <line class="asc-band-visual" data-pathway="visc" x1="127" y1="14" x2="127" y2="273" stroke="#7090e0" stroke-width="1.5" opacity="0.15"/>
                 <line class="asc-band-hit"    data-pathway="visc" x1="127" y1="14" x2="127" y2="273" stroke="transparent" stroke-width="18"/>
-                <line class="asc-band-visual" data-pathway="hum"  x1="148" y1="14" x2="148" y2="273" stroke="#a07840" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.15"/>
+                <line class="asc-band-visual" data-pathway="hum"  x1="148" y1="14" x2="148" y2="273" stroke="#a07840" stroke-width="1.5" opacity="0.15"/>
                 <line class="asc-band-hit"    data-pathway="hum"  x1="148" y1="14" x2="148" y2="273" stroke="transparent" stroke-width="18"/>
                 <circle class="asc-dot" data-nucleus-id="507" data-pathway="olf"  data-nav-mode="afferent" cx="22"  cy="28"  r="5" fill="#b060a0" opacity="0.55"/>
                 <circle class="asc-dot" data-nucleus-id="159" data-pathway="olf"  data-nav-mode="afferent" cx="22"  cy="42"  r="4" fill="#b060a0" opacity="0.45"/>
@@ -95,7 +96,7 @@
                 <div class="pwy-legend-item"><span class="pwy-dot" style="background:#e0a050"></span>V — Trigeminal</div>
                 <div class="pwy-legend-item"><span class="pwy-dot" style="background:#70b870"></span>Au — Auditory (VIII)</div>
                 <div class="pwy-legend-item"><span class="pwy-dot" style="background:#7090e0"></span>Vc — Visceral / Gustatory</div>
-                <div class="pwy-legend-item"><span class="pwy-dot" style="background:#a07840"></span>Ho — Homeostatic (CVO)</div>
+                <div class="pwy-legend-item"><span class="pwy-dot" style="background:#a07840"></span>CVO — Circumventricular organs</div>
               </div>
             </div>
 
@@ -189,7 +190,7 @@
                 <line class="motor-cn-band-hit"    data-band="mcn-ix"  x1="127" y1="14" x2="127" y2="265" stroke="transparent" stroke-width="18"/>
                 <line class="motor-cn-band-visual" data-band="mcn-xii" x1="148" y1="14" x2="148" y2="270" stroke="#60a060" stroke-width="1.5" opacity="0.15"/>
                 <line class="motor-cn-band-hit"    data-band="mcn-xii" x1="148" y1="14" x2="148" y2="270" stroke="transparent" stroke-width="18"/>
-                <line class="motor-cn-band-visual" data-band="mcn-ne"  x1="169" y1="14" x2="169" y2="66"  stroke="#a07840" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.15"/>
+                <line class="motor-cn-band-visual" data-band="mcn-ne"  x1="169" y1="14" x2="169" y2="66"  stroke="#a07840" stroke-width="1.5" opacity="0.15"/>
                 <line class="motor-cn-band-hit"    data-band="mcn-ne"  x1="169" y1="14" x2="169" y2="66"  stroke="transparent" stroke-width="18"/>
                 <circle class="motor-cn-dot" data-nucleus-id="975" data-band="mcn-iii" cx="22"  cy="88"  r="5" fill="#5090d0" opacity="0.45"/>
                 <circle class="motor-cn-dot" data-nucleus-id="35"  data-band="mcn-iii" cx="22"  cy="96"  r="6" fill="#5090d0" opacity="0.55"/>
@@ -335,6 +336,59 @@
     </div>
   </div>
   <div id="tooltip"></div>
+
+  <!-- ── About modal ── -->
+  <div id="info-modal">
+    <div id="info-modal-backdrop"></div>
+    <div id="info-modal-box">
+      <div id="info-modal-header">
+        <div id="info-modal-tabs">
+          <button class="info-tab active" data-tab="stack">Tech Stack</button>
+          <button class="info-tab"        data-tab="method">Methodology</button>
+        </div>
+        <button id="info-modal-close">×</button>
+      </div>
+      <div id="info-modal-body">
+
+        <!-- ── Tech Stack ── -->
+        <div class="info-section" id="info-tab-stack">
+          <h3>Data Source</h3>
+          <p>The underlying connectivity data comes from the <a href="https://www.nature.com/articles/nature05453" target="_blank" rel="noopener"><strong>Allen Mouse Brain Connectivity Atlas</strong></a>, produced by the Allen Institute for Brain Science. Researchers injected a recombinant adeno-associated virus (rAAV) carrying a fluorescent protein into hundreds of sites across the mouse brain. Because the virus travels along axons from the injection site to their targets, the resulting fluorescence marks where each region sends its projections. The dataset covers approximately 470 injection experiments spanning 332 gray matter structures.</p>
+          <p>Region boundaries and flatmap layout are derived from the <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.24966" target="_blank" rel="noopener"><strong>Swanson Mouse Flatmap</strong></a>.</p>
+
+          <h3>Technologies</h3>
+          <p>Connectivity data was processed in Python using the <a href="https://docs.internationalbrainlab.org/notebooks_external/atlas_mapping.html" target="_blank" rel="noopener"><strong>IBL Atlas library</strong></a> (<code>iblatlas</code>) to load Swanson flatmap region geometry and resolve Allen CCF identifiers, alongside NetworkX, igraph, leidenalg, and NumPy. The visualization runs entirely in the browser — JavaScript with D3.js for rendering, bundled with Vite. There is no server-side component; all data is loaded as static JSON files.</p>
+
+          <h3>Disclaimer</h3>
+          <p>This tool was primarily built with Claude Code, an AI coding assistant made by Anthropic.</p>
+        </div>
+
+        <!-- ── Methodology ── -->
+        <div class="info-section" id="info-tab-method" style="display:none">
+          <h3>Absolute and Relative Connectivity</h3>
+          <p>The atlas reports connectivity in two forms. Absolute projection density is the fluorescence signal in a target region normalized by the volume of the injection site — it reflects the total number of labeled axon terminals in each area. Relative projection density further divides this by the total signal across all targets, giving each target's share of the injected region's total output.</p>
+          <p>Relative connectivity is the primary measure used here. A large region like the cortex sends fibers broadly, so its raw absolute numbers appear dominant everywhere. Relative normalization reveals each region's actual connectivity preferences by controlling for its overall projection volume. This matches the design intent of the atlas, which uses relative density to characterize the specificity of anatomical connections.</p>
+
+          <h3>Adjacent Region Bleed-Through</h3>
+          <p>Viral tracer injections do not respect anatomical borders. Dye placed near the edge of one region can label fibers originating in a neighboring structure — a known limitation of the technique. The atlas's pipeline includes injection-site segmentation to reduce this, but residual contamination persists in some experiments.</p>
+          <p>This is addressed by keeping only edges above the 85th percentile of the weight distribution — roughly the strongest 15% of measured connections. This removes most low-weight noise, including the majority of bleed-through contamination, while preserving the connections strong enough to be biologically meaningful.</p>
+
+          <h3>Missing Data</h3>
+          <p>Not every region was directly injected. Coverage is good for larger, well-characterized structures but thinner for small, deep, or surgically difficult nuclei. Regions with no measured connections are shown in dark gray on the flatmap and excluded from network clustering. The connectivity data reflects what the atlas has measured — it is not a complete wiring diagram of the mouse brain.</p>
+
+          <h3>System Inputs and Outputs</h3>
+          <p>The tracer injection method captures connections between brain regions but cannot directly measure the first-order inputs from sensory organs or the final-order outputs to actuators. Light hitting the retina, sound reaching the cochlea, and axons exiting to drive movement are not recorded by the atlas's approach.</p>
+          <p>These peripheral connections were added manually based on estimated anatomy: sensory cranial nerve nuclei were linked to their respective sensory inputs (olfactory, optic, vestibular, trigeminal, auditory, and visceral), along with the circumventricular organs — structures that lack a blood-brain barrier and sample circulating hormones, osmolality, and metabolites directly from the bloodstream. Motor cranial nerve nuclei were linked to their downstream targets. Spinal pathways were similarly added by hand; a few of the descending tracts have partial connectivity data from the atlas, but most spinal connections were drawn from diverse publications. These connections appear in the Pathways panel.</p>
+
+          <h3>Network Detection</h3>
+          <p>Communities were identified using the Leiden algorithm, which finds groups of regions more densely connected to each other than to the rest of the network. The directed connectivity graph was first symmetrized — bidirectional connections were collapsed to a single undirected edge, keeping the stronger weight. Leiden was then run at 25 resolution levels from low (few large communities) to high (many small ones), using 64 random seeds per level and retaining the best partition by modularity quality.</p>
+          <p>The 14-community result was selected at the resolution just before the algorithm began splitting anatomically coherent systems into fragments. Communities with fewer than 5 members were merged into their nearest neighbor by total edge-weight affinity. The group labels — Sensory, Homeostasis, Limbic, Motor — and the community names within them are editorial, assigned after clustering based on the anatomy of the member regions.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="main.js"></script>
 </body>
 </html>
