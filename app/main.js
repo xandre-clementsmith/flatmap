@@ -137,11 +137,12 @@ async function main() {
 
   const tooltipEl = document.getElementById('tooltip');
 
-  let selected    = null;
-  let mode        = 'efferent';     // 'efferent' | 'afferent'
-  let metric      = 'relative';    // 'relative'  | 'absolute'
-  let appMode     = 'connectivity'; // 'connectivity' | 'networks'
-  let netSelected = null;           // null | Set<commId>
+  let selected     = null;
+  let tractModeKey = null;          // set when showTractInfo is active
+  let mode         = 'efferent';    // 'efferent' | 'afferent'
+  let metric       = 'relative';   // 'relative'  | 'absolute'
+  let appMode      = 'connectivity'; // 'connectivity' | 'networks'
+  let netSelected  = null;          // null | Set<commId>
 
   // ── Connectivity fill ─────────────────────────────────────────────────────
   // Used at initialisation and when restoring from networks mode.
@@ -183,14 +184,18 @@ async function main() {
 
   // ── Info panel ────────────────────────────────────────────────────────────
 
-  function makeConnItem({ acronym, id, name, barColor, barWidth = 100, barOpacity = 1, onEnter, onClick }) {
+  function makeConnItem({ acronym, id, name, barColor, barWidth = 100, barOpacity = 1, estimated = false, onEnter, onClick }) {
     const item = document.createElement('div');
     item.className = 'connection-item';
-    const opacity  = barOpacity < 1 ? `;opacity:${barOpacity}` : '';
+    const opacity = barOpacity < 1 ? `;opacity:${barOpacity}` : '';
+    const col     = barColor || '#4a9eff';
+    const barBg   = estimated
+      ? `repeating-linear-gradient(90deg,${col} 0 5px,transparent 5px 10px)`
+      : col;
     item.innerHTML = `
       <div style="width:100%">
         <div>${acronym || id}</div>
-        <div class="connection-bar" style="width:${barWidth}%${barColor ? `;background:${barColor}` : ''}${opacity}"></div>
+        <div class="connection-bar" style="width:${barWidth}%;background:${barBg}${opacity}"></div>
       </div>`;
     item.addEventListener('mouseenter', onEnter);
     item.addEventListener('mousemove', e => {
@@ -402,10 +407,10 @@ async function main() {
 
   function updateAscendingPanel(allenId) {
     const pathwayId = NUCLEUS_TO_ASCENDING.get(allenId);
+    // Bands stay neutral — only highlight on direct band click or hover
     document.querySelectorAll('.asc-band-visual').forEach(el => {
-      const match = el.dataset.pathway === pathwayId;
-      el.setAttribute('opacity',      pathwayId ? (match ? '1.0' : '0.05') : '0.15');
-      el.setAttribute('stroke-width', match ? '3' : '1.5');
+      el.setAttribute('opacity',      '0.15');
+      el.setAttribute('stroke-width', '1.5');
     });
     document.querySelectorAll('.asc-dot').forEach(el => {
       const match  = el.dataset.pathway === pathwayId;
@@ -436,10 +441,10 @@ async function main() {
 
   function updateMotorCNPanel(allenId) {
     const bandId = NUCLEUS_TO_MOTOR_CN.get(allenId);
+    // Bands stay neutral — only highlight on direct band click or hover
     document.querySelectorAll('.motor-cn-band-visual').forEach(el => {
-      const match = el.dataset.band === bandId;
-      el.setAttribute('opacity',      bandId ? (match ? '1.0' : '0.05') : '0.15');
-      el.setAttribute('stroke-width', match ? '3' : '1.5');
+      el.setAttribute('opacity',      '0.15');
+      el.setAttribute('stroke-width', '1.5');
     });
     document.querySelectorAll('.motor-cn-dot').forEach(el => {
       const match  = el.dataset.band === bandId;
@@ -477,14 +482,46 @@ async function main() {
           <div class="known-conn-sub">${sites.sub}</div>
           <div class="known-conn-bar" style="width:100%;background:${sites.color}"></div>
         </div>`;
-      item.addEventListener('mouseenter', () => { if (sites.primary) startGlow(sites.primary); });
-      item.addEventListener('mouseleave', () => stopGlow());
+      item.addEventListener('mouseenter', () => {
+        const wrapperEl = document.getElementById('pathway-wrapper');
+        const panelOpen = isMobileLayout()
+          ? wrapperEl.classList.contains('mobile-open')
+          : pathwayOpen;
+        if (!panelOpen) return;
+        let bandEl = null;
+        if (sites.dir === 'aff') {
+          bandEl = document.querySelector(`.asc-band-visual[data-pathway="${tid}"]`);
+        } else if (sites.route === 'cranial') {
+          const bandId = TRACT_KEY_TO_BAND[tid];
+          if (bandId) bandEl = document.querySelector(`.motor-cn-band-visual[data-band="${bandId}"]`);
+        } else {
+          bandEl = document.getElementById(`tract-${tid}`);
+        }
+        if (bandEl) {
+          item._hBand    = bandEl;
+          item._hOpacity = bandEl.getAttribute('opacity');
+          item._hStroke  = bandEl.getAttribute('stroke-width');
+          bandEl.setAttribute('opacity', '1.0');
+          bandEl.setAttribute('stroke-width', '3.5');
+        }
+      });
+      item.addEventListener('mouseleave', () => {
+        if (item._hBand) {
+          if (item._hOpacity) item._hBand.setAttribute('opacity', item._hOpacity);
+          else item._hBand.removeAttribute('opacity');
+          if (item._hStroke) item._hBand.setAttribute('stroke-width', item._hStroke);
+          else item._hBand.removeAttribute('stroke-width');
+          item._hBand = null;
+        }
+      });
       item.addEventListener('click', e => {
         e.stopPropagation();
-        stopGlow();
+        if (item._hBand) { // clear hover highlight before showTractInfo resets bands
+          item._hBand = null;
+        }
         openPathwayPanel();
         switchToCombo(sites.dir || 'aff', sites.route || 'cranial');
-        if (sites.primary) selectRegion(sites.primary);
+        showTractInfo(tid);
       });
       list.appendChild(item);
     }
@@ -495,9 +532,14 @@ async function main() {
     const sites = TRACT_PROJECTION_SITES[tractKey];
     if (!sites) return;
     paths.interrupt('flash');
-    selected = null;
+    selected     = null;
+    tractModeKey = tractKey;
 
-    const isAff     = sites.dir === 'aff';
+    const isAff = sites.dir === 'aff';
+    setActiveButton(
+      isAff ? 'btn-afferent' : 'btn-efferent',
+      isAff ? 'btn-efferent' : 'btn-afferent',
+    );
     const regionIds = isAff ? (sites.afferent_termini || []) : (sites.efferent_origins || []);
     const idSet     = new Set(regionIds);
 
@@ -532,7 +574,9 @@ async function main() {
 
     document.getElementById('region-acronym').textContent      = sites.label;
     document.getElementById('region-name').textContent         = sites.sub;
-    document.getElementById('no-data-reason').style.display    = 'none';
+    document.getElementById('no-data-label').textContent       = 'Estimated';
+    document.getElementById('no-data-text').textContent        = 'Connectivity inferred from published anatomy — not directly measured by the atlas.';
+    document.getElementById('no-data-reason').style.display    = 'flex';
     document.getElementById('known-connections').style.display = 'none';
     setDescription('');
 
@@ -546,6 +590,7 @@ async function main() {
         name:       meta.name,
         barColor:   sites.color,
         barOpacity: 0.7,
+        estimated:  true,
         onEnter:    () => startGlow(rid),
         onClick:    () => { stopGlow(); selectRegion(rid); panToRegion(rid); },
       }));
@@ -559,6 +604,7 @@ async function main() {
     paths.classed('dimmed', false).classed('selected', false)
       .style('opacity', null).style('stroke-width', null);
     selected = null;
+    tractModeKey = null;
     clearPathwayPanel(); clearAscendingPanel(); clearMotorCNPanel();
   }
 
@@ -620,6 +666,12 @@ async function main() {
 
   function triggerSelect(allenId) {
     const isTractSel = TRACT_IDS.has(allenId);
+    if (!isTractSel) {
+      tractModeKey = null;
+    } else {
+      if (!tractModeKey) tractModeKey = '__data_aff__';
+      setActiveButton('btn-afferent', 'btn-efferent');
+    }
     const isEff      = !isTractSel && mode === 'efferent';
     const injMap     = metric === 'relative' ? injMapRel  : injMapAbs;
     const projMap    = metric === 'relative' ? projMapRel : projMapAbs;
@@ -877,11 +929,33 @@ async function main() {
   // Connectivity: direction + metric
   document.getElementById('btn-efferent').addEventListener('click', () => {
     mode = 'efferent'; setActiveButton('btn-efferent', 'btn-afferent');
-    if (selected !== null) triggerSelect(selected);
+    if (tractModeKey) {
+      const sites = TRACT_PROJECTION_SITES[tractModeKey];
+      const dir   = sites ? sites.dir : 'aff'; // data-tracts always afferent
+      if (dir !== 'eff') {
+        document.getElementById('connections-list').innerHTML = '';
+      } else {
+        showTractInfo(tractModeKey);
+      }
+    } else if (selected !== null) {
+      triggerSelect(selected);
+    }
   });
   document.getElementById('btn-afferent').addEventListener('click', () => {
     mode = 'afferent'; setActiveButton('btn-afferent', 'btn-efferent');
-    if (selected !== null) triggerSelect(selected);
+    if (tractModeKey) {
+      const sites = TRACT_PROJECTION_SITES[tractModeKey];
+      const dir   = sites ? sites.dir : 'aff';
+      if (dir !== 'aff') {
+        document.getElementById('connections-list').innerHTML = '';
+      } else if (sites) {
+        showTractInfo(tractModeKey);
+      } else {
+        triggerSelect(selected); // data-tract: re-fetch from atlas
+      }
+    } else if (selected !== null) {
+      triggerSelect(selected);
+    }
   });
   document.getElementById('btn-relative').addEventListener('click', () => {
     metric = 'relative'; setActiveButton('btn-relative', 'btn-absolute');
