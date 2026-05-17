@@ -804,3 +804,74 @@ line[id^="tract-"] {
   border-radius: 3px;
 }
 
+/* ── Mobile layout (≤ 680px) ── */
+
+#mobile-panel-btn { display: none; }
+
+@media (max-width: 680px) {
+  #title { display: none; }
+  #topbar { gap: 10px; padding: 0 10px; }
+
+  #main-row { position: relative; }
+
+  #map-container {
+    position: absolute;
+    inset: 0;
+    touch-action: none;
+  }
+
+  #pathway-wrapper { display: none; }
+
+  #info-panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 72vh;
+    max-height: 72vh;
+    border-left: none;
+    border-top: 1px solid #333;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 20;
+  }
+
+  #info-panel::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: #444;
+    border-radius: 2px;
+    margin: 8px auto 2px;
+    flex-shrink: 0;
+  }
+
+  #info-panel.mobile-open { transform: translateY(0); }
+
+  #mobile-panel-btn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    right: 16px;
+    z-index: 15;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #bbb;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 0.72rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #mobile-panel-btn:active { background: #2a2a2a; }
+}
+
