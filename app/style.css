@@ -319,6 +319,12 @@ body {
   background: #4a9eff;
 }
 
+.bar-multiplier {
+  font-size: 0.7rem;
+  opacity: 0.55;
+  margin-left: 2px;
+}
+
 .tract-bar {
   background: #3d9e8a;
 }

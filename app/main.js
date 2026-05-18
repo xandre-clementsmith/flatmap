@@ -184,7 +184,7 @@ async function main() {
 
   // ── Info panel ────────────────────────────────────────────────────────────
 
-  function makeConnItem({ acronym, id, name, barColor, barWidth = 100, barOpacity = 1, estimated = false, onEnter, onClick }) {
+  function makeConnItem({ acronym, id, name, barColor, barWidth = 100, barRows = 1, barOpacity = 1, estimated = false, onEnter, onClick }) {
     const item = document.createElement('div');
     item.className = 'connection-item';
     const opacity = barOpacity < 1 ? `;opacity:${barOpacity}` : '';
@@ -192,10 +192,19 @@ async function main() {
     const barBg   = estimated
       ? `repeating-linear-gradient(90deg,${col} 0 5px,transparent 5px 10px)`
       : col;
+    const barStyle  = `background:${barBg}${opacity}`;
+    const fullBar   = `<div class="connection-bar" style="width:100%;${barStyle}"></div>`;
+    const lastBar   = `<div class="connection-bar" style="width:${barWidth}%;${barStyle}"></div>`;
+    const barsHtml  = barRows > 1
+      ? fullBar.repeat(barRows - 1) + lastBar
+      : lastBar;
+    const multLabel = barRows > 1
+      ? ` <span class="bar-multiplier">×${barRows}</span>`
+      : '';
     item.innerHTML = `
       <div style="width:100%">
-        <div>${acronym || id}</div>
-        <div class="connection-bar" style="width:${barWidth}%;background:${barBg}${opacity}"></div>
+        <div>${acronym || id}${multLabel}</div>
+        ${barsHtml}
       </div>`;
     item.addEventListener('mouseenter', onEnter);
     item.addEventListener('mousemove', e => {
@@ -223,21 +232,45 @@ async function main() {
       .sort((a, b) => b.normalized_value - a.normalized_value);
     const localMax  = sorted[0]?.normalized_value || 1;
 
+    // Detect outlier entries: top entries whose value dwarfs the next cluster (≥3× gap).
+    // Those entries show stacked bars; the first non-outlier entry becomes the 100% anchor.
+    const GAP_RATIO = 3.0;
+    let normalStartIdx = 0;
+    for (let i = 0; i < Math.min(3, sorted.length - 1); i++) {
+      if (sorted[i].normalized_value / sorted[i + 1].normalized_value >= GAP_RATIO) {
+        normalStartIdx = i + 1;
+        break;
+      }
+    }
+    const normalMax = normalStartIdx > 0 ? sorted[normalStartIdx].normalized_value : localMax;
+
     const list = document.getElementById('connections-list');
     list.innerHTML = '';
-    for (const conn of sorted) {
-      if (conn.normalized_value / localMax < 0.02) break;
+    for (let i = 0; i < sorted.length; i++) {
+      const conn = sorted[i];
+      if (conn.normalized_value / normalMax < 0.02) break;
       const isTract     = TRACT_IDS.has(conn[partnerId]);
       if (isTract && !isEff) continue;
       const partnerMeta = metadata[conn[partnerId]] || {};
-      const pct         = Math.round((conn.normalized_value / localMax) * 100);
       const barColor    = isTract ? (TRACT_COLORS[conn[partnerId]] || '#3d9e8a') : null;
+      const isOutlier   = i < normalStartIdx;
+      let barRows = 1, barWidth;
+      if (isOutlier) {
+        const ratio    = conn.normalized_value / normalMax;
+        const fullBars = Math.floor(ratio);
+        const lastPct  = Math.round((ratio - fullBars) * 100);
+        barRows  = lastPct > 0 ? fullBars + 1 : fullBars;
+        barWidth = lastPct > 0 ? lastPct       : 100;
+      } else {
+        barWidth = Math.round((conn.normalized_value / normalMax) * 100);
+      }
       list.appendChild(makeConnItem({
         acronym:  partnerMeta.acronym,
         id:       conn[partnerId],
         name:     partnerMeta.name,
         barColor,
-        barWidth: pct,
+        barWidth,
+        barRows,
         onEnter:  () => { if (!isTract) startGlow(conn[partnerId]); },
         onClick:  () => {
           tooltipEl.style.display = 'none';
