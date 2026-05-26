@@ -102,8 +102,16 @@ body {
   flex-direction: column;
 }
 
+#conn-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 #info-content {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding: 20px;
   display: flex;
@@ -323,6 +331,19 @@ body {
   font-size: 0.7rem;
   opacity: 0.55;
   margin-left: 2px;
+}
+
+#low-confidence-notice {
+  font-size: 0.66rem;
+  color: #777;
+  border-left: 2px solid #444;
+  padding: 2px 6px;
+  margin: 4px 0 2px;
+  line-height: 1.5;
+}
+
+.low-conf-overlay {
+  pointer-events: none;
 }
 
 .tract-bar {
@@ -625,12 +646,19 @@ line[id^="tract-"] {
 .comm-item:hover  { background: rgba(255,255,255,0.04); }
 .comm-item.active { background: rgba(255,255,255,0.07); }
 
+.comm-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
 .comm-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-top: 3px;
   opacity: 0.85;
 }
 

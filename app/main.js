@@ -95,9 +95,26 @@ async function main() {
     [...Object.keys(injMapRel), ...Object.keys(injMapAbs)].map(Number)
   );
 
+  // Data-coverage categories from Knox confidence_flags.low_confidence_reason:
+  //   'ancestor' — Knox data from a coarser parent region (Swanson subdivision is finer than Knox)
+  //   'size'     — Direct Knox match but bilateral volume < 250 voxels at 100μm (~0.78mm sphere)
+  //   'unmapped' — No Knox data at all; already rendered dark as "no-data"
+  const confidenceFlags = connectivity.confidence_flags || {};
+  const ancestorConfSet = new Set(
+    Object.entries(confidenceFlags)
+      .filter(([, v]) => v.low_confidence_reason === 'ancestor')
+      .map(([k]) => Number(k))
+  );
+  const sizeConfSet = new Set(
+    Object.entries(confidenceFlags)
+      .filter(([, v]) => v.low_confidence_reason === 'size')
+      .map(([k]) => Number(k))
+  );
+
   // ── SVG ───────────────────────────────────────────────────────────────────
 
   const container = document.getElementById('map-container');
+  container.innerHTML = '';   // clear any stale SVG from hot-module reload
   const svg = d3.select(container).append('svg').attr('width', '100%').attr('height', '100%');
   const g   = svg.append('g');
 
@@ -132,6 +149,31 @@ async function main() {
     zoom.scaleExtent([fitScale, fitScale * 40]);
     svg.call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(fitScale));
   });
+
+  // ── Low-confidence hatch overlay ──────────────────────────────────────────
+  // Diagonal stripe pattern built via D3 (avoids innerHTML + SVG namespace issues).
+  const hatchPattern = svg.append('defs').append('pattern')
+    .attr('id',               'low-conf-hatch')
+    .attr('width',            5)
+    .attr('height',           5)
+    .attr('patternUnits',     'userSpaceOnUse')
+    .attr('patternTransform', 'rotate(45 0 0)');
+  hatchPattern.append('line')
+    .attr('x1', 0).attr('y1', 0)
+    .attr('x2', 0).attr('y2', 5)
+    .attr('stroke',         'white')
+    .attr('stroke-width',   1)
+    .attr('stroke-opacity', 0.18);
+
+  // Hatch only ancestor-mapped regions (data from parent, not this subdivision).
+  // Unmapped regions are already dark "no-data". GPi gets a notice only (data IS for GPi).
+  g.selectAll('path.low-conf-overlay')
+    .data(regions.filter(d => ancestorConfSet.has(d.allenId) && !d.hole))
+    .join('path')
+    .attr('class',          'low-conf-overlay')
+    .attr('d',              d => pathFromCoords(d.coordsReg || []))
+    .attr('fill',           'url(#low-conf-hatch)')
+    .attr('pointer-events', 'none');
 
   // ── State ─────────────────────────────────────────────────────────────────
 
@@ -218,11 +260,28 @@ async function main() {
     return item;
   }
 
+  function setLowConfNotice(allenId) {
+    const el   = document.getElementById('low-confidence-notice');
+    const flag = confidenceFlags[String(allenId)];
+    if (ancestorConfSet.has(allenId)) {
+      el.textContent = 'Knox coverage via parent region — this Swanson subdivision is finer than Knox\'s 291-region parcellation; connectivity shown is from the enclosing Knox structure, not specific to this nucleus.';
+      el.style.display = '';
+    } else if (sizeConfSet.has(allenId)) {
+      const vox = flag?.knox_bilateral_voxels;
+      const volStr = vox != null ? ` (${vox} bilateral voxels at 100μm)` : '';
+      el.textContent = `Small nucleus${volStr} — below Knox’s ~0.78 mm equivalent diameter threshold; kernel regression may blend signal from neighboring structures.`;
+      el.style.display = '';
+    } else {
+      el.style.display = 'none';
+    }
+  }
+
   function showInfo(allenId, conns, curMode, onSelectRegion) {
     const meta = metadata[allenId] || {};
     document.getElementById('region-acronym').textContent = meta.acronym || allenId;
     document.getElementById('region-name').textContent    = meta.name    || '';
     document.getElementById('no-data-reason').style.display = 'none';
+    setLowConfNotice(allenId);
     setDescription(REGION_DESCRIPTIONS[allenId] || '');
 
     const isEff     = curMode === 'efferent';
@@ -287,6 +346,7 @@ async function main() {
     document.getElementById('no-data-label').textContent         = reason.label;
     document.getElementById('no-data-text').textContent          = reason.text;
     document.getElementById('no-data-reason').style.display      = 'flex';
+    if (allenId != null) setLowConfNotice(allenId);
     document.getElementById('connections-list').innerHTML         = '';
     document.getElementById('known-connections').style.display    = 'none';
     setDescription(allenId != null ? (REGION_DESCRIPTIONS[allenId] || '') : '');
@@ -296,6 +356,7 @@ async function main() {
     document.getElementById('region-acronym').textContent        = '';
     document.getElementById('region-name').textContent           = '';
     document.getElementById('no-data-reason').style.display      = 'none';
+    document.getElementById('low-confidence-notice').style.display  = 'none';
     document.getElementById('connections-list').innerHTML         = '';
     document.getElementById('known-connections').style.display    = 'none';
     setDescription('');
@@ -768,7 +829,7 @@ async function main() {
         { hint: 'auditory-brainstem' },
       ]},
     ]},
-    { group: 'Homeostasis', children: [
+    { group: 'Homeostatic', children: [
       { hint: 'medullary' },
       { hint: 'hypothalamic' },
       { hint: 'Arousal' },
@@ -797,12 +858,11 @@ async function main() {
   function capitalise(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
   // Returns all community IDs reachable from a hierarchy node.
-  function nodeCommIds(node, hintToComm) {
+  function nodeCommIds(node, hintToComms) {
     if (node.hint !== undefined) {
-      const c = hintToComm[node.hint];
-      return c ? [c.id] : [];
+      return (hintToComms[node.hint] || []).map(c => c.id);
     }
-    return node.children.flatMap(ch => nodeCommIds(ch, hintToComm));
+    return node.children.flatMap(ch => nodeCommIds(ch, hintToComms));
   }
 
   function netApplyColors() {
@@ -824,8 +884,9 @@ async function main() {
                 : typeof ids === 'number' ? new Set([ids])
                 : ids;
     netApplyColors();
-    document.querySelectorAll('.comm-item[data-comm-id]').forEach(el => {
-      el.classList.toggle('active', !!netSelected?.has(+el.dataset.commId));
+    document.querySelectorAll('.comm-item[data-comm-ids]').forEach(el => {
+      const cids = JSON.parse(el.dataset.commIds);
+      el.classList.toggle('active', !!netSelected && cids.every(id => netSelected.has(id)));
     });
     document.querySelectorAll('.net-group-btn[data-group-ids]').forEach(el => {
       const gids   = JSON.parse(el.dataset.groupIds);
@@ -839,33 +900,42 @@ async function main() {
     document.getElementById('net-count').textContent = leidenData.communities.length;
     list.innerHTML = '';
 
-    const hintToComm = Object.fromEntries(
-      leidenData.communities.filter(c => c.hint).map(c => [c.hint, c])
-    );
+    // Group by hint: one hint may map to multiple communities (e.g. two cerebellar modules)
+    const hintToComms = {};
+    for (const c of leidenData.communities) {
+      if (c.hint) (hintToComms[c.hint] ??= []).push(c);
+    }
 
     function renderNode(node, depth) {
       const indent = `${14 + depth * 12}px`;
 
       if (node.hint !== undefined) {
-        const comm = hintToComm[node.hint];
-        if (!comm) return;
+        const comms = hintToComms[node.hint];
+        if (!comms || comms.length === 0) return;
+        const allIds    = comms.map(c => c.id);
+        const totalSize = comms.reduce((s, c) => s + c.size, 0);
+        const dotsHtml  = comms.map(c =>
+          `<div class="comm-dot" style="background:${commColors[c.id]}"></div>`
+        ).join('');
         const el = document.createElement('div');
         el.className         = 'comm-item';
-        el.dataset.commId    = comm.id;
+        el.dataset.commIds   = JSON.stringify(allIds);
         el.style.paddingLeft = indent;
-        el.title             = comm.acronyms.join(', ');
+        el.title             = comms.flatMap(c => c.acronyms).join(', ');
         el.innerHTML = `
-          <div class="comm-dot" style="background:${commColors[comm.id]}"></div>
+          <div class="comm-dots">${dotsHtml}</div>
           <div class="comm-body">
-            <div class="comm-name">${capitalise(comm.hint)}</div>
-            <div class="comm-meta">${comm.size} region${comm.size !== 1 ? 's' : ''}</div>
+            <div class="comm-name">${capitalise(node.hint)}</div>
+            <div class="comm-meta">${totalSize} region${totalSize !== 1 ? 's' : ''}</div>
           </div>`;
         el.addEventListener('click', () => {
-          netSelect(netSelected?.size === 1 && netSelected.has(comm.id) ? null : comm.id);
+          const s       = new Set(allIds);
+          const already = netSelected && allIds.every(id => netSelected.has(id));
+          netSelect(already ? null : s);
         });
         list.appendChild(el);
       } else {
-        const groupIds = nodeCommIds(node, hintToComm);
+        const groupIds = nodeCommIds(node, hintToComms);
         const el = document.createElement('div');
         el.className         = `${depth === 0 ? 'net-section' : 'net-subgroup'} net-group-btn`;
         el.style.paddingLeft = indent;
@@ -938,7 +1008,7 @@ async function main() {
       event.stopPropagation();
       const cid = regionToCommIdx[d.allenId];
       if (cid !== undefined)
-        netSelect(netSelected?.size === 1 && netSelected.has(cid) ? null : cid);
+        netSelect(netSelected?.has(cid) && netSelected.size <= 2 ? null : cid);
     } else {
       stopGlow();
       selectRegion(d.allenId);

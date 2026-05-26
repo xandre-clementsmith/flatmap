@@ -100,6 +100,7 @@ export const REGION_DESCRIPTIONS = {
   575: "Central lateral nucleus. Intralaminar thalamic nucleus; involved in arousal, attention, and motor control.",
   599: "Central medial nucleus. Intralaminar thalamic nucleus; involved in attention, arousal, and sensorimotor gating.",
   59:  "Intermediodorsal nucleus. Medial thalamic nucleus involved in memory and limbic functions.",
+  1096:"Anteromedial nucleus, dorsal part. Subdivision of the anteromedial thalamic nucleus; part of the anterior thalamic group with strong reciprocal connections to cingulate and retrosplenial cortices, contributing to spatial memory and the Papez circuit.",
   1104:"Anteromedial nucleus, ventral part. Subdivision of the anteromedial thalamic nucleus; part of the anterior thalamic group involved in the Papez circuit and spatial memory.",
   1113:"Interanterodorsal nucleus. Part of the anterior thalamic complex involved in spatial memory and limbic circuits.",
   1120:"Interanteromedial nucleus. Part of the anterior thalamic complex; contributes to spatial memory and the Papez memory circuit.",

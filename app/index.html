@@ -304,6 +304,7 @@
               <span id="region-acronym"></span>
               <span id="region-name"></span>
             </div>
+            <div id="low-confidence-notice" style="display:none"></div>
             <div id="description-section" style="display:none">
               <div id="description-toggle">
                 <span id="description-arrow">▶</span>
@@ -354,7 +355,8 @@
         <!-- ── Tech Stack ── -->
         <div class="info-section" id="info-tab-stack">
           <h3>Data Source</h3>
-          <p>The underlying connectivity data comes from the <a href="https://www.nature.com/articles/nature05453" target="_blank" rel="noopener"><strong>Allen Mouse Brain Connectivity Atlas</strong></a>, produced by the Allen Institute for Brain Science. Researchers injected a recombinant adeno-associated virus (rAAV) carrying a fluorescent protein into hundreds of sites across the mouse brain. Because the virus travels along axons from the injection site to their targets, the resulting fluorescence marks where each region sends its projections. The dataset covers approximately 470 injection experiments spanning 332 gray matter structures.</p>
+          <p>The underlying connectivity data comes from the <a href="https://www.nature.com/articles/nature05453" target="_blank" rel="noopener"><strong>Allen Mouse Brain Connectivity Atlas</strong></a>, produced by the Allen Institute for Brain Science. Researchers injected a recombinant adeno-associated virus (rAAV) carrying a fluorescent protein into hundreds of sites across the mouse brain. Because the virus travels along axons from the injection site to their targets, the resulting fluorescence marks where each region sends its projections.</p>
+          <p>Raw tracer signals were processed through the <a href="https://doi.org/10.1162/netn_a_00066" target="_blank" rel="noopener"><strong>Knox et al. (2019) voxel-scale connectome model</strong></a> rather than using per-experiment regional averages directly. This model fits a separate kernel regression for each of 12 major brain divisions (striatum, pallidum, thalamus, etc.) using 428 wild-type injection experiments at 100 μm resolution, then aggregates to the regional level. Because connectivity is modeled independently within each division, cross-division injection contamination — such as a striatal injection spreading into adjacent pallidum — is excluded by construction.</p>
           <p>Region boundaries and flatmap layout are derived from the <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cne.24966" target="_blank" rel="noopener"><strong>Swanson Mouse Flatmap</strong></a>.</p>
 
           <h3>Technologies</h3>
@@ -373,8 +375,17 @@
           <p>Relative connectivity is the primary measure used here. A large region like the cortex sends fibers broadly, so its raw absolute numbers appear dominant everywhere. Relative normalization reveals each region's actual connectivity preferences by controlling for its overall projection volume. This matches the design intent of the atlas, which uses relative density to characterize the specificity of anatomical connections.</p>
 
           <h3>Adjacent Region Bleed-Through</h3>
-          <p>Viral tracer injections do not respect anatomical borders. Dye placed near the edge of one region can label fibers originating in a neighboring structure — a known limitation of the technique. The atlas's pipeline includes injection-site segmentation to reduce this, but residual contamination persists in some experiments.</p>
-          <p>This is addressed by keeping only edges above the 85th percentile of the weight distribution — roughly the strongest 15% of measured connections. This removes most low-weight noise, including the majority of bleed-through contamination, while preserving the connections strong enough to be biologically meaningful.</p>
+          <p>Viral tracer injections do not respect anatomical borders. Dye placed near the edge of one region can label fibers originating in a neighboring structure, and passing fiber bundles can deposit fluorescent signal in regions they merely transit rather than innervate — a known limitation of the technique.</p>
+          <p>The primary correction is the Knox voxel model's division-separated kernel regression, which prevents contamination from propagating across major brain division boundaries. For network community detection specifically, an additional 85th-percentile edge threshold is applied, retaining only the strongest 15% of connections to reduce residual low-weight noise.</p>
+
+          <h3>Data Coverage Tiers</h3>
+          <p>Connectivity estimates carry different levels of confidence depending on how each Swanson region maps onto the Knox model's 291 Allen CCF summary structures:</p>
+          <ul>
+            <li><strong>Direct coverage</strong> — the region has its own row in the Knox model. Estimates are the most reliable.</li>
+            <li><strong>Parent-region coverage</strong> (diagonal hatch on the flatmap) — the Swanson subdivision is finer than the Knox parcellation. Connectivity shown is from the enclosing Knox structure, not specific to that nucleus. Affects 48 regions, primarily layer-level subdivisions of the superior colliculus, inferior colliculus, amygdala, and medial geniculate.</li>
+            <li><strong>Small-nucleus flag</strong> (info panel notice) — the region has a direct Knox match but a bilateral volume below 250 voxels at 100 μm (~0.78 mm equivalent diameter). The Nadaraya-Watson kernel used by Knox may substantially blend signal from neighboring structures at this scale. Affects 101 regions including most cranial nerve nuclei, many small hypothalamic and brainstem nuclei, the subthalamic nucleus, and substantia nigra pars compacta.</li>
+            <li><strong>No data</strong> (dark gray on the flatmap) — the region and all of its ancestors are absent from the Knox model. 14 regions fall into this category.</li>
+          </ul>
 
           <h3>Missing Data</h3>
           <p>Not every region was directly injected. Coverage is good for larger, well-characterized structures but thinner for small, deep, or surgically difficult nuclei. Regions with no measured connections are shown in dark gray on the flatmap and excluded from network clustering. The connectivity data reflects what the atlas has measured — it is not a complete wiring diagram of the mouse brain.</p>
